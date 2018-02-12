@@ -4,18 +4,25 @@
 
 require __DIR__.'/../path.php';
 require UTILS_DIR.'managerDB.php';
+require UTILS_DIR.'sessionUtil.php';
 
-session_start();
+if(!isset($_SESSION))
+	session_start();
+
+if (!isLogged()) {
+	header('location: ./../home.php');
+	exit;
+}
 
 $upload_dir = './../../uploads/';
-$file_dir = $upload_dir.hash('sha256',$_SESSION['username']);
+$file_dir = $upload_dir.hash('sha256', $_SESSION['userID']);
 
-if(isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
 	move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $file_dir);
 
 	updateDatabase();
 
-	header('location: ./../profile.php');
+	header('location: ./../profile.php?id='.$_SESSION['userID']);
 	exit;
 }
 
@@ -29,6 +36,8 @@ function updateDatabase() {
 			 'SET U.Image="'.$type.'" '.
 			 'WHERE U.ID='.$_SESSION['userID'];
 	$dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
 }
 
 ?>

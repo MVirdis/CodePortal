@@ -11,11 +11,15 @@
 	<a id="change_button" style="color: rgb(0,0,238); font-size: 14px; cursor: pointer;">Change profile picture.</a><br>
 	<span style="color: black; font-size: 12px;">or</span><br>
 	<a id="delete_button" href="./utils/interactionDB.php?action=rm" style="color: rgb(0,0,238); font-size: 14px;">Remove profile picture.</a>
+
+	<!-- Upload form -->
 	<form id="change_form" class="hidden" action="./utils/uploadUtil.php" enctype="multipart/form-data" method="post">
 		Select an Image to upload (format jpeg):
 		<input type="file" name="fileToUpload">
 		<input type="submit" name="submit" value="Submit">
 	</form>
+	<!-- - - - - - - - -->
+
 	<script>
 		var a = document.getElementById('change_button');
 		var change_form = document.getElementById('change_form');

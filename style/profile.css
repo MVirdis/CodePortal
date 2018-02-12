@@ -17,6 +17,10 @@ body div {
 	text-align: center;
 }
 
+.hidden {
+	display: none;
+}
+
 .heading {
 	display: inline-block;
 	margin: 0 auto;
@@ -69,4 +73,31 @@ body div {
 	text-align: left;
 	display: block;
 	font-size: 24px;
+}
+
+.dashboard {
+	display: block;
+	margin: 0 auto;
+	padding: 4px 0;
+
+	background-color: gray;
+	background-image: url('./../images/dashboard_bg.png');
+	background-repeat: repeat;
+	background-position: top left;
+	box-shadow: inset 0px 4px 4px 1px rgba(20,20,20,0.3);
+}
+
+.dashboard h2 {
+	color: #412A2A;
+}
+
+.dashboard ul {
+	list-style-type: none;
+}
+
+.dashboard a {
+	color: #1E8DFF;
+	text-decoration: underline;
+	font-size: 22px;
+	cursor: pointer;
 }
