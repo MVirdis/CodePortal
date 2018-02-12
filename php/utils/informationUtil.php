@@ -299,7 +299,9 @@ function checkFriendship($id) {
 
 	$id = $dbmanager->sqlInjectionFilter($id);
 
-	$query = 'SELECT IF(A.DataAmicizia IS NULL, 1, 2 ) AS Flag '.
+	$query = 'SELECT IF(A.DataAmicizia IS NULL, '.
+						'IF( A.Utente1='.$_SESSION['userID'].', 1, 0), '.
+					  	'2 ) AS Flag '.
 			 'FROM amicizia A '.
 			 'WHERE (A.Utente1='.$_SESSION['userID'].' AND A.Utente2='.$id.') '.
 			 	'OR (A.Utente1='.$id.' AND A.Utente2='.$_SESSION['userID'].') ';

@@ -50,6 +50,11 @@ p {
 	font-size: 20px;
 }
 
+.username a {
+	text-decoration: none;
+	color: inherit;
+}
+
 .img_container {
 	float: left;
 }

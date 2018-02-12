@@ -30,22 +30,6 @@ function wrapRequests($data) {
 	}
 }
 
-/*
-function displayPicture($data) {
-	$dim = 150;
-
-	if($data->num_rows==0) {
-		echo '<img src="./../images/user-default.jpeg" alt="profile picture" '.
-			 'height="'.$dim.'px" width="'.$dim.'px"></img>';
-		return;
-	}
-
-	$data = $data->fetch_assoc();
-	echo '<img src="./../uploads/'.hash('sha256',$_SESSION['username']).'" type="'.$data['Image'].'" '.
-		 'height="'.$dim.'px" width="'.$dim.'px" alt="profile picture"></img>';
-}
-*/
-
 function getMailList($data) {
 	if($data==null || $data->num_rows==0) {
 		echo '<div>'.
@@ -135,7 +119,7 @@ function getFriendReqsList($data) {
 				  		getPic($row['UserID']).
 				  	'</div>'.
 				  	'<div class="username">'.
-				  		'<span>'.$row['Username'].'</span>'.
+				  		'<a href="./profile.php?id='.$row['UserID'].'">'.$row['Username'].'</a>'.
 				  	'</div>'.
 				  	'<div class="buttons">'.
 				  		'<form action="./utils/interactionDB.php?action=accReq" method="POST">'.

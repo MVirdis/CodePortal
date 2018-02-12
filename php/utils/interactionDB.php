@@ -170,10 +170,8 @@ function newFriendRequest() {
 
 	$query = 'SELECT * '.
 			 'FROM amicizia A '.
-			 'WHERE (A.Utente1='.$_SESSION['userID'].' '.
-			 		'AND A.Utente2='.$id.') '.
-			 		'OR (A.Utente2='.$_SESSION['userID'].
-			 			' AND A.Utente1='.$id.' ) '.
+			 'WHERE (A.Utente2='.$_SESSION['userID'].' '.
+			 		'AND A.Utente1='.$id.') '.
 			 	'AND A.DataAmicizia IS NULL';
 
 	$res = $dbmanager->performQuery($query);
