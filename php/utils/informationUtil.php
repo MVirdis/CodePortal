@@ -11,6 +11,7 @@ function topRatedRequests() {
 	$query = 'SELECT DT.* '.
 			 'FROM ( '.
 				  'SELECT R.*, '.
+				  		'U.ID AS UserID, '.
 						'U.Username AS Autore, '.
 						'U.Image, '.
 						'count(DISTINCT RA.ID) AS NumResponses '.
@@ -36,7 +37,7 @@ function topRatedRequests() {
 function friendsRequests() {
 	global $dbmanager;
 
-	$query = 'SELECT R.*, U.Username AS Autore, U.Image '.
+	$query = 'SELECT R.*, U.ID AS UserID, U.Username AS Autore, U.Image '.
 			 'FROM richiesta R INNER JOIN utente U ON U.ID = R.Autore '.
 			 'WHERE EXISTS ( '.
 			 '   SELECT * '.
@@ -58,7 +59,7 @@ function friendsRequests() {
 function recentRequests() {
 	global $dbmanager;
 
-	$query = 'SELECT R.*, U.Username AS Autore, U.Image '.
+	$query = 'SELECT R.*, U.ID AS UserID, U.Username AS Autore, U.Image '.
 			 'FROM richiesta R INNER JOIN utente U ON U.ID = R.Autore '.
 			 'WHERE R.Visibilita=1 '.
 			 'ORDER BY R.Istante DESC';
@@ -68,18 +69,6 @@ function recentRequests() {
 	$dbmanager->closeConnection();
 
 	return $result;
-}
-
-// Restituisce
-function getProfilePicture() {
-	global $dbmanager;
-
-	$query = 'SELECT Image '.
-			 'FROM utente '.
-			 'WHERE ID='.$_SESSION['userID'].' '.
-			 '  AND Image IS NOT NULL';
-
-	return $dbmanager->performQuery($query);
 }
 
 // Restituisce il numero di codici in totale nella piattaforma

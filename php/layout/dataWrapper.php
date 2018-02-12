@@ -13,7 +13,7 @@ function wrapRequests($data) {
 	}
 
 	while ($row = $data->fetch_assoc()) {
-		$img = getPic($row['ID']);
+		$img = getPic($row['UserID']);
 
 		echo '<div class="post_container">'.
 			 '<div class="post">'.
@@ -24,12 +24,13 @@ function wrapRequests($data) {
 			 '<span class="details" style="color: black;">'.$row['Linguaggio'].'</span>'.
 			 '</div>'.
 			 '</div><div class="post_picture">'.
-			 $img.
+			 	$img.
 			 '</div></div>'.
 			 '<div class="clear"></div>';
 	}
 }
 
+/*
 function displayPicture($data) {
 	$dim = 150;
 
@@ -43,6 +44,7 @@ function displayPicture($data) {
 	echo '<img src="./../uploads/'.hash('sha256',$_SESSION['username']).'" type="'.$data['Image'].'" '.
 		 'height="'.$dim.'px" width="'.$dim.'px" alt="profile picture"></img>';
 }
+*/
 
 function getMailList($data) {
 	if($data==null || $data->num_rows==0) {
