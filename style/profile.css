@@ -1,0 +1,72 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Open Sans', sans-serif;
+}
+
+a {
+	text-decoration: none;
+}
+
+h1 {
+	font-variant: normal;
+	font-weight: normal;
+}
+
+body div {
+	text-align: center;
+}
+
+.heading {
+	display: inline-block;
+	margin: 0 auto;
+	padding-top: 20px;
+}
+
+.profile_pic {
+	display: block;
+}
+
+.profile_pic img {
+	width: 140px;
+	height: 140px;
+	border-radius: 70px;
+	border: thin solid #616161;
+}
+
+.username {
+	display: block;
+}
+
+.heading input[type=submit] {
+	height: 30px;
+	border-radius: 4px;
+	box-shadow: none;
+	border: thin solid #616161;
+	background-color: #6DC4FF;
+	font-size: 20px;
+	font-weight: lighter;
+	color: #262626;
+	cursor: pointer;
+}
+
+.heading input:disabled {
+	background-color: gray;
+	color: white;
+	cursor: default;
+}
+
+.statistics ul {
+	list-style-type: none;
+	color: #818181;
+}
+
+.statistics span {
+	color: black;
+}
+
+.statistics {
+	text-align: left;
+	display: block;
+	font-size: 24px;
+}

@@ -1,0 +1,121 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+
+h2 {
+	color: #4C4C4C;
+	font-size: 20px;
+	font-weight: normal;
+	font-style: normal;
+}
+
+section {
+	display: block;
+	text-align: center;
+}
+
+section div {
+	display: inline-block;
+	margin: 0 auto;
+}
+
+button:focus {
+	outline: 0;
+}
+
+p {
+	color: #919191;
+}
+
+.list_element {
+	display: inline-block;
+	overflow: hidden;
+	margin: 0 auto;
+	padding: 6px 8px;
+	min-width: 300px;
+	border: 1px solid #CECECE;
+	background-color: #EFEFEF;
+	border-radius: 10px;
+	text-align: left;
+}
+
+.username {
+	line-height: 60px;
+	margin-left: 10px;
+	font-size: 20px;
+}
+
+.img_container {
+	float: left;
+}
+.img_container img {
+	width: 60px;
+	height: 60px;
+	border-radius: 30px;
+}
+
+.buttons {
+	float: right;
+	height: 60px;
+}
+
+.buttons button {
+	height: 22px;
+	border-radius: 4px;
+	cursor: pointer;
+	border: 1px solid #BBBBBB;
+}
+
+.buttons form:first-child button {
+	background-color: #6DFF34;
+	margin-right: 4px;
+}
+
+.buttons form:last-child button {
+	background-color: #FF5C5C;
+}
+
+.container {
+	display: inline-block;
+	position: fixed;
+	top: 100px;
+	right: 60px;
+	width: 300px;
+	border-radius: 6px;
+	border: 1px dashed #EDEDED;
+	box-shadow: 2px 2px 2px rgba(50,50,50,0.3);
+	text-align: center;
+}
+
+.container div:first-child {
+	display: inline-block;
+	margin: 0 auto;
+	padding-bottom: 10px;
+}
+
+.container input {
+	border-radius: 2px;
+	font-size: 18px;
+	padding: 2px 2px;
+	border: 1px solid #BBBBBB;
+}
+
+.container input:focus {
+	outline: 0;
+}
+
+#result_container {
+	margin: 4px 0;
+	font-size: 22px;
+	padding: 4px;
+	cursor: pointer;
+}
+
+#result_container div:hover {
+	color: #33adff;
+}
