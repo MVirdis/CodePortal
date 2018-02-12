@@ -94,6 +94,22 @@ nav a {
 	background-image: url('./../images/signout_icon_hover.png');
 }
 
+.profile {
+	background-image: url('./../images/profile_icon.png');
+}
+
+.profile:hover {
+	background-image: url('./../images/profile_icon_hover.png');
+}
+
+.search {
+	background-image: url('./../images/search_icon.png');
+}
+
+.search:hover {
+	background-image: url('./../images/search_icon_hover.png');
+}
+
 .rx_space {
 	margin-right: 20px;
 }
