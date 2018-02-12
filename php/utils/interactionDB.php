@@ -56,14 +56,17 @@ function removeProfilePic() {
 	global $dbmanager;
 	global $_SESSION;
 
-	unlink('./../../uploads/'.hash('sha256',$_SESSION['username']));
+	unlink('./../../uploads/'.hash('sha256',$_SESSION['userID']));
 
 	$query = 'UPDATE utente U '.
-			 'SET U.Image=NULL '.
+			 'SET U.Image = NULL '.
 			 'WHERE U.ID='.$_SESSION['userID'];
+
 	$dbmanager->performQuery($query);
 
-	header('location: ./../profile.php');
+	$dbmanager->closeConnection();
+
+	header('location: ./../profile.php?id='.$_SESSION['userID']);
 	exit;
 }
 
