@@ -73,6 +73,8 @@ DataWrapper.UserList = function(Object) {
 	}
 };
 
+// Mostra le richieste in arrivo dal server
+// Object.data è una tabella di richieste che rispettano i parametri di ricerca
 DataWrapper.MainRequestWrapper = function(Object) {
 	var container = document.getElementById('results_container');
 	DataWrapper.clear(container);
@@ -82,8 +84,38 @@ DataWrapper.MainRequestWrapper = function(Object) {
 
 	for (var i = 0; i < Object.data.length; i++) {
 		var req_element = document.createElement('div');
+		req_element.setAttribute('class', 'request_container');
 
-		req_element.appendChild(document.createTextNode( Object.data[i]['Titolo'] ));
+		var title_el = document.createElement('div');
+		title_el.setAttribute('class', 'title');
+		title_el.appendChild(document.createTextNode(Object.data[i]['Titolo']));
+
+		var detail_el = document.createElement('div');
+
+		detail_el.style.overflow = "hidden";
+		detail_el.style.padding = "0 4px";
+
+		var username_el = document.createElement('div');
+		username_el.setAttribute('class','author');
+		username_el.appendChild(document.createTextNode(Object.data[i]['Username']));
+
+		var time_el = document.createElement('div');
+		time_el.setAttribute('class','time');
+		time_el.appendChild(document.createTextNode(Object.data[i]['Istante']));
+
+		var detail2_el = document.createElement('div');
+		
+		var replies = document.createElement('div');
+		replies.appendChild(document.createTextNode(Object.data[i]['NumRisposte']));
+
+		detail2_el.appendChild(replies);
+
+		detail_el.appendChild(username_el);
+		detail_el.appendChild(time_el);
+
+		req_element.appendChild(title_el);
+		req_element.appendChild(detail_el);
+		req_element.appendChild(detail2_el);
 
 		container.appendChild(req_element);
 	}

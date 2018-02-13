@@ -43,9 +43,14 @@
 				<li><label>Language: <input type="text" name="Language"></label></li>
 			</ul>
 		</div><br>
-		<div id="results_container" class="heading">
+		<div>
+			<div id="results_container" class="results">
+			</div>
 		</div>
 	</section>
+
+	<div style="height: 200px">
+	</div>
 
 	<script>
 		var container = document.getElementById('results_container');

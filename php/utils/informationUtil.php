@@ -329,7 +329,7 @@ function getRequestsLike($title, $author, $language) {
 	$author = $dbmanager->sqlInjectionFilter($author);
 	$language = $dbmanager->sqlInjectionFilter($language);
 
-	$query = 'SELECT R.* '.
+	$query = 'SELECT R.*, U.Username '.
 			 'FROM richiesta R INNER JOIN utente U ON U.ID=R.Autore '.
 			 'WHERE '.
 			 		(($title!=null)? ' R.Titolo LIKE "%'.$title.'%" AND ' : '' ).
