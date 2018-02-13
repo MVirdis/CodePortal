@@ -335,6 +335,27 @@ function getRequest($id) {
 	return $result;
 }
 
+// Restituisce i codici proposti come risposta di una richiesta di id $id
+function getReplies($id) {
+	global $dbmanager;
+
+	if ($id==null) {
+		return null;
+	}
+
+	$id = $dbmanager->sqlInjectionFilter($id);
+
+	$query = 'SELECT RA.* '.
+			 'FROM risposta RA '.
+			 'WHERE RA.ID='.$id;
+
+	$result = $dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	return $result;
+}
+
 // Controlla se l'utente loggato e' amico di quello passato
 function checkFriendship($id) {
 	global $dbmanager;

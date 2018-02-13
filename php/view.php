@@ -7,6 +7,7 @@ require_once './path.php';
 require_once UTILS_DIR.'sessionUtil.php';
 require_once UTILS_DIR.'informationUtil.php';
 require_once UTILS_DIR.'profilePicUtil.php';
+require_once LAYOUT_DIR.'dataWrapper.php';
 
 if(!isLogged() || !isset($_GET['id'])) {
 	header('location: ./login.php');
@@ -59,6 +60,12 @@ $author = $author->fetch_assoc();
 			</div>
 			<div class="description">
 				<p><?php echo $request['Descrizione']; ?></p>
+			</div>
+			<div class="replies">
+				<?php
+					$res = getReplies($request['ID']);
+					wrapRepliesShowcase($res);
+				?>
 			</div>
 		</div>
 	</section>
