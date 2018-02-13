@@ -293,6 +293,27 @@ function id2Pic($id) {
 	return $result;
 }
 
+// Restituisce l'utente
+function getUser($id) {
+	global $dbmanager;
+
+	if ($id == null) {
+		return null;
+	}
+
+	$id = $dbmanager->sqlInjectionFilter($id);
+
+	$query = 'SELECT U.* '.
+			 'FROM utente U '.
+			 'WHERE U.ID='.$id;
+
+	$result = $dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	return $result;
+}
+
 // Restituisce una richiesta a partire dall'id
 function getRequest($id) {
 	global $dbmanager;
