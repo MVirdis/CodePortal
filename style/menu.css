@@ -1,12 +1,8 @@
-* {
+ header * {
 	cursor: default;
 }
 
 header {
-	/*position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 100;*/
 	display: block;
 	text-align: center;
 	font-size: 24px;
@@ -16,6 +12,7 @@ header {
 	margin: 0;
 	padding-top: 4px;
 	padding-bottom: 4px;
+	cursor: default;
 }
 
 nav {
