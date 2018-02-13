@@ -329,8 +329,13 @@ function getRequestsLike($title, $author, $language) {
 	$author = $dbmanager->sqlInjectionFilter($author);
 	$language = $dbmanager->sqlInjectionFilter($language);
 
-	$query = 'SELECT R.*, U.Username '.
-			 'FROM richiesta R INNER JOIN utente U ON U.ID=R.Autore '.
+	$query = 'SELECT R.*, U.Username, IFNULL(DT.NumRisposte, 0) AS NumRisposte '.
+			 'FROM (richiesta R INNER JOIN utente U ON U.ID=R.Autore) '.
+			 	' LEFT OUTER JOIN ( '.
+			 		'SELECT R2.ID, count(*) AS NumRisposte '.
+			 		'FROM richiesta R2 INNER JOIN risposta RA ON RA.Richiesta = R2.ID '.
+			 		'GROUP BY R2.ID '.
+			 	' ) DT ON DT.ID=R.ID '.
 			 'WHERE '.
 			 		(($title!=null)? ' R.Titolo LIKE "%'.$title.'%" AND ' : '' ).
 			 		(($author!=null)? ' U.Username LIKE "%'.$author.'%" AND ' : '' ).

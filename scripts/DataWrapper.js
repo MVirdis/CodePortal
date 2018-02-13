@@ -101,17 +101,22 @@ DataWrapper.MainRequestWrapper = function(Object) {
 
 		var time_el = document.createElement('div');
 		time_el.setAttribute('class','time');
-		time_el.appendChild(document.createTextNode(Object.data[i]['Istante']));
+		time_el.appendChild(document.createTextNode('Created at '+Object.data[i]['Istante']));
+
+		var language_el = document.createElement('div');
+		language_el.setAttribute('class', 'language');
+		language_el.appendChild(document.createTextNode(Object.data[i]['Linguaggio']));
 
 		var detail2_el = document.createElement('div');
 		
 		var replies = document.createElement('div');
-		replies.appendChild(document.createTextNode(Object.data[i]['NumRisposte']));
+		replies.appendChild(document.createTextNode('Number of Replies: '+Object.data[i]['NumRisposte']));
 
 		detail2_el.appendChild(replies);
 
 		detail_el.appendChild(username_el);
 		detail_el.appendChild(time_el);
+		detail_el.appendChild(language_el);
 
 		req_element.appendChild(title_el);
 		req_element.appendChild(detail_el);

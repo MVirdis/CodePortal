@@ -67,7 +67,7 @@ li input:focus {
 	display: inline-block;
 	margin: 0 auto;
 	max-width: 1012px;
-	min-width: 400px;
+	min-width: 460px;
 	background-color: white;
 }
 
@@ -91,6 +91,7 @@ li input:focus {
 	display: block;
 	height: 20px;
 }
+
 .author {
 	display: inline-block;
 	font-size: 16px;
@@ -100,4 +101,14 @@ li input:focus {
 .time {
 	display: inline-block;
 	font-size: 16px;
+}
+
+.language {
+	padding: 2px 8px;
+	display: inline-block;
+	font-size: 16px;
+	float: right;
+	background-color: rgb(235,235,235);
+	color: black;
+	border-radius: 2px;
 }
