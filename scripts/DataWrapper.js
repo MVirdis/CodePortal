@@ -72,3 +72,19 @@ DataWrapper.UserList = function(Object) {
 		container.appendChild(list_element);
 	}
 };
+
+DataWrapper.MainRequestWrapper = function(Object) {
+	var container = document.getElementById('results_container');
+	DataWrapper.clear(container);
+
+	if (Object==null)
+		return;
+
+	for (var i = 0; i < Object.data.length; i++) {
+		var req_element = document.createElement('div');
+
+		req_element.appendChild(document.createTextNode( Object.data[i]['Titolo'] ));
+
+		container.appendChild(req_element);
+	}
+};

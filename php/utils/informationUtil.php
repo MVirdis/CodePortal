@@ -318,4 +318,31 @@ function checkFriendship($id) {
 	return $result['Flag'];
 }
 
+// Restituisce le richieste nel database in base alle informazioni fornite
+function getRequestsLike($title, $author, $language) {
+	global $dbmanager;
+
+	if ($title==null && $author == null && $language==null)
+		return null;
+
+	$title = $dbmanager->sqlInjectionFilter($title);
+	$author = $dbmanager->sqlInjectionFilter($author);
+	$language = $dbmanager->sqlInjectionFilter($language);
+
+	$query = 'SELECT R.* '.
+			 'FROM richiesta R INNER JOIN utente U ON U.ID=R.Autore '.
+			 'WHERE '.
+			 		(($title!=null)? ' R.Titolo LIKE "%'.$title.'%" AND ' : '' ).
+			 		(($author!=null)? ' U.Username LIKE "%'.$author.'%" AND ' : '' ).
+			 		(($language!=null)? ' R.Linguaggio LIKE "%'.$language.'%" AND ' : '' ).
+			 		' 1 '.
+			 'ORDER BY R.Istante DESC';
+
+	$result = $dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	return $result;
+}
+
 ?>

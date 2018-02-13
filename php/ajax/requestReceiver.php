@@ -84,6 +84,40 @@
 		// Rispondo
 		echo json_encode($response);
 
+	} elseif (isset($_GET['t']) || isset($_GET['a']) || isset($_GET['l'])) {
+
+		$t = $a = $l = null;
+
+		if (isset($_GET['t']) && $_GET['t'] != null && $_GET['t']!='')
+			$t = $_GET['t'];
+
+		if (isset($_GET['a']) && $_GET['a'] != null && $_GET['a']!='')
+			$a = $_GET['a'];
+
+		if (isset($_GET['l']) && $_GET['l'] != null && $_GET['l']!='')
+			$l = $_GET['l'];
+
+		$result = getRequestsLike($t, $a, $l);
+
+		if ($result == null || $result->num_rows == 0) {
+			$response->responseCode = 1;
+			echo json_encode($response);
+			return;
+		}
+
+		$i = 0;
+		while($row = $result->fetch_assoc()) {
+			$response->data[$i] = $row;
+			$i = $i+1;
+		}
+
+		// Setto i parametri
+		$response->responseCode = 0;
+		$response->message = "OK";
+
+		// Rispondo
+		echo json_encode($response);
+
 	} else {
 		echo json_encode($response);
 	}

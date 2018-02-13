@@ -48,6 +48,9 @@ class DBManager {
 			if(!$this->isOpened())
 				$this->openConnection();
 				
+			if ($parameter == null)
+				return null;
+			
 			return $this->connection->real_escape_string($parameter);
 		}
 

@@ -42,13 +42,25 @@
 				<li><label>Author: <input type="text" name="author"></label></li>
 				<li><label>Language: <input type="text" name="Language"></label></li>
 			</ul>
-		</div>
+		</div><br>
 		<div id="results_container" class="heading">
 		</div>
 	</section>
 
 	<script>
-		
+		var container = document.getElementById('results_container');
+		var options = document.getElementsByTagName('input');
+
+		for (var i = 0; i < options.length; i++) {
+			options[i].addEventListener('keyup', (function(title_input,author_input,language_input){
+				return function(){
+					AjaxActivities.searchRequests(title_input.value,
+												  author_input.value,
+												  language_input.value,
+												  DataWrapper.MainRequestWrapper);
+				};
+			})(options[0], options[1], options[2]));
+		}
 	</script>
 </body>
 </html>

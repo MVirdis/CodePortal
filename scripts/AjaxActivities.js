@@ -56,3 +56,21 @@ AjaxActivities.findNewFriend = function(pattern, customHandler){
 								  null,
 								  responseHandler);
 };
+
+AjaxActivities.searchRequests = function(title_pattern,author_pattern,
+										 language_pattern,customHandler) {
+	if ((title_pattern==null || title_pattern.length==0) && 
+	   	(author_pattern==null || author_pattern.length==0) &&
+	   	(language_pattern==null || language_pattern.length==0)) {
+		customHandler(null);
+		return;
+	}
+
+	var responseHandler = this.createResponseHandler(customHandler);
+
+	AjaxEngine.performAjaxRequest("GET",
+		"./ajax/requestReceiver.php?t="+title_pattern+"&a="+author_pattern+"&l="+language_pattern,
+								  true,
+								  null,
+								  responseHandler);
+};
