@@ -293,6 +293,27 @@ function id2Pic($id) {
 	return $result;
 }
 
+// Restituisce una richiesta a partire dall'id
+function getRequest($id) {
+	global $dbmanager;
+
+	if ($id == null) {
+		return null;
+	}
+
+	$id = $dbmanager->sqlInjectionFilter($id);
+
+	$query = 'SELECT R.* '.
+			 'FROM richiesta R '.
+			 'WHERE R.ID='.$id;
+
+	$result = $dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	return $result;
+}
+
 // Controlla se l'utente loggato e' amico di quello passato
 function checkFriendship($id) {
 	global $dbmanager;

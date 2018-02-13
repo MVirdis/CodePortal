@@ -8,3 +8,14 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
+
+section {
+	display: block;
+	text-align: center;
+}
+
+.container {
+	max-width: 1012px;
+	display: inline-block;
+	margin: 0 auto;
+}
