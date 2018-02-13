@@ -22,7 +22,7 @@
 	<meta name="keywords" content="coding code programming social network socialnetwork programs C C++ Java Python">
 	<!-- importo il font Open Sans -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
-	<link rel="stylesheet" href="./../style/friends.css" type="text/css">
+	<link rel="stylesheet" href="./../style/search.css" type="text/css">
 	<link rel="stylesheet" href="./../style/menu.css" type="text/css">
 	<link rel="icon" type="image/png" href="./../images/codeportal_logo2.png"  >
 	<title><?php echo $_SESSION['username']; ?> - CodePortal</title>
@@ -34,6 +34,21 @@
 </head>
 <body>
 	<?php include LAYOUT_DIR.'menu.php'; ?>
-	<h1>In costruzione!</h1>
+	<section>
+		<div class="heading">
+			<h1>Find a Code Request</h1>
+			<ul>
+				<li><label>Title: <input type="text" name="title"></label></li>
+				<li><label>Author: <input type="text" name="author"></label></li>
+				<li><label>Language: <input type="text" name="Language"></label></li>
+			</ul>
+		</div>
+		<div id="results_container" class="heading">
+		</div>
+	</section>
+
+	<script>
+		
+	</script>
 </body>
 </html>

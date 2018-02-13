@@ -1,0 +1,68 @@
+html, body {
+	margin: 0;
+	padding: 0;
+
+	font-family: 'Open Sans', sans-serif;
+	font-weight: lighter;
+}
+
+h1 {
+	font-weight: inherit;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+section {
+	display: block;
+	text-align: center;
+}
+
+label {
+	display: inline-block;
+}
+
+ul {
+	list-style-type: none;
+	display: inline-block;
+	text-align: right;
+
+	position: relative;
+	top: 0;
+	left: -16%;
+}
+
+li {
+	margin-bottom: 8px;
+}
+
+li label {
+	font-size: 18px;
+}
+
+li input {
+	border-radius: 4px;
+	font-size: 20px;
+	padding: 4px;
+	border: 1px solid gray;
+	margin-left: 4px;
+}
+
+li input:focus {
+	outline: 0;
+}
+
+.heading {
+	display: inline-block;
+	margin: 0 auto;
+	max-width: 1012px;
+}
+
+.results {
+	display: inline-block;
+	margin: 0 auto;
+	max-width: 1012px;
+}
+
