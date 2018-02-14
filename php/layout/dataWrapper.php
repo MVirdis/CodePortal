@@ -136,4 +136,22 @@ function getFriendReqsList($data) {
 	}
 }
 
+// Mostra tutte le risposte ad una richiesta nella pagina di visualizzazione
+function wrapRepliesShowcase($data) {
+
+	if ($data == null || $data->num_rows == 0) {
+		return;
+	}
+
+	while ($row = $data->fetch_assoc()) {
+		echo '<div class="reply_element">'.
+				'<div class="profile_pic">'.getPic($row['Autore']).'</div>'.
+			 	'<div class="username"><span>'.$row['Username'].'</span></div>'.
+			 	'<div class="date"> - '.$row['UltimaModifica'].'</div>'.
+			 	'<div class="rating">'.$row['Valutazione'].'</div>'.
+			 '</div>';
+	}
+
+}
+
 ?>
