@@ -84,3 +84,23 @@ section {
 
 	overflow: scroll;
 }
+
+.code code::-webkit-scrollbar {
+	width: 14px;
+}
+
+/* Track */
+.code code::-webkit-scrollbar-track {
+    background: rgb(55,56,51); 
+}
+
+/* Handle */
+.code code::-webkit-scrollbar-thumb {
+    background: rgb(84,85,81); 
+    border-radius: 4px;
+}
+
+/* Handle on hover */
+.code code::-webkit-scrollbar-thumb:hover {
+    background: rgb(88,89,85); 
+}
