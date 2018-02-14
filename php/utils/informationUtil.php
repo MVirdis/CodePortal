@@ -335,6 +335,27 @@ function getRequest($id) {
 	return $result;
 }
 
+// Restituisce la risposta di id $id
+function getReply($id) {
+	global $dbmanager;
+
+	if ($id == null) {
+		return null;
+	}
+
+	$id = $dbmanager->sqlInjectionFilter($id);
+
+	$query = 'SELECT R.* '.
+			 'FROM risposta R '.
+			 'WHERE R.ID='.$id;
+
+	$result = $dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	return $result;
+}
+
 // Restituisce i codici proposti come risposta di una richiesta di id $id
 function getReplies($id) {
 	global $dbmanager;
