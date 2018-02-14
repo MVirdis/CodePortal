@@ -21,6 +21,10 @@ p {
 	color: #2A2A2A;
 }
 
+div {
+	text-align: center;
+}
+
 .container {
 	max-width: 1012px;
 	display: inline-block;
@@ -53,4 +57,65 @@ p {
 
 .description {
 	border-bottom: thin solid rgb(235,235,235);
+	margin-bottom: 10px;
+}
+
+.replies {
+	display: inline-block;
+	margin: 0 auto;
+	max-width: 1012px;
+	min-width: 420px;
+}
+
+.reply_element {
+	display: block;
+	background-color: rgb(235,235,235);
+	overflow: hidden;
+	padding: 8px 24px;
+	text-align: left;
+
+	border: thin solid white;
+	cursor: pointer;
+}
+
+.reply_element:hover {
+	background-color: rgb(245,245,235);
+}
+
+.profile_pic {
+	display: inline-block;
+	float: left;
+}
+
+.profile_pic img {
+	height: 60px;
+	width: 60px;
+	border-radius: 30px;
+
+	border: thin solid #616161;
+}
+
+.username {
+	display: inline-block;
+	font-size: 24px;
+	color: black;
+	font-weight: 400;
+	height: 60px;
+
+	margin-left: 20px;
+	margin-right: 10px;
+}
+
+.username span {
+	display: inline;
+	line-height: 60px;
+}
+
+.date {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.rating {
+	display: inline-block;
 }

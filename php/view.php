@@ -61,11 +61,13 @@ $author = $author->fetch_assoc();
 			<div class="description">
 				<p><?php echo $request['Descrizione']; ?></p>
 			</div>
-			<div class="replies">
-				<?php
-					$res = getReplies($request['ID']);
-					wrapRepliesShowcase($res);
-				?>
+			<div>
+				<div class="replies">
+					<?php
+						$res = getReplies($request['ID']);
+						wrapRepliesShowcase($res);
+					?>
+				</div>
 			</div>
 		</div>
 	</section>
