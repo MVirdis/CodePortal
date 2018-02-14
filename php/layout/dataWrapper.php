@@ -144,12 +144,18 @@ function wrapRepliesShowcase($data) {
 	}
 
 	while ($row = $data->fetch_assoc()) {
-		echo '<div class="reply_element">'.
-				'<div class="profile_pic">'.getPic($row['Autore']).'</div>'.
-			 	'<div class="username"><span>'.$row['Username'].'</span></div>'.
-			 	'<div class="date"> - '.$row['UltimaModifica'].'</div>'.
-			 	'<div class="rating">'.$row['Valutazione'].'</div>'.
-			 '</div>';
+		echo "<div id='".$row['ID']."' class='reply_element'>".
+				"<div class='profile_pic'>".getPic($row["Autore"])."</div>".
+			 	"<div class='username'><span>".$row["Username"]."</span></div>".
+			 	"<div class='date'> - ".$row["UltimaModifica"]."</div>".
+			 	"<div class='rating'>".$row["Valutazione"]."</div>".
+			 "</div>".
+			 "<script>\n".
+			 	"var div_x = document.getElementById('".$row['ID']."');\n".
+			 	"div_x.addEventListener('click', function(){\n".
+			 		"window.location = './code.php?id=".$row['ID']."';\n".
+			 	"});\n".
+			 "</script>";
 	}
 
 }
