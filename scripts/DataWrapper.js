@@ -90,6 +90,12 @@ DataWrapper.MainRequestWrapper = function(Object) {
 		title_el.setAttribute('class', 'title');
 		title_el.appendChild(document.createTextNode(Object.data[i]['Titolo']));
 
+		title_el.addEventListener('click', (function(id) {
+			return function(){
+				window.location = './view.php?id='+id;
+			};
+		})(Object.data[i]['ID']));
+
 		var detail_el = document.createElement('div');
 
 		detail_el.style.overflow = "hidden";
