@@ -9,8 +9,13 @@ require_once UTILS_DIR.'informationUtil.php';
 require_once UTILS_DIR.'profilePicUtil.php';
 require_once LAYOUT_DIR.'dataWrapper.php';
 
-if(!isLogged() || !isset($_GET['id'])) {
+if(!isLogged()) {
 	header('location: ./login.php');
+	exit;
+}
+
+if(!isset($_GET['id'])) {
+	header('location: ./home.php');
 	exit;
 }
 
