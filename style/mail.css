@@ -26,9 +26,9 @@ section {
 
 .list {
 	float: left;
-	width: 31%;
 	border-right: 1px solid #CCCCCC;
 	min-height: 100px;
+	max-width: 380px;
 	text-align: center;
 }
 
@@ -51,8 +51,8 @@ section {
 }
 
 .mail_content {
-	float: right;
-	width: 68%;
+	display: inline-block;
+	padding: 2px 8px;
 }
 
 .comunication {
@@ -68,7 +68,7 @@ section {
 	overflow: hidden;
 	min-height: 35px;
 	border-bottom: 1px solid #CCCCCC;
-	padding: 2px;
+	padding: 2px 8px;
 	cursor: pointer;
 	background-color: #EFEFEF;
 }
