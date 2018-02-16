@@ -48,7 +48,7 @@ function getMailList($data) {
 	$in_flag = false;
 
 	while($row = $data->fetch_assoc()) {
-		$image = getPic($row['ID']);
+		$image = getPic($row['UserID']);
 
 		$in_flag = $row['dir'];
 

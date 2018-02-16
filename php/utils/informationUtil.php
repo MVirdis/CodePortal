@@ -177,7 +177,7 @@ function getMail($mailID) {
 function getMailsIn() {
 	global $dbmanager;
 
-	$query = 'SELECT M.*, U1.ID, U1.Username AS UsernameTarget, U1.Image, 1 AS dir '.
+	$query = 'SELECT M.*, U1.ID AS UserID, U1.Username AS UsernameTarget, U1.Image, 1 AS dir '.
 			 'FROM messaggio M INNER JOIN utente U1 ON U1.ID=M.Mittente '.
 			 'WHERE M.Destinatario='.$_SESSION['userID'].' '.
 			 'ORDER BY M.Istante DESC';
