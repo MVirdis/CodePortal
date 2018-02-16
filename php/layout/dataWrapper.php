@@ -155,10 +155,9 @@ function wrapRepliesShowcase($data) {
 			 	"<div class='username'><span>".$row["Username"]."</span></div>".
 			 	"<div class='date'> Last Change: ".$row["UltimaModifica"]."</div>".
 			 	"<div class='rating'>".
-			 		"<div class='icon like'></div>".
-			 		$row["Like"]."-".
-			 		$row['Dislike'].
-			 		"<div class='icon dislike'></div>".
+			 		"<span style='color: green'>".$row["Like"]."</span>".
+			 		"-".
+			 		"<span style='color: red'>".$row['Dislike']."</span>".
 			 	"</div>".
 			 "</div>".
 			 "<script>\n".
