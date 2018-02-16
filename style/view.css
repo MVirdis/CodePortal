@@ -114,4 +114,18 @@ div {
 
 .rating {
 	display: inline-block;
+	margin-left: 10px;
+}
+
+.rating .icon {
+	width: 20px;
+	height: 20px;
+}
+
+.like {
+	background-image: url('./../images/like.png');
+}
+
+.dislike {
+	background-image: url('./../images/dislike.png');
 }

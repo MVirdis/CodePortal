@@ -154,7 +154,12 @@ function wrapRepliesShowcase($data) {
 				"<div class='profile_pic'>".getPic($row["Autore"])."</div>".
 			 	"<div class='username'><span>".$row["Username"]."</span></div>".
 			 	"<div class='date'> Last Change: ".$row["UltimaModifica"]."</div>".
-			 	"<div class='rating'>".$row["Valutazione"]."</div>".
+			 	"<div class='rating'>".
+			 		"<div class='icon like'></div>".
+			 		$row["Like"]."-".
+			 		$row['Dislike'].
+			 		"<div class='icon dislike'></div>".
+			 	"</div>".
 			 "</div>".
 			 "<script>\n".
 			 	"var div_x = document.getElementById('".$row['ID']."');\n".
