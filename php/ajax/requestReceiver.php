@@ -38,9 +38,16 @@
 		$id = $_GET['read'];
 		$check = getMail($id);
 
+		if ($check==null || $check->num_rows==0) {
+			$response->message = "Error while querying database: no such email.";
+			echo json_encode($response);
+			return;
+		}
+
 		$check = $check->fetch_assoc();
 		// Se quello che ha mandato la richiesta non è il destinatario della email
 		if($_SESSION['userID']!=$check['Destinatario']) {
+			$response->message="Error: you're not the destinatary of this email.";
 			echo json_encode($response);
 			return;
 		}
