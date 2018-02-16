@@ -67,7 +67,7 @@ $author = $author->fetch_assoc();
 				</code>
 				<div class="rating_container">
 					<div class="icon like"></div>
-					<span>0 - 0</span>
+					<span><?php echo retLikes($reply['ID']).' - '.retDislikes($reply['ID']);?></span>
 					<div class="icon dislike"></div>
 				</div>
 			</div>

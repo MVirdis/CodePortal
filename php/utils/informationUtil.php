@@ -434,4 +434,62 @@ function getRequestsLike($title, $author, $language) {
 	return $result;
 }
 
+// Restituisce il numero di like di un codice
+function retLikes($code) {
+	global $dbmanager;
+
+	if ($code==null) {
+		return 0;
+	}
+
+	$code = $dbmanager->sqlInjectionFilter($code);
+
+	$query = 'SELECT count(*) AS Likes '.
+			 'FROM risposta R INNER JOIN likes L ON L.Risposta=R.ID '.
+			 'WHERE R.ID='.$code;
+
+	$result = $dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	if ($result==null)
+		return null;
+
+	if ($result->num_rows==0)
+		return 0;
+
+	$result = $result->fetch_assoc();
+
+	return $result['Likes'];
+}
+
+// Restituisce il numero di dislike di un codice
+function retDislikes($code) {
+	global $dbmanager;
+
+	if ($code==null) {
+		return 0;
+	}
+
+	$code = $dbmanager->sqlInjectionFilter($code);
+
+	$query = 'SELECT count(*) AS Dislikes '.
+			 'FROM risposta R INNER JOIN dislikes D ON D.Risposta=R.ID '.
+			 'WHERE R.ID='.$code;
+
+	$result = $dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	if ($result==null)
+		return null;
+
+	if ($result->num_rows==0)
+		return 0;
+
+	$result = $result->fetch_assoc();
+
+	return $result['Dislikes'];
+}
+
 ?>
