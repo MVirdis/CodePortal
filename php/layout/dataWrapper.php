@@ -155,9 +155,9 @@ function wrapRepliesShowcase($data) {
 			 	"<div class='username'><span>".$row["Username"]."</span></div>".
 			 	"<div class='date'> Last Change: ".$row["UltimaModifica"]."</div>".
 			 	"<div class='rating'>".
-			 		"<span style='color: green'>".$row["Like"]."</span>".
+			 		"<span style='color: green'>".retLikes($row['ID'])."</span>".
 			 		"-".
-			 		"<span style='color: red'>".$row['Dislike']."</span>".
+			 		"<span style='color: red'>".retDislikes($row['ID'])."</span>".
 			 	"</div>".
 			 "</div>".
 			 "<script>\n".
