@@ -15,18 +15,24 @@ function wrapRequests($data) {
 	while ($row = $data->fetch_assoc()) {
 		$img = getPic($row['UserID']);
 
-		echo '<div class="post_container">'.
-			 '<div class="post">'.
-			 '<span class="author">'.$row['Autore'].':</span><br>'.
-			 '<span class="description">'.$row['Titolo'].'</span><br>'.
-			 '<div style="text-align: right;">'.
-			 '<span class="details">'.$row['Istante'].' - Language: </span>'.
-			 '<span class="details" style="color: black;">'.$row['Linguaggio'].'</span>'.
-			 '</div>'.
-			 '</div><div class="post_picture">'.
+		echo "<div id='".$row["ID"]."' class='post_container'>".
+			 "<div class='post'>".
+			 "<span class='author'>".$row["Autore"].":</span><br>".
+			 "<span class='description'>".$row["Titolo"]."</span><br>".
+			 "<div style='text-align: right;''>".
+			 "<span class='details'>".$row["Istante"]." - Language: </span>".
+			 "<span class='details' style='color: black;''>".$row["Linguaggio"]."</span>".
+			 "</div>".
+			 "</div><div class='post_picture'>".
 			 	$img.
-			 '</div></div>'.
-			 '<div class="clear"></div>';
+			 "</div></div>".
+			 "<div class='clear'></div>\n".
+			 "<script>\n".
+			 	"var x_container = document.getElementById('".$row['ID']."');\n".
+			 	"x_container.addEventListener('click',function(){\n".
+			 		"window.location = './view.php?id=".$row["ID"]."';\n".
+			 	"});\n".
+			 "</script>";
 	}
 }
 
