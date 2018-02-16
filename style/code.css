@@ -90,16 +90,47 @@ section {
 
 /* Track */
 .code code::-webkit-scrollbar-track {
-    background: rgb(55,56,51); 
+    background-color: rgb(55,56,51); 
 }
 
 /* Handle */
 .code code::-webkit-scrollbar-thumb {
-    background: rgb(84,85,81); 
+    background-color: rgb(84,85,81); 
     border-radius: 4px;
 }
 
 /* Handle on hover */
 .code code::-webkit-scrollbar-thumb:hover {
-    background: rgb(88,89,85); 
+    background-color: rgb(88,89,85); 
+}
+
+.rating_container {
+	display: block;
+	text-align: left;
+	cursor: default;
+}
+
+.icon {
+	display: inline-block;
+	background-repeat: no-repeat;
+	height: 25px;
+	width: 25px;
+	cursor: pointer;
+}
+
+.like {
+	background-image: url('./../images/like.png');
+}
+
+.like:hover {
+	background-image: url('./../images/like_hover.png');
+}
+
+
+.dislike {
+	background-image: url('./../images/dislike.png');
+}
+
+.dislike:hover {
+	background-image: url('./../images/dislike_hover.png');
 }

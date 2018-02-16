@@ -65,10 +65,15 @@ $author = $author->fetch_assoc();
 				<code>
 					<pre><?php echo htmlspecialchars($reply['Codice']); ?></pre>
 				</code>
+				<div class="rating_container">
+					<div class="icon like"></div>
+					<span>0 - 0</span>
+					<div class="icon dislike"></div>
+				</div>
 			</div>
 			<div>
 				<div class="comments">
-					Commenti
+					Comments
 				</div>
 			</div>
 		</div>
