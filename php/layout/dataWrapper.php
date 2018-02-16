@@ -52,6 +52,12 @@ function getMailList($data) {
 
 		$in_flag = $row['dir'];
 
+		// Tronco la stringa Oggetto ad una certa lunghezza massima
+		$max_len = 50;
+		if (strlen($row['Oggetto'])>$max_len) {
+			$row['Oggetto'] = substr($row['Oggetto'], 0, $max_len-4).'...';
+		}
+
 		echo "<div ".(($row['Visualizzato']==1 || !$in_flag)?"name='v'":"")." id='".$row['ID']."' class='list_element ".((!$row['Visualizzato'] && $row['dir'])?"marked":"")."'>".
 			 "<div class='image'>".
 			 $image.
