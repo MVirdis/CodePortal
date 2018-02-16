@@ -34,10 +34,6 @@ div {
 .author {
 	display: block;
 	text-align: left;
-
-	position: relative;
-	top: 20px;
-	height: 40px;
 }
 
 .author span {
