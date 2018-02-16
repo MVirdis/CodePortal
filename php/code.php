@@ -66,9 +66,9 @@ $author = $author->fetch_assoc();
 					<pre><?php echo htmlspecialchars($reply['Codice']); ?></pre>
 				</code>
 				<div class="rating_container">
-					<div class="icon like"></div>
+					<div class="icon like <?php if(retIsLiked($reply['ID'])) echo 'selected'; ?>"></div>
 					<span><?php echo retLikes($reply['ID']).' - '.retDislikes($reply['ID']);?></span>
-					<div class="icon dislike"></div>
+					<div class="icon dislike <?php if(retIsDisliked($reply['ID'])) echo 'selected'; ?>"></div>
 				</div>
 			</div>
 			<div>

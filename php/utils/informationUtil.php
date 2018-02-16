@@ -492,4 +492,68 @@ function retDislikes($code) {
 	return $result['Dislikes'];
 }
 
+// Restituisce vero se l'utente ha già messo mi piace al codice
+function retIsLiked($code) {
+	global $dbmanager;
+
+	if ($code==null) {
+		return null;
+	}
+
+	$code = $dbmanager->sqlInjectionFilter($code);
+
+	$query = 'SELECT IF( EXISTS ( '.
+				'SELECT * '.
+				'FROM likes L '.
+				'WHERE L.Utente='.$_SESSION['userID'].' '.
+				'AND L.Risposta='.$code.' '.
+			 ' ) ,1,0) AS Result ';
+
+	$result = $dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	if ($result==null)
+		return null;
+
+	if ($result->num_rows==0)
+		return null;
+
+	$result = $result->fetch_assoc();
+
+	return $result['Result'];
+}
+
+// Restituisce vero se l'utente ha già messo mi piace al codice
+function retIsDisliked($code) {
+	global $dbmanager;
+
+	if ($code==null) {
+		return null;
+	}
+
+	$code = $dbmanager->sqlInjectionFilter($code);
+
+	$query = 'SELECT IF( EXISTS ( '.
+				'SELECT * '.
+				'FROM dislikes L '.
+				'WHERE L.Utente='.$_SESSION['userID'].' '.
+				'AND L.Risposta='.$code.' '.
+			 ' ) ,1,0) AS Result ';
+
+	$result = $dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	if ($result==null)
+		return null;
+
+	if ($result->num_rows==0)
+		return null;
+
+	$result = $result->fetch_assoc();
+
+	return $result['Result'];
+}
+
 ?>

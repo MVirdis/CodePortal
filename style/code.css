@@ -134,3 +134,11 @@ section {
 .dislike:hover {
 	background-image: url('./../images/dislike_hover.png');
 }
+
+.like.selected {
+	background-image: url('./../images/like_hover.png');
+}
+
+.dislike.selected {
+	background-image: url('./../images/dislike_hover.png');
+}
