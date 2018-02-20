@@ -34,10 +34,10 @@
 		<div class="container">
 			<h1>New Request</h1>
 			<form action="./utils/interactionDB.php?action=newreq" method="POST" enctype="application/x-www-form-urlencoded">
-				<input name="title" type="text" placeholder="Title">
-				<input type="text" name="language" placeholder="Language">
+				<input name="title" type="text" placeholder="Title" autocomplete="off" required>
+				<input type="text" name="language" placeholder="Language" autocomplete="off" required>
 				<label>Public: <input type="checkbox" name="public"></label>
-				<textarea name="description" placeholder="Description"></textarea>
+				<textarea name="description" placeholder="Description" autocomplete="off" required></textarea>
 				<div><input type="submit" value="Send"></div>
 			</form>
 		</div>
