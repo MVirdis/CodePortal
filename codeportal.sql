@@ -57,20 +57,20 @@ DROP TABLE IF EXISTS `commento`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `commento` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Istante` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Risposta` int(11) NOT NULL,
-  `Oggetto` varchar(100) COLLATE latin1_general_ci NOT NULL,
-  `Riga` int(11) NOT NULL,
-  `Modifica` text COLLATE latin1_general_ci NOT NULL,
-  `Testo` text COLLATE latin1_general_ci NOT NULL,
+  `Oggetto` varchar(100) NOT NULL,
+  `Riga` int(11) DEFAULT NULL,
+  `Modifica` int(11) DEFAULT NULL,
+  `Testo` text NOT NULL,
   `Autore` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `Autore` (`Autore`,`Istante`),
   KEY `Risposta` (`Risposta`),
-  CONSTRAINT `commento_ibfk_1` FOREIGN KEY (`Risposta`) REFERENCES `risposta` (`ID`) ON DELETE CASCADE,
-  CONSTRAINT `commento_ibfk_2` FOREIGN KEY (`Autore`) REFERENCES `utente` (`ID`) ON DELETE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  CONSTRAINT `commento_ibfk_1` FOREIGN KEY (`Risposta`) REFERENCES `risposta` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `commento_ibfk_2` FOREIGN KEY (`Autore`) REFERENCES `utente` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,6 +79,7 @@ CREATE TABLE `commento` (
 
 LOCK TABLES `commento` WRITE;
 /*!40000 ALTER TABLE `commento` DISABLE KEYS */;
+INSERT INTO `commento` VALUES (1,'2018-02-20 10:37:45',3,'Valuta modifica riga 4',NULL,NULL,'L\'istruzione dhiuehd è sconsigliata.',3);
 /*!40000 ALTER TABLE `commento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -504,4 +505,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-16 16:47:37
+-- Dump completed on 2018-02-20 16:20:35
