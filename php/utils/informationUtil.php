@@ -556,4 +556,24 @@ function retIsDisliked($code) {
 	return $result['Result'];
 }
 
+function getComments($code) {
+	global $dbmanager;
+
+	if ($code==null) {
+		return null;
+	}
+
+	$code = $dbmanager->sqlInjectionFilter($code);
+
+	$query = 'SELECT C.*, U.ID AS UserID, U.Username '.
+			 'FROM commento C INNER JOIN utente U ON U.ID=C.Autore '.
+			 'WHERE C.Risposta='.$code;
+
+	$result = $dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	return $result;
+}
+
 ?>

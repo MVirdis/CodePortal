@@ -176,4 +176,20 @@ function wrapRepliesShowcase($data) {
 
 }
 
+function getCommentsList($data) {
+	if ($data==null || $data->num_rows==0) {
+		return;
+	}
+
+	while ($row = $data->fetch_assoc()) {
+		echo "<div class='comment'>".
+				"<div class='profile_pic'>".getPic($row['UserID'])."</div>".
+				"<div class='content'>".
+					"<div><span>".$row['Username']."</span></div>".
+					"<div><span>".$row['Testo']."</span></div>".
+				"</div>".
+			 "</div>";
+	}
+}
+
 ?>

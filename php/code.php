@@ -73,7 +73,13 @@ $author = $author->fetch_assoc();
 			</div>
 			<div>
 				<div class="comments">
-					Comments
+					<span>Comments</span>
+					<div>
+						<?php
+							$comments = getComments($reply['ID']);
+							getCommentsList($comments);
+						?>
+					</div>
 				</div>
 			</div>
 		</div>
