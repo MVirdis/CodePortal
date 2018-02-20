@@ -125,6 +125,46 @@
 		// Rispondo
 		echo json_encode($response);
 
+	} elseif(isset($_GET['likes'])) {
+
+		$code_id = $dbmanager->sqlInjectionFilter($_GET['likes']);
+
+		// Esiste un trigger che cancella il non mi piace se era
+		// già stato messo dallo stesso user sul codice
+		$query = 'INSERT INTO likes(Utente, Risposta) '.
+				 'VALUES ('.$_SESSION['userID'].', '.$code_id.')';
+
+		$dbmanager->performQuery($query);
+
+		$dbmanager->closeConnection();
+
+		// Setto i parametri
+		$response->responseCode = 0;
+		$response->message = "OK";
+
+		// Rispondo
+		echo json_encode($response);
+
+	} elseif(isset($_GET['dislikes'])) {
+
+		$code_id = $dbmanager->sqlInjectionFilter($_GET['dislikes']);
+
+		// Esiste un trigger che cancella il mi piace se era
+		// già stato messo dallo stesso user sul codice
+		$query = 'INSERT INTO dislikes(Utente, Risposta) '.
+				 'VALUES ('.$_SESSION['userID'].', '.$code_id.')';
+
+		$dbmanager->performQuery($query);
+
+		$dbmanager->closeConnection();
+
+		// Setto i parametri
+		$response->responseCode = 0;
+		$response->message = "OK";
+
+		// Rispondo
+		echo json_encode($response);
+
 	} else {
 		echo json_encode($response);
 	}

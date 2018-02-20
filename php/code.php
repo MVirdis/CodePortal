@@ -46,11 +46,15 @@ $author = $author->fetch_assoc();
 	<meta name="author" content="Mario Virdis">
 	<meta name="keywords" content="coding code programming social network socialnetwork programs C C++ Java Python">
 
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400" rel="stylesheet">
 	<link rel="stylesheet" href="./../style/code.css" type="text/css">
 	<link rel="stylesheet" href="./../style/menu.css" type="text/css">
 
 	<link rel="icon" type="image/png" href="./../images/codeportal_logo2.png"  >
+	<script type="text/javascript" src="./../scripts/ResponseTable.js"></script>
+	<script type="text/javascript" src="./../scripts/DataWrapper.js"></script>
+	<script type="text/javascript" src="./../scripts/AjaxEngine.js"></script>
+	<script type="text/javascript" src="./../scripts/AjaxActivities.js"></script>
 </head>
 <body>
 	<?php include LAYOUT_DIR.'menu.php'; ?>
@@ -78,5 +82,26 @@ $author = $author->fetch_assoc();
 			</div>
 		</div>
 	</section>
+	<script>
+		// Setto le richieste ajax per il mi piace e non mi piace
+		var like_el = document.getElementsByClassName('rating_container')[0].getElementsByClassName('icon')[0];
+		var dislike_el = document.getElementsByClassName('rating_container')[0].getElementsByClassName('icon')[1];
+
+		// Baker function
+		function getCustomHandler(toSelect, toDeselect){
+			return function(data) {
+				toSelect.setAttribute('class', toSelect.getAttribute('class')+' selected');
+				toDeselect.setAttribute('class', toDeselect.getAttribute('class').replace(/\sselected/g, ''));
+			};
+		}
+
+		like_el.addEventListener('click', function(){
+			AjaxActivities.likeCode(<?php echo $reply['ID']; ?>, getCustomHandler(like_el, dislike_el));
+		});
+
+		dislike_el.addEventListener('click', function(){
+			AjaxActivities.dislikeCode(<?php echo $reply['ID']; ?>, getCustomHandler(dislike_el, like_el));
+		});
+	</script>
 </body>
 </html>
