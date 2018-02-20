@@ -55,6 +55,9 @@
 				<li>
 					<a>Remove Profile Picture</a>
 				</li>
+				<li>
+					<a href="./new_request.php">Create new Code request</a>
+				</li>
 			</ul>
 		</div>
 		<div style="height: 200px;"></div>
