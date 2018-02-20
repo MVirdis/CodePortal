@@ -49,6 +49,15 @@ if(isset($_GET['action'])) {
 
 		newFriendRequest();
 
+	} elseif ($_GET['action']=='newreq') {
+
+		if (!isLogged()) {
+			header('location: ./../login.php');
+			exit;
+		}
+
+		newCodeRequest();
+
 	}
 }
 
@@ -208,6 +217,31 @@ function newFriendRequest() {
 	echo 'Aperto nuova request!';
 
 	header('location: ./../profile.php?id='.$id);
+	exit;
+}
+
+function newCodeRequest() {
+	global $dbmanager;
+	global $_SESSION;
+
+	if(!isset($_POST['title']) || !isset($_POST['language']) || !isset($_POST['description'])) {
+		header('location: ./../new_request.php');
+		exit;
+	}
+
+	$title = $dbmanager->sqlInjectionFilter($_POST['title']);
+	$language = $dbmanager->sqlInjectionFilter($_POST['language']);
+	$public = $dbmanager->sqlInjectionFilter($_POST['public']);
+	$description = $dbmanager->sqlInjectionFilter($_POST['description']);
+
+	$query = 'INSERT INTO richiesta(Autore, Titolo, Descrizione, Linguaggio, Visibilita) '.
+			 'VALUES ('.$_SESSION['userID'].', "'.$title.'", "'.$description.'", "'.$language.'", "'.$public.'")';
+
+	$dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	header('location: ./../profile.php?id='.$_SESSION['userID']);
 	exit;
 }
 
