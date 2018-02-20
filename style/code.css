@@ -12,6 +12,7 @@ a {
 section {
 	display: block;
 	text-align: center;
+	margin-bottom: 200px;
 }
 
 .container {
@@ -30,8 +31,6 @@ section {
 	text-align: left;
 
 	margin-bottom: 10px;
-
-	
 }
 
 .author img {
