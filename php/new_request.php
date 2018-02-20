@@ -33,6 +33,7 @@
 	<div>
 		<div class="container">
 			<h1>New Request</h1>
+			<p><?php if(isset($_GET['message'])) echo $_GET['message']; ?></p>
 			<form action="./utils/interactionDB.php?action=newreq" method="POST" enctype="application/x-www-form-urlencoded">
 				<input name="title" type="text" placeholder="Title" autocomplete="off" required>
 				<input type="text" name="language" placeholder="Language" autocomplete="off" required>

@@ -225,7 +225,7 @@ function newCodeRequest() {
 	global $_SESSION;
 
 	if(!isset($_POST['title']) || !isset($_POST['language']) || !isset($_POST['description'])) {
-		header('location: ./../new_request.php');
+		header('location: ./../new_request.php?message='.'Error some information was missing!');
 		exit;
 	}
 
@@ -241,7 +241,7 @@ function newCodeRequest() {
 
 	$dbmanager->closeConnection();
 
-	header('location: ./../profile.php?id='.$_SESSION['userID']);
+	header('location: ./../new_request.php?message='.'Request successfully received.');
 	exit;
 }
 
