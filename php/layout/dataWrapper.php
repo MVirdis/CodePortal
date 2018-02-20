@@ -152,6 +152,7 @@ function getFriendReqsList($data) {
 function wrapRepliesShowcase($data) {
 
 	if ($data == null || $data->num_rows == 0) {
+		echo "<p style='font-size: 16px; font-weight: 300; font-style: normal;'>No replies at the moment</p>";
 		return;
 	}
 
