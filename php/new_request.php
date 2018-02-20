@@ -30,5 +30,17 @@
 </head>
 <body>
 	<?php include LAYOUT_DIR.'menu.php'; ?>
+	<div>
+		<div class="container">
+			<h1>New Request</h1>
+			<form action="./utils/interactionDB.php?action=newreq" method="POST" enctype="application/x-www-form-urlencoded">
+				<input name="title" type="text" placeholder="Title">
+				<input type="text" name="language" placeholder="Language">
+				<label>Public: <input type="checkbox" name="public"></label>
+				<textarea name="description" placeholder="Description"></textarea>
+				<div><input type="submit" value="Send"></div>
+			</form>
+		</div>
+	</div>
 </body>
 </html>
