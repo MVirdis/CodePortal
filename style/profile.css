@@ -27,6 +27,20 @@ body div {
 	padding-top: 20px;
 }
 
+h1.admin {
+	color: #BC0404;
+}
+
+.admin img {
+	display: inline;
+	width: 35px;
+	height: 35px;
+	position: relative;
+	top: 5px;
+	left: 20px;
+	margin-right: 10px;
+}
+
 .profile_pic {
 	display: block;
 }

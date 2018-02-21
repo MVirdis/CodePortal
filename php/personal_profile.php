@@ -13,6 +13,7 @@
 	}
 
 	$target_id = $_SESSION['userID'];
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,7 +37,13 @@
 				<?php echo getPic($_SESSION['userID']); ?>
 			</div>
 			<div class="username">
-				<h1><?php echo $_SESSION['username']; ?></h1>
+				<?php 
+					if ($_SESSION['admin'])
+						echo '<h1 class="admin">'.$_SESSION['username'].
+							 '<img src="./../images/admin_badge.png" alt="admin_badge"></h1>';
+					else
+						echo '<h1>'.$_SESSION['username'].'</h1>';
+				?>
 			</div>
 			<?php include LAYOUT_DIR.'profile_stats.php'; ?>
 		</div>

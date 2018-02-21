@@ -11,9 +11,16 @@
 	require_once UTILS_DIR.'informationUtil.php';
 	require_once UTILS_DIR.'profilePicUtil.php';
 
-	$res = id2Username($_GET['id'])->fetch_assoc();
-	$target_username = $res['Username'];
-	$target_id = $_GET['id'];
+	$target_user = getUser($_GET['id']);
+
+	if ($target_user==null || $target_user->num_rows==0) {
+		header('location: ./home.php');
+		exit;
+	}
+
+	$target_user = $target_user->fetch_assoc();
+
+	$target_id = $target_user['ID'];
 
 	// Flag per sapere se l'utente che sta guardando la pagina
 	// e' amico dell'utente mostrato nel qual caso
@@ -27,7 +34,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><?php echo $target_username; ?>'s Profile - CodePortal</title>
+	<title><?php echo $target_user['Username']; ?>'s Profile - CodePortal</title>
 	<meta charset="utf-8">
 	<meta name="author" content="Mario Virdis">
 	<meta name="keywords" content="coding code programming social network socialnetwork programs C C++ Java Python">
@@ -48,7 +55,13 @@
 				<?php echo getPic($_GET['id']); ?>
 			</div>
 			<div class="username">
-				<h1><?php echo $target_username; ?></h1>
+				<?php 
+					if ($target_user['Amministratore'])
+						echo '<h1 class="admin">'.$target_user['Username'].
+							 '<img src="./../images/admin_badge.png" alt="admin_badge"></h1>';
+					else
+						echo '<h1>'.$target_user['Username'].'</h1>';
+				?>
 			</div>
 			<form action="./utils/interactionDB.php?action=sendReq" method="POST">
 				<input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
