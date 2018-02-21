@@ -75,6 +75,15 @@ if(isset($_GET['action'])) {
 
 		newComment();
 
+	} elseif ($_GET['action']=='upcode') {
+
+		if (!isLogged()) {
+			header('location: ./../login.php');
+			exit;
+		}
+
+		updateCode();
+
 	}
 }
 
@@ -308,6 +317,30 @@ function newComment() {
 	$dbmanager->closeConnection();
 
 	header('location: ./../code.php?id='.$code_id);
+	exit;
+}
+
+function updateCode() {
+	global $dbmanager;
+	global $_SESSION;
+
+	if (!isset($_POST['old_code_id']) || !isset($_POST['code'])) {
+		header('location: ./../new_code.php?message='.'Error updating your code!');
+		exit;
+	}
+
+	$old_id = $dbmanager->sqlInjectionFilter($_POST['old_code_id']);
+	$code = $dbmanager->sqlInjectionFilter($_POST['code']);
+
+	$query = 'UPDATE risposta R '.
+			 'SET R.Codice="'.$code.'" '.
+			 'WHERE R.ID='.$old_id;
+
+	$dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	header('location: ./../new_code.php?id='.$_POST['request'].'&message='.'Code updated!');
 	exit;
 }
 
