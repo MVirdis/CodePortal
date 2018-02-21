@@ -54,8 +54,7 @@
 					if ($edit_flag) {
 						echo trim(htmlspecialchars($_POST['old_code']));
 					}
-				?>
-				</textarea>
+				?></textarea>
 				<?php
 					if ($edit_flag) {
 						echo '<input type="hidden" name="old_code_id" value="'.$_POST['code_id'].'" >';
@@ -65,5 +64,18 @@
 			</form>
 		</div>
 	</div>
+	<script>
+		// Permetto di premere tab nella text area ed inserire un \t
+		var code_space = document.getElementsByTagName('textarea')[0];
+
+		code_space.addEventListener('keydown', (function(element){
+			return function(key){
+				if(key.keyCode==9) {//tab
+					key.preventDefault();// Prevengo il comportamento default
+					element.value = element.value + "\t";// Append di \t
+				}
+			};
+		})(code_space));
+	</script>
 </body>
 </html>
