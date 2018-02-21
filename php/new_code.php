@@ -46,7 +46,7 @@
 	<?php include LAYOUT_DIR.'menu.php'; ?>
 	<div>
 		<div class="container">
-			<h1>New Reply to request <?php echo '#'.$request['ID']; ?></h1>
+			<h1><?php if($edit_flag) echo 'Edit your'; else echo 'New'; ?> Reply to request <?php echo '#'.$request['ID']; ?></h1>
 			<p><?php if(isset($_GET['message'])) echo $_GET['message']; ?></p>
 			<form action="./utils/interactionDB.php?action=<?php if($edit_flag) echo 'upcode'; else echo 'newcode'; ?>" method="POST" enctype="application/x-www-form-urlencoded">
 				<input name="request" type="hidden" value="<?php echo $request['ID']; ?>">
