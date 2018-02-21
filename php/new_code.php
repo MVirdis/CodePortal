@@ -48,7 +48,7 @@
 			<p><?php if(isset($_GET['message'])) echo $_GET['message']; ?></p>
 			<form action="./utils/interactionDB.php?action=newcode" method="POST" enctype="application/x-www-form-urlencoded">
 				<input name="request" type="hidden" value="<?php echo $request['ID']; ?>">
-				<textarea name="description" placeholder="Write here your code." autocomplete="off" required></textarea>
+				<textarea name="code" placeholder="Write here your code." autocomplete="off" required></textarea>
 				<div><input type="submit" value="Send"></div>
 			</form>
 		</div>

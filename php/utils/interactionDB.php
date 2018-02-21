@@ -58,6 +58,14 @@ if(isset($_GET['action'])) {
 
 		newCodeRequest();
 
+	} elseif ($_GET['action']=='newcode') {
+		
+		if (!isLogged()) {
+			header('location: ./../login.php');
+			exit;
+		}
+
+		newCodeSubmit();
 	}
 }
 
@@ -242,6 +250,29 @@ function newCodeRequest() {
 	$dbmanager->closeConnection();
 
 	header('location: ./../new_request.php?message='.'Request successfully received.');
+	exit;
+}
+
+function newCodeSubmit() {
+	global $dbmanager;
+	global $_SESSION;
+
+	if (!isset($_POST['request']) || !isset($_POST['code'])) {
+		header('location: ./../new_code.php?message='.'Error submitting your code!');
+		exit;
+	}
+
+	$request = $dbmanager->sqlInjectionFilter($_POST['request']);
+	$code = $dbmanager->sqlInjectionFilter($_POST['code']);
+
+	$query = 'INSERT INTO risposta(Autore, Richiesta, Codice, UltimaModifica) '.
+			 'VALUES ('.$_SESSION['userID'].', '.$request.', "'.$code.'", CURRENT_DATE)';
+
+	$dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	header('location: ./../new_code.php?id='.$_POST['request'].'&message='.'Code successfully sent!');
 	exit;
 }
 
