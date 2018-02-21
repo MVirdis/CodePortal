@@ -14,7 +14,7 @@
 
 	$vars = login($email, $password);
 	if($vars!=null) {
-		setupSession($vars[0], $vars[1], $vars[2], $vars[3]);
+		setupSession($vars[0], $vars[1], $vars[2], $vars[3], $vars[4]);
 		header('location: ./../page.php');
 		exit;
 	} else {
@@ -44,7 +44,7 @@
 
 		$result = $result->fetch_assoc();
 
-		return [$result['ID'], $result['Username'], $result['Nome'], $result['Cognome']];
+		return [$result['ID'], $result['Username'], $result['Nome'], $result['Cognome'], $result['Amministratore']];
 	}
 
 ?>
