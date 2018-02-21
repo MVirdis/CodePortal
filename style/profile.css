@@ -101,3 +101,51 @@ body div {
 	font-size: 22px;
 	cursor: pointer;
 }
+
+.dash_links{
+	margin-left: 0;
+	padding: 0 !important;
+}
+
+.dash_links li{
+	display: inline-block;
+	margin: 0px 50px;
+} 
+
+.dash_links a{
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	border-radius: 8px;
+}
+
+
+.delete{
+	background-image: url("./../images/delete_icon.png");
+}
+
+.delete:hover{
+	background-image: url("./../images/delete_icon_hover.png");
+	box-shadow: inset 0px 0px 3px white;
+}
+
+.change{
+	background-image: url("./../images/change_icon.png");
+}
+
+.change:hover{
+	background-image: url("./../images/change_icon_hover.png");
+	box-shadow: inset 0px 0px 3px white;
+}
+
+.request{
+	background-image: url("./../images/new_request_icon.png");
+}
+
+.request:hover{
+	background-image: url("./../images/new_request_icon_hover.png");
+	box-shadow: inset 0px 0px 3px white;
+}
