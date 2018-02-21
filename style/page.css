@@ -20,6 +20,10 @@ section {
 	text-align: center;
 }
 
+.admin {
+	color: #BC0404;
+}
+
 .navigation {
 	padding: 4px 0;
 	text-align: center;

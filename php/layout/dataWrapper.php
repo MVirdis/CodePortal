@@ -17,7 +17,7 @@ function wrapRequests($data) {
 
 		echo "<div id='".$row["ID"]."' class='post_container'>".
 			 "<div class='post'>".
-			 "<span class='author'>".$row["UsernameAutore"].":</span><br>".
+			 "<span class='author ".($row['Amministratore']?"admin":"")."'>".$row["UsernameAutore"].":</span><br>".
 			 "<span class='description'>".$row["Titolo"]."</span><br>".
 			 "<div style='text-align: right;''>".
 			 "<span class='details'>".$row["Istante"]." - Language: </span>".
