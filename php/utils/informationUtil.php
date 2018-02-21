@@ -21,7 +21,17 @@ function topRatedRequests() {
 				  'GROUP BY R.ID, U.Username '.
 				  'ORDER BY NumResponses DESC, R.Istante DESC '.
 			 ') DT '.
-			 'WHERE DT.NumResponses>=20';
+			 'WHERE DT.NumResponses>=( '.
+			 	'SELECT avg(DT2.NumResponses) '.
+			 	'FROM ( '.
+					  'SELECT count(DISTINCT RA.ID) AS NumResponses '.
+					  'FROM (richiesta R INNER JOIN utente U ON U.ID=R.Autore) '.
+					  		'LEFT OUTER JOIN risposta RA ON RA.Richiesta=R.ID '.
+					  'WHERE R.Visibilita=1 '.
+					  'GROUP BY R.ID, U.Username '.
+					  'ORDER BY NumResponses DESC, R.Istante DESC '.
+				 ') DT2 '.
+			 ')';
 
 	$rows = $dbmanager->performQuery($query);
 
