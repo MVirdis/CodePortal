@@ -102,8 +102,14 @@ body div {
 	cursor: pointer;
 }
 
+.dash_links{
+	margin-left: 0;
+	padding: 0 !important;
+}
+
 .dash_links li{
 	display: inline-block;
+	margin: 0px 50px;
 } 
 
 .dash_links a{
