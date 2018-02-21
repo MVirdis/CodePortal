@@ -25,6 +25,8 @@
 		exit;
 	}
 
+	$edit_flag = isset($_POST['old_code']);
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -46,9 +48,19 @@
 		<div class="container">
 			<h1>New Reply to request <?php echo '#'.$request['ID']; ?></h1>
 			<p><?php if(isset($_GET['message'])) echo $_GET['message']; ?></p>
-			<form action="./utils/interactionDB.php?action=newcode" method="POST" enctype="application/x-www-form-urlencoded">
+			<form action="./utils/interactionDB.php?action=<?php if($edit_flag) echo 'upcode'; else echo 'newcode'; ?>" method="POST" enctype="application/x-www-form-urlencoded">
 				<input name="request" type="hidden" value="<?php echo $request['ID']; ?>">
-				<textarea name="code" placeholder="Write here your code." autocomplete="off" required></textarea>
+				<textarea name="code" placeholder="Write here your code." autocomplete="off" required><?php 
+					if ($edit_flag) {
+						echo trim(htmlspecialchars($_POST['old_code']));
+					}
+				?>
+				</textarea>
+				<?php
+					if ($edit_flag) {
+						echo '<input type="hidden" name="old_code_id" value="'.$_POST['code_id'].'" >';
+					}
+				?>
 				<div><input type="submit" value="Send"></div>
 			</form>
 		</div>
