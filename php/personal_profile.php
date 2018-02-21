@@ -45,6 +45,7 @@
 			<ul class="dash_links">
 				<li>
 					<a class="change"></a>
+					<span id="change_pic_descr" class="invisible">Change profile picture.</span>
 					<form id="profile_change_form" class="hidden"
 						  method="POST" action="./utils/uploadUtil.php"
 						  enctype="multipart/form-data">
@@ -54,9 +55,11 @@
 				</li>
 				<li>
 					<a class="delete"></a>
+					<span id="delete_pic_descr" class="invisible">Delete profile picture.</span>
 				</li>
 				<li>
 					<a href="./new_request.php" class="request"></a>
+					<span id="new_request_descr" class="invisible">Make a new request.</span>
 				</li>
 			</ul>
 		</div>
@@ -85,6 +88,58 @@
 				window.location = './utils/interactionDB.php?action=rm';
 			}
 		});
+
+		// Delay function
+		var delay = function (elem, inCallback, outCallback) {
+			var timeout = null;
+			elem.onmouseover = function() {
+				timeout = setTimeout(inCallback, 300);
+			};
+
+			elem.onmouseout = function() {
+				clearTimeout(timeout);
+				outCallback();
+			}
+		};
+
+		// Change profile description
+		delay(options[0], (function(element) {
+			return function(){
+				if (element.getAttribute('class')=='invisible')
+					element.setAttribute('class', '');
+			};
+		})(document.getElementById('change_pic_descr')),
+		(function(element){
+			return function(){
+				element.setAttribute('class', 'invisible');
+			};
+		})(document.getElementById('change_pic_descr')));
+
+		// delete profile pic description
+		delay(options[1], (function(element) {
+			return function(){
+				if (element.getAttribute('class')=='invisible')
+					element.setAttribute('class', '');
+			};
+		})(document.getElementById('delete_pic_descr')),
+		(function(element){
+			return function(){
+				element.setAttribute('class', 'invisible');
+			};
+		})(document.getElementById('delete_pic_descr')));
+
+		// Publish new request description
+		delay(options[2], (function(element) {
+			return function(){
+				if (element.getAttribute('class')=='invisible')
+					element.setAttribute('class', '');
+			};
+		})(document.getElementById('new_request_descr')),
+		(function(element){
+			return function(){
+				element.setAttribute('class', 'invisible');
+			};
+		})(document.getElementById('new_request_descr')));
 	</script>
 </body>
 </html>

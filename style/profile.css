@@ -102,17 +102,17 @@ body div {
 	cursor: pointer;
 }
 
-.dash_links{
+.dash_links {
 	margin-left: 0;
 	padding: 0 !important;
 }
 
-.dash_links li{
+.dash_links li {
 	display: inline-block;
 	margin: 0px 50px;
 } 
 
-.dash_links a{
+.dash_links a {
 	display: inline-block;
 	width: 100px;
 	height: 100px;
@@ -122,30 +122,40 @@ body div {
 	border-radius: 8px;
 }
 
+.dash_links span {
+	display: block;
+	color: #5B5B5B;
+	font-size: 16px;
+	font-weight: 300;
+}
 
-.delete{
+.invisible {
+	visibility: hidden;
+}
+
+.delete {
 	background-image: url("./../images/delete_icon.png");
 }
 
-.delete:hover{
+.delete:hover {
 	background-image: url("./../images/delete_icon_hover.png");
 	box-shadow: inset 0px 0px 3px white;
 }
 
-.change{
+.change {
 	background-image: url("./../images/change_icon.png");
 }
 
-.change:hover{
+.change:hover {
 	background-image: url("./../images/change_icon_hover.png");
 	box-shadow: inset 0px 0px 3px white;
 }
 
-.request{
+.request {
 	background-image: url("./../images/new_request_icon.png");
 }
 
-.request:hover{
+.request:hover {
 	background-image: url("./../images/new_request_icon_hover.png");
 	box-shadow: inset 0px 0px 3px white;
 }
