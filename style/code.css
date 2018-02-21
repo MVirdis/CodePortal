@@ -199,7 +199,7 @@ section {
 	border-bottom: 1px solid #09f;
 	width: 280px;
 	height: 180px;
-	resize: vertical;
+	resize: both;
 }
 
 .hidden {
