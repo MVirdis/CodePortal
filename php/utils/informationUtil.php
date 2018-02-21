@@ -575,7 +575,7 @@ function getComments($code) {
 
 	$code = $dbmanager->sqlInjectionFilter($code);
 
-	$query = 'SELECT C.*, U.ID AS UserID, U.Username '.
+	$query = 'SELECT C.*, U.ID AS UserID, U.Username, U.Amministratore '.
 			 'FROM commento C INNER JOIN utente U ON U.ID=C.Autore '.
 			 'WHERE C.Risposta='.$code;
 

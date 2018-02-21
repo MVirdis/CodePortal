@@ -63,7 +63,12 @@ $author = $author->fetch_assoc();
 			<h1>Reply #<?php echo $reply['ID']; ?></h1>
 			<div class="author">
 				<?php echo getPic($author['ID']); ?>
-				<span><?php echo $author['Username']; ?></span> submitted:
+				<?php
+					if ($author['Amministratore'])
+						echo '<span class="admin">'.$author['Username'].'</span>';
+					else
+						echo '<span>'.$author['Username'].'</span>';
+				?> submitted:
 			</div>
 			<div class="code">
 				<code>

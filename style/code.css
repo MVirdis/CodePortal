@@ -22,6 +22,10 @@ section {
 	max-width: 1012px;
 }
 
+.admin {
+	color: #BC0404 !important;
+}
+
 .author {
 	display: block;
 	overflow: hidden;

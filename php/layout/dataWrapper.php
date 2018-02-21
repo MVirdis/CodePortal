@@ -186,7 +186,7 @@ function getCommentsList($data) {
 		echo "<div class='comment'>".
 				"<div class='profile_pic'>".getPic($row['UserID'])."</div>".
 				"<div class='content'>".
-					"<div><span>".$row['Username']."</span></div>".
+					"<div><span ".($row['Amministratore']?"class=\"admin\"":"").">".$row['Username']."</span></div>".
 					"<div><span>".$row['Testo']."</span></div>".
 				"</div>".
 			 "</div>";
