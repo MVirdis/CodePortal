@@ -70,10 +70,16 @@ p {
 }
 
 .buttons button {
-	height: 22px;
+	height: 30px;
+	width: 100px;
 	border-radius: 4px;
 	cursor: pointer;
 	border: 1px solid #BBBBBB;
+	margin-bottom: 5px;
+}
+
+.buttons button:hover{
+	box-shadow: inset 0px 0px 4px black;
 }
 
 .buttons form:first-child button {
