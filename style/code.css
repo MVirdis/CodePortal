@@ -195,6 +195,7 @@ section {
 	font-weight: 300;
 	color: #333333;
 	font-family: sans-serif;
+	text-align: left;
 }
 
 .content textarea:focus {
@@ -221,4 +222,23 @@ section {
 
 .hidden {
 	display: none !important;
+}
+
+#change_container {
+	display: inline-block;
+	float: right;
+	cursor: pointer;
+}
+
+#change_container input[type=submit] {
+	display: inline;
+	border: none;
+	color: #0A0E21;
+	font-size: 16px;
+	background-color: white;
+	cursor: pointer;
+}
+
+#change_container input[type=submit]:focus {
+	outline: 0;
 }
