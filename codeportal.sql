@@ -36,7 +36,7 @@ CREATE TABLE `amicizia` (
   KEY `Utente2` (`Utente2`),
   CONSTRAINT `amicizia_ibfk_1` FOREIGN KEY (`Utente1`) REFERENCES `utente` (`ID`) ON DELETE CASCADE,
   CONSTRAINT `amicizia_ibfk_2` FOREIGN KEY (`Utente2`) REFERENCES `utente` (`ID`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,7 +60,6 @@ CREATE TABLE `commento` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Istante` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Risposta` int(11) NOT NULL,
-  `Oggetto` varchar(100) NOT NULL,
   `Riga` int(11) DEFAULT NULL,
   `Modifica` int(11) DEFAULT NULL,
   `Testo` text NOT NULL,
@@ -70,7 +69,7 @@ CREATE TABLE `commento` (
   KEY `Risposta` (`Risposta`),
   CONSTRAINT `commento_ibfk_1` FOREIGN KEY (`Risposta`) REFERENCES `risposta` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `commento_ibfk_2` FOREIGN KEY (`Autore`) REFERENCES `utente` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,7 +78,7 @@ CREATE TABLE `commento` (
 
 LOCK TABLES `commento` WRITE;
 /*!40000 ALTER TABLE `commento` DISABLE KEYS */;
-INSERT INTO `commento` VALUES (1,'2018-02-20 10:37:45',3,'Valuta modifica riga 4',NULL,NULL,'L\'istruzione dhiuehd è sconsigliata.',3);
+INSERT INTO `commento` VALUES (1,'2018-02-20 10:37:45',3,NULL,NULL,'L\'istruzione dhiuehd è sconsigliata.',3),(2,'2018-02-21 16:32:00',3,NULL,NULL,'Valuta di usare sintassi ES6',2);
 /*!40000 ALTER TABLE `commento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -369,7 +368,7 @@ CREATE TABLE `richiesta` (
   PRIMARY KEY (`ID`),
   KEY `richiesta_ibfk_1` (`Autore`),
   CONSTRAINT `richiesta_ibfk_1` FOREIGN KEY (`Autore`) REFERENCES `utente` (`ID`) ON DELETE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -378,7 +377,7 @@ CREATE TABLE `richiesta` (
 
 LOCK TABLES `richiesta` WRITE;
 /*!40000 ALTER TABLE `richiesta` DISABLE KEYS */;
-INSERT INTO `richiesta` VALUES (1,'2017-12-18 19:14:54','Multi-threading e socket server.','Necessito di libreria multi threading per connesioni socket server.','Java',1,3),(2,'2017-12-18 23:32:04','OpenGL videogame.','Libreria per videogiochi che sfrutti la OpenGL.','C++',1,1),(3,'2017-12-18 23:45:14','RestFul API','Vorrei sviluppare una API Restful che permetta di ottenere posizione GPS.','Qualunque',1,1),(4,'2017-12-19 00:43:57','Richiesta 8','Come da titolo.','Python',1,3),(5,'2017-12-19 00:43:57','Richiesta 404.','Come da titolo.','C#',1,3),(6,'2017-12-19 00:44:53','Richiesta 996','Come da titolo.','Verilog',1,3);
+INSERT INTO `richiesta` VALUES (1,'2017-12-18 19:14:54','Multi-threading e socket server.','Necessito di libreria multi threading per connesioni socket server.','Java',1,3),(2,'2017-12-18 23:32:04','OpenGL videogame.','Libreria per videogiochi che sfrutti la OpenGL.','C++',1,1),(3,'2017-12-18 23:45:14','RestFul API','Vorrei sviluppare una API Restful che permetta di ottenere posizione GPS.','Qualunque',1,1),(4,'2017-12-19 00:43:57','Richiesta 8','Come da titolo.','Python',1,3),(5,'2017-12-19 00:43:57','Richiesta 404.','Come da titolo.','C#',1,3),(6,'2017-12-19 00:44:53','Richiesta 996','Come da titolo.','Verilog',1,3),(7,'2018-02-20 15:54:05','Nuova richiesta di prova','Una richiesta qualunque','Python',0,2);
 /*!40000 ALTER TABLE `richiesta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -505,4 +504,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-20 16:20:35
+-- Dump completed on 2018-02-21 17:39:05
