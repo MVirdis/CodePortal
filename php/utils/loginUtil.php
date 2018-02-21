@@ -28,7 +28,7 @@
 		$email = $dbmanager->sqlInjectionFilter($email);
 		$password = hash('sha256', $password);
 
-		$query = 'SELECT ID, Username, Nome, Cognome 
+		$query = 'SELECT ID, Username, Nome, Cognome, Amministratore 
 				  FROM utente 
 				  WHERE Email="'.$email.'" 
 				  	AND Password="'.$password.'"';
