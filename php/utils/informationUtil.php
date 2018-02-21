@@ -237,7 +237,8 @@ function getFriendReqs() {
 	$query = 'SELECT A.ID, '.
 					'A.Utente1 AS UserID, '.
 			 		'U1.Username, '.
-			 		'U1.Image '.
+			 		'U1.Image, '.
+			 		'U1.Amministratore '.
 			 'FROM utente U1 INNER JOIN amicizia A ON A.Utente1=U1.ID '.
 			 'WHERE A.DataAmicizia IS NULL '.
 			 '  AND A.Utente2='.$_SESSION['userID'];
@@ -255,7 +256,7 @@ function getUsersLike($pattern) {
 
 	$pattern = $dbmanager->sqlInjectionFilter($pattern);
 
-	$query = 'SELECT U.ID, U.Username '.
+	$query = 'SELECT U.ID, U.Username, U.Amministratore '.
 			 'FROM utente U '.
 			 'WHERE U.Username LIKE "%'.$pattern.'%" '.
 			   'AND U.Username <> "'.$_SESSION['username'].'"';

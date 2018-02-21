@@ -60,14 +60,17 @@ DataWrapper.UserList = function(Object) {
 
 	for (var i = 0; i < Object.data.length; i++) {
 		var list_element = document.createElement('div');
-		list_element.appendChild(document.createTextNode(Object.data[i][1]));
+		list_element.appendChild(document.createTextNode(Object.data[i]['Username']));
 		list_element.style.display = "block";
+		if(Number(Object.data[i]['Amministratore'])) {
+			list_element.setAttribute('class', 'admin');
+		}
 
 		list_element.addEventListener('click', (function(id) {
 			return function(){
 				window.location = './profile.php?id='+id;
 			};
-		})(Object.data[i][0]));
+		})(Object.data[i]['ID']));
 
 		container.appendChild(list_element);
 	}

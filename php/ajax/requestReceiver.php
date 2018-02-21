@@ -80,7 +80,7 @@
 		// Altrimenti popolo l'AjaxResponse
 		$i = 0;
 		while($row = $result->fetch_assoc()) {
-			$response->data[$i] = [$row['ID'], $row['Username']];
+			$response->data[$i] = $row;
 			$i = $i+1;
 		}
 

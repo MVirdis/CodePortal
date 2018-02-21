@@ -131,7 +131,7 @@ function getFriendReqsList($data) {
 				  		getPic($row['UserID']).
 				  	'</div>'.
 				  	'<div class="username">'.
-				  		'<a href="./profile.php?id='.$row['UserID'].'">'.$row['Username'].'</a>'.
+				  		'<a class="'.($row['Amministratore']?'admin':'').'" href="./profile.php?id='.$row['UserID'].'">'.$row['Username'].'</a>'.
 				  	'</div>'.
 				  	'<div class="buttons">'.
 				  		'<form action="./utils/interactionDB.php?action=accReq" method="POST">'.

@@ -44,6 +44,14 @@ p {
 	text-align: left;
 }
 
+.admin {
+	color: #BC0404;
+}
+
+a.admin {
+	color: #BC0404 !important;
+}
+
 .username {
 	line-height: 60px;
 	margin-left: 10px;
