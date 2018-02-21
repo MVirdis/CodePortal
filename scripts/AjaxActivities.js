@@ -74,3 +74,33 @@ AjaxActivities.searchRequests = function(title_pattern,author_pattern,
 								  null,
 								  responseHandler);
 };
+
+AjaxActivities.likeCode = function(code_id, customHandler) {
+	if (code_id==null) {
+		customHandler(null);
+		return;
+	}
+
+	var responseHandler = this.createResponseHandler(customHandler);
+
+	AjaxEngine.performAjaxRequest("GET",
+								  "./ajax/requestReceiver.php?likes="+code_id,
+								  true,
+								  null,
+								  responseHandler);
+};
+
+AjaxActivities.dislikeCode = function(code_id, customHandler) {
+	if (code_id==null) {
+		customHandler(null);
+		return;
+	}
+
+	var responseHandler = this.createResponseHandler(customHandler);
+
+	AjaxEngine.performAjaxRequest("GET",
+								  "./ajax/requestReceiver.php?dislikes="+code_id,
+								  true,
+								  null,
+								  responseHandler);
+};
