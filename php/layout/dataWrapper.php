@@ -187,6 +187,7 @@ function getCommentsList($data) {
 		$delete_form = "<form class=\"delete_form\" action=\"./utils/interactionDB.php?action=rmcomment\" method=\"POST\" ".
 							"enctype=\"application/x-www-form-urlencoded\">".
 							"<input type=\"hidden\" name=\"comment_id\" value=\"".$row['ID']."\">".
+							"<input type=\"hidden\" name=\"autore\" value=\"".$row['Autore']."\">".
 							"<div class=\"delete_button hidden\"><button>X</button></div>".
 						"</form>";
 

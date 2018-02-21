@@ -84,6 +84,15 @@ if(isset($_GET['action'])) {
 
 		updateCode();
 
+	} elseif ($_GET['action']=='rmcomment') {
+
+		if (!isLogged()) {
+			header('location: ./../login.php');
+			exit;
+		}
+
+		removeComment();
+
 	}
 }
 
@@ -341,6 +350,29 @@ function updateCode() {
 	$dbmanager->closeConnection();
 
 	header('location: ./../new_code.php?id='.$_POST['request'].'&message='.'Code updated!');
+	exit;
+}
+
+function removeComment() {
+	global $dbmanager;
+	global $_SESSION;
+
+	if (!isset($_POST['comment_id']) || !$_SESSION['admin'] || $_SESSION['userID']!=$_POST['autore']) {
+		header('location: ./../home.php');
+		exit;
+	}
+
+	$comment_id = $dbmanager->sqlInjectionFilter($_POST['comment_id']);
+
+	$query = 'DELETE C.* '.
+			 'FROM commento C '.
+			 'WHERE C.ID='.$comment_id;
+
+	$dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	header('location: ./../home.php');
 	exit;
 }
 
