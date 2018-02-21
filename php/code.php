@@ -73,6 +73,17 @@ $author = $author->fetch_assoc();
 					<div class="icon like <?php if(retIsLiked($reply['ID'])) echo 'selected'; ?>"></div>
 					<span><?php echo retLikes($reply['ID']).' - '.retDislikes($reply['ID']);?></span>
 					<div class="icon dislike <?php if(retIsDisliked($reply['ID'])) echo 'selected'; ?>"></div>
+					<?php
+						if ($_SESSION['userID']==$author['ID'])
+							echo '<div id="change_container">'.
+									'<form action="./new_code.php?id='.$reply['Richiesta'].'" method="POST" '.
+											'enctype="application/x-www-form-urlencoded"> '.
+										'<input type="hidden" name="code_id" value="'.$reply['ID'].'"> '.
+										'<input type="hidden" name="old_code" value="'.htmlspecialchars($reply['Codice']).'"> '.
+								 		'<input type="submit" value="Edit your code"> '.
+								 	'</form> '.
+								 '</div>';
+					?>
 				</div>
 			</div>
 			<div>
