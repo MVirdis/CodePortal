@@ -83,6 +83,15 @@ $author = $author->fetch_assoc();
 							$comments = getComments($reply['ID']);
 							getCommentsList($comments);
 						?>
+						<div class="comment">
+							<div class="profile_pic">
+								<?php echo getPic($_SESSION['userID']); ?>
+							</div>
+							<div class="content">
+								<textarea type="text" placeholder="Write your comment" autocomplete="off" maxlength="10000" rows="1" required></textarea>
+								<button class="hidden">Send</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -93,7 +102,6 @@ $author = $author->fetch_assoc();
 		var like_el = document.getElementsByClassName('rating_container')[0].getElementsByClassName('icon')[0];
 		var dislike_el = document.getElementsByClassName('rating_container')[0].getElementsByClassName('icon')[1];
 
-		// Baker function
 		function getCustomHandler(toSelect, toDeselect){
 			return function(data) {
 				toSelect.setAttribute('class', toSelect.getAttribute('class')+' selected');
@@ -108,6 +116,15 @@ $author = $author->fetch_assoc();
 		dislike_el.addEventListener('click', function(){
 			AjaxActivities.dislikeCode(<?php echo $reply['ID']; ?>, getCustomHandler(dislike_el, like_el));
 		});
+
+		// Comment button handler
+		var bttn = document.getElementsByTagName('button')[0];
+		var area = document.getElementsByTagName('textarea')[0];
+		area.addEventListener('click', (function(button){
+			return function() {
+				button.setAttribute('class', '');
+			};
+		})(bttn));
 	</script>
 </body>
 </html>

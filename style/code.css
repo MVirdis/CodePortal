@@ -183,3 +183,25 @@ section {
 	font-weight: 300;
 	cursor: text;
 }
+
+.content textarea {
+	display: inline-block;
+	font-size: 18px;
+	padding: 4px;
+	border: none;
+	border-bottom: 1px solid #E7E7E7;
+	margin-left: 10px;
+	resize: none;
+}
+
+.content textarea:focus {
+	outline: 0;
+	border-bottom: 1px solid #09f;
+	width: 280px;
+	height: 180px;
+	resize: vertical;
+}
+
+.hidden {
+	display: none;
+}
