@@ -88,8 +88,11 @@ $author = $author->fetch_assoc();
 								<?php echo getPic($_SESSION['userID']); ?>
 							</div>
 							<div class="content">
-								<textarea type="text" placeholder="Write your comment" autocomplete="off" maxlength="10000" rows="1" required></textarea>
-								<button class="hidden">Send</button>
+								<form action="./utils/interactionDB.php?action=newcomment" method="POST"
+									enctype="application/x-www-form-urlencoded">
+									<textarea type="text" placeholder="Write your comment" autocomplete="off" maxlength="10000" rows="1" required></textarea>
+									<button class="hidden">Send</button>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -123,8 +126,13 @@ $author = $author->fetch_assoc();
 		area.addEventListener('click', (function(button){
 			return function() {
 				button.setAttribute('class', '');
+				this.style.outline = '0';
+				this.style.borderBottom = '1px solid #09f';
+				this.style.width = '280px';
+				this.style.height = '180px';
+				this.style.resize = 'both';
 			};
-		})(bttn));
+		})(bttn).bind(area));
 	</script>
 </body>
 </html>

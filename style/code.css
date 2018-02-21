@@ -163,7 +163,6 @@ section {
 
 .content {
 	display: inline-block;
-	height: 66px;
 	margin-left: 14px;
 }
 
@@ -185,23 +184,37 @@ section {
 }
 
 .content textarea {
-	display: inline-block;
+	display: block;
 	font-size: 18px;
 	padding: 4px;
 	border: none;
 	border-bottom: 1px solid #E7E7E7;
 	margin-left: 10px;
 	resize: none;
+
+	font-weight: 300;
+	color: #333333;
+	font-family: sans-serif;
 }
 
-.content textarea:focus {
+.content button {
+	display: inline-block;
+	width: 60px;
+	height: 30px;
+	border: 1px solid #0081D7;
+	background-color: #33A6FF;
+	border-radius: 8px;
+	margin-top: 10px;
+	cursor: pointer;
+
+	font-weight: 400;
+	color: white;
+}
+
+.content button:focus {
 	outline: 0;
-	border-bottom: 1px solid #09f;
-	width: 280px;
-	height: 180px;
-	resize: both;
 }
 
 .hidden {
-	display: none;
+	display: none !important;
 }
