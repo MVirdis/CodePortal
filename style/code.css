@@ -197,6 +197,10 @@ section {
 	font-family: sans-serif;
 }
 
+.content textarea:focus {
+	outline: 0;
+}
+
 .content button {
 	display: inline-block;
 	width: 60px;

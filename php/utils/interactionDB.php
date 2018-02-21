@@ -66,6 +66,15 @@ if(isset($_GET['action'])) {
 		}
 
 		newCodeSubmit();
+	} elseif ($_GET['action']=='newcomment') {
+
+		if (!isLogged()) {
+			header('location: ./../login.php');
+			exit;
+		}
+
+		newComment();
+
 	}
 }
 
@@ -273,6 +282,32 @@ function newCodeSubmit() {
 	$dbmanager->closeConnection();
 
 	header('location: ./../new_code.php?id='.$_POST['request'].'&message='.'Code successfully sent!');
+	exit;
+}
+
+function newComment() {
+	global $dbmanager;
+	global $_SESSION;
+
+	if (!isset($_POST['comment']) && isset($_POST['return'])) {
+		header('location: ./../code.php?id='.$_POST['return']);
+		exit;
+	} elseif (!isset($_POST['comment']) && !isset($_POST['return'])) {
+		header('location: ./../code.php');
+		exit;
+	}
+
+	$comment = $dbmanager->sqlInjectionFilter($_POST['comment']);
+	$code_id = $dbmanager->sqlInjectionFilter($_POST['return']);
+
+	$query = 'INSERT INTO commento(Autore, Risposta, Testo) '.
+			 'VALUES ('.$_SESSION['userID'].', '.$code_id.', "'.$comment.'")';
+
+	$dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	header('location: ./../code.php?id='.$code_id);
 	exit;
 }
 

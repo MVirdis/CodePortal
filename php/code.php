@@ -90,7 +90,8 @@ $author = $author->fetch_assoc();
 							<div class="content">
 								<form action="./utils/interactionDB.php?action=newcomment" method="POST"
 									enctype="application/x-www-form-urlencoded">
-									<textarea type="text" placeholder="Write your comment" autocomplete="off" maxlength="10000" rows="1" required></textarea>
+									<input type="hidden" value="<?php echo $_GET['id']; ?>" name="return">
+									<textarea name="comment" placeholder="Write your comment" autocomplete="off" maxlength="10000" rows="1" required></textarea>
 									<button class="hidden">Send</button>
 								</form>
 							</div>
