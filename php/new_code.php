@@ -12,6 +12,19 @@
 		exit;
 	}
 
+	$request = getRequest($_GET['id']);
+	if ($request==null || $request->num_rows!=1) {
+		header('location: ./page.php');
+		exit;
+	}
+
+	$request = $request->fetch_assoc();
+
+	if ($request['Visibilita']!=1) {
+		header('location: ./page.php');
+		exit;
+	}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,6 +43,15 @@
 <body>
 	<?php include LAYOUT_DIR.'menu.php'; ?>
 	<div>
+		<div class="container">
+			<h1>New Reply to request <?php echo '#'.$request['ID']; ?></h1>
+			<p><?php if(isset($_GET['message'])) echo $_GET['message']; ?></p>
+			<form action="./utils/interactionDB.php?action=newcode" method="POST" enctype="application/x-www-form-urlencoded">
+				<input name="request" type="hidden" value="<?php echo $request['ID']; ?>">
+				<textarea name="description" placeholder="Write here your code." autocomplete="off" required></textarea>
+				<div><input type="submit" value="Send"></div>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

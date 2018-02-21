@@ -8,3 +8,85 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
+
+body div:last-child {
+	display: block;
+	text-align: center;
+	margin-bottom: 200px;
+}
+
+div.container {
+	display: inline-block;
+	margin: 0 auto;
+	max-width: 812px;
+}
+
+h1 {
+	display: block;
+	margin: 0 auto;
+	margin-top: 6%;
+}
+
+form {
+	display: block;
+	margin: 0 auto;
+	margin-top: 2%;
+}
+
+label {
+	display: block;
+	margin-bottom: 20px;
+}
+
+input[type=text] {
+	display: inline-block;
+	width: 100%;
+	font-size: 20px;
+	color: black;
+	border-radius: 2px;
+	padding: 4px 8px;
+	border: thin solid #05A6F1;
+	margin-bottom: 10px;
+}
+
+input[type=text]:focus {
+	outline: 0;
+}
+
+input[type=checkbox] {
+	display: inline;
+}
+
+textarea {
+	display: inline-block;
+	margin: 0 auto;
+	border-radius: 2px;
+	width: 100%;
+	min-height: 400px;
+	overflow: visible;
+	font-size: 20px;
+	color: black;
+	padding: 4px 8px;
+}
+
+textarea:focus {
+	outline: 0;
+}
+
+form div:last-child {
+	display: block;
+	text-align: center;
+}
+
+form input[type=submit] {
+	border-radius: 2px;
+	border: thin solid #05A6F1;
+	cursor: pointer;
+	margin-top: 12px;
+	width: 50px;
+	height: 28px;
+}
+
+form input[type=submit]:focus {
+	outline: 0;
+}

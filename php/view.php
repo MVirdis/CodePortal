@@ -69,7 +69,7 @@ $author = $author->fetch_assoc();
 			<div>
 				<div class="replies_header">
 					<span>Replies:</span>
-					<a href="./new_code.php">Submit your code</a>
+					<a href="./new_code.php?id=<?php echo $request['ID']; ?>">Submit your code</a>
 				</div>
 				<div class="replies">
 					<?php
