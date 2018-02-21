@@ -101,3 +101,42 @@ body div {
 	font-size: 22px;
 	cursor: pointer;
 }
+
+.dash_links li{
+	display: inline-block;
+} 
+
+.dash_links a{
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	border-radius: 4px;
+}
+
+
+.delete{
+	background-image: url("./../images/delete_icon.png");
+}
+
+.delete:hover{
+	background-image: url("./../images/delete_icon_hover.png");
+}
+
+.change{
+	background-image: url("./../images/change_icon.png");
+}
+
+.change:hover{
+	background-image: url("./../images/change_icon_hover.png");
+}
+
+.request{
+	background-image: url("./../images/new_request_icon.png");
+}
+
+.request:hover{
+	background-image: url("./../images/new_request_icon_hover.png");
+}
