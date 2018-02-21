@@ -67,6 +67,10 @@ $author = $author->fetch_assoc();
 				<p><?php echo $request['Descrizione']; ?></p>
 			</div>
 			<div>
+				<div class="replies_header">
+					<span>Replies:</span>
+					<a href="./new_code.php">Submit your code</a>
+				</div>
 				<div class="replies">
 					<?php
 						$res = getReplies($request['ID']);

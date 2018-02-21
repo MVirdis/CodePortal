@@ -61,6 +61,22 @@ div {
 	margin: 0 auto;
 	max-width: 1012px;
 	min-width: 420px;
+	overflow: hidden;
+}
+
+.replies_header {
+	display: block;
+	overflow: hidden;
+}
+
+.replies_header span {
+	display: inline-block;
+	float: left;
+}
+
+.replies_header a {
+	float: right;
+	color: #33adff;
 }
 
 .reply_element {
