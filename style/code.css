@@ -187,6 +187,15 @@ section {
 	cursor: text;
 }
 
+.content .delete_button button {
+	background-color: #E61717;
+	border: none;
+}
+
+.content .delete_button button:focus {
+	outline: 0;
+}
+
 .content textarea {
 	display: block;
 	font-size: 18px;

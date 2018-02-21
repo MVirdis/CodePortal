@@ -85,8 +85,8 @@ $author = $author->fetch_assoc();
 											'enctype="application/x-www-form-urlencoded"> '.
 										'<input type="hidden" name="code_id" value="'.$reply['ID'].'"> '.
 										'<input type="hidden" name="old_code" value="'.htmlspecialchars($reply['Codice']).'"> '.
-								 		'<input type="submit" value="Edit your code"> '.
-								 	'</form> '.
+										'<input type="submit" value="Edit your code"> '.
+									'</form> '.
 								 '</div>';
 					?>
 				</div>
@@ -150,6 +150,28 @@ $author = $author->fetch_assoc();
 				this.style.resize = 'both';
 			};
 		})(bttn).bind(area));
+
+		// Admin's remove buttons
+		var comments = document.getElementsByClassName('comment');
+		for(var i=0; i<comments.length-1; ++i) {
+			comments[i].addEventListener('mouseenter', (function(){
+				this.getElementsByClassName('delete_button')[0].setAttribute('class', 'delete_button');
+			}).bind(comments[i]));
+
+			comments[i].addEventListener('mouseleave', (function(){
+				this.getElementsByClassName('delete_button')[0].setAttribute('class', 'delete_button hidden');
+			}).bind(comments[i]));
+		}
+
+		// Prompt for comment deletion before executing
+		var dd_form = document.getElementsByClassName('delete_form');
+		for(var i=0; i<dd_form.length; ++i) {
+			dd_form[i].addEventListener('submit', (function(event) {
+				event.preventDefault();
+				if(confirm('Are you sure you want to delete this comment?'))
+					this.submit();
+			}).bind(dd_form[i]));
+		}
 	</script>
 </body>
 </html>

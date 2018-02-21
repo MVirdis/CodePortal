@@ -183,11 +183,19 @@ function getCommentsList($data) {
 	}
 
 	while ($row = $data->fetch_assoc()) {
+
+		$delete_form = "<form class=\"delete_form\" action=\"./utils/interactionDB.php?action=rmcomment\" method=\"POST\" ".
+							"enctype=\"application/x-www-form-urlencoded\">".
+							"<input type=\"hidden\" name=\"comment_id\" value=\"".$row['ID']."\">".
+							"<div class=\"delete_button hidden\"><button>X</button></div>".
+						"</form>";
+
 		echo "<div class='comment'>".
 				"<div class='profile_pic'>".getPic($row['UserID'])."</div>".
 				"<div class='content'>".
 					"<div><span ".($row['Amministratore']?"class=\"admin\"":"").">".$row['Username']."</span></div>".
 					"<div><span>".$row['Testo']."</span></div>".
+					($_SESSION['admin']?$delete_form:"").
 				"</div>".
 			 "</div>";
 	}
