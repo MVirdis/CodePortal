@@ -12,7 +12,7 @@ function topRatedRequests() {
 			 'FROM ( '.
 				  'SELECT R.*, '.
 				  		'U.ID AS UserID, '.
-						'U.Username AS Autore, '.
+						'U.Username AS UsernameAutore, '.
 						'U.Image, '.
 						'count(DISTINCT RA.ID) AS NumResponses '.
 				  'FROM (richiesta R INNER JOIN utente U ON U.ID=R.Autore) '.
@@ -47,7 +47,7 @@ function topRatedRequests() {
 function friendsRequests() {
 	global $dbmanager;
 
-	$query = 'SELECT R.*, U.ID AS UserID, U.Username AS Autore, U.Image '.
+	$query = 'SELECT R.*, U.ID AS UserID, U.Username AS UsernameAutore, U.Image '.
 			 'FROM richiesta R INNER JOIN utente U ON U.ID = R.Autore '.
 			 'WHERE EXISTS ( '.
 			 '   SELECT * '.
@@ -69,7 +69,7 @@ function friendsRequests() {
 function recentRequests() {
 	global $dbmanager;
 
-	$query = 'SELECT R.*, U.ID AS UserID, U.Username AS Autore, U.Image '.
+	$query = 'SELECT R.*, U.ID AS UserID, U.Username AS UsernameAutore, U.Image '.
 			 'FROM richiesta R INNER JOIN utente U ON U.ID = R.Autore '.
 			 'WHERE R.Visibilita=1 '.
 			 'ORDER BY R.Istante DESC';
