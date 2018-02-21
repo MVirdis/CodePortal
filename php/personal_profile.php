@@ -44,7 +44,7 @@
 			<h2>Dashboard</h2>
 			<ul class="dash_links">
 				<li>
-					<a>Change Profile Picture</a>
+					<a class="change"></a>
 					<form id="profile_change_form" class="hidden"
 						  method="POST" action="./utils/uploadUtil.php"
 						  enctype="multipart/form-data">
@@ -53,10 +53,10 @@
 					</form>
 				</li>
 				<li>
-					<a>Remove Profile Picture</a>
+					<a class="delete"></a>
 				</li>
 				<li>
-					<a href="./new_request.php">Create new Code request</a>
+					<a href="./new_request.php" class="request"></a>
 				</li>
 			</ul>
 		</div>
