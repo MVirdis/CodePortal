@@ -17,7 +17,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><?php echo $_SESSION['username']; ?>'s Profile - CodePortal</title>
+	<title>New request - CodePortal</title>
 	<meta charset="utf-8">
 	<meta name="author" content="Mario Virdis">
 	<meta name="keywords" content="coding code programming social network socialnetwork programs C C++ Java Python">
