@@ -376,7 +376,7 @@ function getReplies($id) {
 
 	$id = $dbmanager->sqlInjectionFilter($id);
 
-	$query = 'SELECT RA.*, U.Username '.
+	$query = 'SELECT RA.*, U.Username, U.Amministratore '.
 			 'FROM risposta RA INNER JOIN utente U ON U.ID=RA.Autore '.
 			 'WHERE RA.Richiesta='.$id;
 

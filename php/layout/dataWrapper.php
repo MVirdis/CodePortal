@@ -159,7 +159,7 @@ function wrapRepliesShowcase($data) {
 	while ($row = $data->fetch_assoc()) {
 		echo "<div id='".$row['ID']."' class='reply_element'>".
 				"<div class='profile_pic'>".getPic($row["Autore"])."</div>".
-			 	"<div class='username'><span>".$row["Username"]."</span></div>".
+			 	"<div class='username'><span ".($row["Amministratore"]?"class=\"admin\"":"").">".$row["Username"]."</span></div>".
 			 	"<div class='date'> Last Change: ".$row["UltimaModifica"]."</div>".
 			 	"<div class='rating'>".
 			 		"<span style='color: green'>".retLikes($row['ID'])."</span>".

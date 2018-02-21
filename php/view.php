@@ -61,7 +61,14 @@ $author = $author->fetch_assoc();
 			<h1><?php echo $request['Titolo']; ?></h1>
 			<div class="author">
 				<?php echo getPic($author['ID']); ?>
-				<span><?php echo $author['Username']." says:"; ?></span>
+				<span >
+				<?php
+					if ($author['Amministratore'])
+						echo '<span class="admin">'.$author['Username'].'</span> says:';
+					else
+						echo '<span>'.$author['Username']."</span> says:";
+				?>	
+				</span>
 			</div>
 			<div class="description">
 				<p><?php echo $request['Descrizione']; ?></p>
