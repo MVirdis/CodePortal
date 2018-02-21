@@ -141,3 +141,45 @@ section {
 .dislike.selected {
 	background-image: url('./../images/dislike_hover.png');
 }
+
+.comment {
+	display: block;
+	overflow: hidden;
+	text-align: left;
+	cursor: default;
+}
+
+.profile_pic {
+	display: inline-block;
+	float: left;
+}
+
+.profile_pic img {
+	width: 60px;
+	height: 60px;
+	border-radius: 30px;
+	border: thin solid #616161;
+}
+
+.content {
+	display: inline-block;
+	height: 66px;
+	margin-left: 14px;
+}
+
+.content div {
+	display: block;
+}
+
+.content div:first-child {
+	font-size: 20px;
+	color: black;
+	font-weight: 400;
+}
+
+.content div:last-child {
+	font-size: 18px;
+	color: #222222;
+	font-weight: 300;
+	cursor: text;
+}
