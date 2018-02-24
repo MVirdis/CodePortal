@@ -138,7 +138,8 @@ $author = $author->fetch_assoc();
 		});
 
 		// Comment button handler
-		var bttn = document.getElementsByTagName('button')[0];
+		var bttn = document.getElementsByTagName('button');
+		bttn = bttn[bttn.length-1];// L'ultimo pulsante è quello dei commenti
 		var area = document.getElementsByTagName('textarea')[0];
 		area.addEventListener('click', (function(button){
 			return function() {
