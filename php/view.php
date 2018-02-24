@@ -76,6 +76,15 @@ $author = $author->fetch_assoc();
 			<div>
 				<div class="replies_header">
 					<span>Replies:</span>
+					<?php
+						if ($_SESSION['admin'] || $_SESSION['userID']==$author['ID']) {
+							echo "<form id=\"deletion_form\" action=\"./utils/interactionDB.php?action=rmreq\" method=\"POST\" ".
+									"enctype=\"application/x-www-form-urlencoded\">".
+									"<input type=\"hidden\" name=\"request_id\" value=\"".$_GET['id']."\">".
+									"<input type=\"submit\" value=\"Delete request\">".
+								 "</form>";
+						}
+					?>
 					<a href="./new_code.php?id=<?php echo $request['ID']; ?>">Submit your code</a>
 				</div>
 				<div class="replies">
@@ -87,5 +96,16 @@ $author = $author->fetch_assoc();
 			</div>
 		</div>
 	</section>
+	<script>
+		// Confirm request deletion if needed
+		var form = document.getElementById('deletion_form');
+		if (form!=null)
+			form.addEventListener('submit', (function(event){
+				event.preventDefault();// Fermo la sottomissione del form
+				if (confirm('Do you really want to delete this request?')) {
+					this.submit();
+				}
+			}).bind(form));
+	</script>
 </body>
 </html>

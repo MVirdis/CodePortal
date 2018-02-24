@@ -87,6 +87,22 @@ div {
 	color: #33adff;
 }
 
+.replies_header form {
+	display: inline-block;
+}
+
+.replies_header input[type=submit] {
+	color: #BC0404;
+	border: none;
+	background-color: white;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+.replies_header input[type=submit]:focus {
+	outline: 0;
+}
+
 .reply_element {
 	display: block;
 	background-color: rgb(235,235,235);
