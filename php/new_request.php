@@ -13,6 +13,13 @@
 	}
 
 	$target_id = $_SESSION['userID'];
+
+	$edit_flag = (isset($_POST['old_id']) 
+				  && isset($_POST['old_language']) 
+				  && isset($_POST['old_title']) 
+				  && isset($_POST['old_description'])
+				  && isset($_POST['old_public']));
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,13 +39,25 @@
 	<?php include LAYOUT_DIR.'menu.php'; ?>
 	<div>
 		<div class="container">
-			<h1>New Request</h1>
+			<h1><?php if ($edit_flag) echo "Edit"; else echo "New"; ?> Request</h1>
 			<p><?php if(isset($_GET['message'])) echo $_GET['message']; ?></p>
-			<form action="./utils/interactionDB.php?action=newreq" method="POST" enctype="application/x-www-form-urlencoded">
-				<input name="title" type="text" placeholder="Title" autocomplete="off" required>
-				<input type="text" name="language" placeholder="Language" autocomplete="off" required>
-				<label>Public: <input type="checkbox" name="public"></label>
-				<textarea name="description" placeholder="Description" autocomplete="off" required></textarea>
+			<form action="./utils/interactionDB.php?action=<?php if($edit_flag) echo "upreq"; else echo "newreq"; ?>" method="POST"
+				  enctype="application/x-www-form-urlencoded">
+				<input name="title" type="text" placeholder="Title" autocomplete="off"
+					   <?php if($edit_flag) echo "value=\"".htmlspecialchars($_POST['old_title'])."\""; ?> required>
+				<input type="text" name="language" placeholder="Language" autocomplete="off"
+					   <?php if($edit_flag) echo "value=\"".htmlspecialchars($_POST['old_language'])."\""; ?> required>
+				<label>Public: <input type="checkbox" name="public" <?php if($edit_flag) echo "checked"; ?>></label>
+				<textarea name="description" placeholder="Description" autocomplete="off" required><?php
+					if($edit_flag) {
+						echo htmlspecialchars($_POST['old_description']);
+					}
+				?></textarea>
+				<?php
+					if($edit_flag) {
+						echo "<input type=\"hidden\" name=\"old_req_id\" value=\"".$_POST['old_id']."\">";
+					}
+				?>
 				<div><input type="submit" value="Send"></div>
 			</form>
 		</div>
