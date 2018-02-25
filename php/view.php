@@ -72,6 +72,18 @@ $author = $author->fetch_assoc();
 			</div>
 			<div class="description">
 				<p><?php echo $request['Descrizione']; ?></p>
+				<?php
+					if ($_SESSION['admin'] || $_SESSION['userID']==$author['ID']) {
+						echo "<form method=\"POST\" action=\"./new_request.php\" enctype=\"application/x-www-form-urlencoded\">".
+								"<input type=\"hidden\" name=\"old_title\" value=\"".$request['Titolo']."\">".
+								"<input type=\"hidden\" name=\"old_language\" value=\"".$request['Linguaggio']."\">".
+								"<input type=\"hidden\" name=\"old_public\" value=\"".$request['Visibilita']."\">".
+								"<input type=\"hidden\" name=\"old_description\" value=\"".htmlspecialchars($request['Descrizione'])."\">".
+								"<input type=\"hidden\" name=\"old_id\" value=\"".$request['ID']."\">".
+								"<input type=\"submit\" value=\"Edit this request\">".
+							 "</form>";
+					}
+				?>
 			</div>
 			<div>
 				<div class="replies_header">

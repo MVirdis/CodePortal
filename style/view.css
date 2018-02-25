@@ -64,6 +64,19 @@ div {
 	margin-bottom: 10px;
 }
 
+.description input[type=submit] {
+	border: none;
+	background-color: white;
+	color: #222222;
+	font-size: 18px;
+	cursor: pointer;
+	border-bottom: thin dashed #616161;
+}
+
+.description input[type=submit]:focus {
+	outline: 0;
+}
+
 .replies {
 	display: inline-block;
 	margin: 0 auto;
