@@ -93,6 +93,15 @@ if(isset($_GET['action'])) {
 
 		removeComment();
 
+	} elseif ($_GET['action']=='rmreq') {
+
+		if (!isLogged()) {
+			header('location: ./../login.php');
+			exit;
+		}
+
+		removeRequest();
+
 	}
 }
 
@@ -357,7 +366,7 @@ function removeComment() {
 	global $dbmanager;
 	global $_SESSION;
 
-	if (!isset($_POST['comment_id']) || !$_SESSION['admin'] || $_SESSION['userID']!=$_POST['autore']) {
+	if (!isset($_POST['comment_id'])) {
 		header('location: ./../home.php');
 		exit;
 	}
@@ -373,6 +382,29 @@ function removeComment() {
 	$dbmanager->closeConnection();
 
 	header('location: ./../home.php');
+	exit;
+}
+
+function removeRequest() {
+	global $dbmanager;
+	global $_SESSION;
+
+	if (!isset($_POST['request_id'])) {
+		header('location: ./../view.php');
+		exit;
+	}
+
+	$request_id = $dbmanager->sqlInjectionFilter($_POST['request_id']);
+
+	$query = 'DELETE R.* '.
+			 'FROM richiesta R '.
+			 'WHERE R.ID='.$request_id;
+
+	$dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	header('location: ./../page.php');
 	exit;
 }
 
