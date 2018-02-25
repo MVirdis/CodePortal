@@ -102,6 +102,15 @@ if(isset($_GET['action'])) {
 
 		removeRequest();
 
+	} elseif ($_GET['action']=='upreq') {
+
+		if (!isLogged()) {
+			header('location: ./../login.php');
+			exit;
+		}
+
+		updateRequest();
+
 	}
 }
 
@@ -441,6 +450,40 @@ function removeRequest() {
 	$dbmanager->closeConnection();
 
 	header('location: ./../page.php');
+	exit;
+}
+
+function updateRequest() {
+	global $dbmanager;
+	global $_SESSION;
+
+	if (!isset($_POST['old_req_id']) 
+	  || !isset($_POST['language']) 
+	  || !isset($_POST['title']) 
+	  || !isset($_POST['description'])
+	  || !isset($_POST['public'])) {
+	  	header('location: ./../new_request.php?message='.'Error some information was missing!');
+		exit;
+	}
+
+	$old_id = $dbmanager->sqlInjectionFilter($_POST['old_req_id']);
+	$language = $dbmanager->sqlInjectionFilter($_POST['language']);
+	$title = $dbmanager->sqlInjectionFilter($_POST['title']);
+	$description = $dbmanager->sqlInjectionFilter($_POST['description']);
+	$public = $dbmanager->sqlInjectionFilter($_POST['public']);
+
+	$query = 'UPDATE richiesta R '.
+			 'SET R.Titolo="'.$title.'", '.
+			 	'R.Linguaggio="'.$language.'", '.
+			 	'R.Descrizione="'.$description.'", '.
+			 	'R.Visibilita='.($public=='on'?1:0).' '.
+			 'WHERE R.ID='.$old_id;
+
+	$dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	header('location: ./../new_request.php?message='.'Request successfully received.');
 	exit;
 }
 
