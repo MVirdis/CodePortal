@@ -357,6 +357,26 @@ function updateCode() {
 	}
 
 	$old_id = $dbmanager->sqlInjectionFilter($_POST['old_code_id']);
+
+	$query = 'SELECT C.Autore AS ID '.
+			 'FROM commento C '.
+			 'WHERE C.ID='.$old_id;
+
+	$author = $dbmanager->performQuery($query);
+
+	if ($author==null || $author->num_rows!=1) {
+		header('location: ./../new_code.php?message='.'Error updating your code!');
+		exit;
+	}
+
+	$author = $author->fetch_assoc();
+
+	// Controllo di sicurezza
+	if (!$_SESSION['admin'] && $_SESSION['userID']!=$author['ID']) {
+		header('location: ./../new_code.php?message='.'Error updating your code!');
+		exit;
+	}
+
 	$code = $dbmanager->sqlInjectionFilter($_POST['code']);
 
 	$query = 'UPDATE risposta R '.
@@ -467,6 +487,22 @@ function updateRequest() {
 	}
 
 	$old_id = $dbmanager->sqlInjectionFilter($_POST['old_req_id']);
+
+	$request = getRequest($old_id);
+
+	if ($request==null || $request->num_rows!=1) {
+		header('location: ./../view.php?id='.$old_id);
+		exit;
+	}
+
+	$request = $request->fetch_assoc();
+
+	// Controllo di sicurezza
+	if (!$_SESSION['admin'] && $_SESSION['userID']!=$request['Autore']) {
+		header('location: ./../view.php?id='.$old_id);
+		exit;
+	}
+
 	$language = $dbmanager->sqlInjectionFilter($_POST['language']);
 	$title = $dbmanager->sqlInjectionFilter($_POST['title']);
 	$description = $dbmanager->sqlInjectionFilter($_POST['description']);
