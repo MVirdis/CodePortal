@@ -2,8 +2,8 @@
 /* Questo file contiene delle funzioni per inserire informazioni nel database. */
 
 require_once './../path.php';
-require_once UTILS_DIR.'managerDB.php';
 require_once UTILS_DIR.'sessionUtil.php';
+require_once UTILS_DIR.'informationUtil.php';
 
 if(isset($_GET['action'])) {
 	if(!isset($_SESSION))
@@ -373,6 +373,25 @@ function removeComment() {
 
 	$comment_id = $dbmanager->sqlInjectionFilter($_POST['comment_id']);
 
+	$query = 'SELECT C.Autore '.
+			 'FROM commento C '.
+			 'WHERE C.ID='.$comment_id;
+
+	$author = $dbmanager->performQuery($query);
+
+	if ($author==null || $author->num_rows!=1) {
+		header('location: ./../home.php');
+		exit;
+	}
+
+	$author = $author->fetch_assoc();
+
+	// Controllo di sicurezza
+	if (!$_SESSION['admin'] && $_SESSION['userID']!=$author['Autore']) {
+		header('location: ./../home.php');
+		exit;
+	}
+
 	$query = 'DELETE C.* '.
 			 'FROM commento C '.
 			 'WHERE C.ID='.$comment_id;
@@ -395,6 +414,23 @@ function removeRequest() {
 	}
 
 	$request_id = $dbmanager->sqlInjectionFilter($_POST['request_id']);
+
+	$request = getRequest($request_id);
+
+	if ($request==null || $request->num_rows!=1) {
+		header('location: ./../view.php');
+		exit;
+	}
+
+	$request = $request->fetch_assoc();
+
+	$author = $request['Autore'];
+
+	// Controllo di sicurezza
+	if (!$_SESSION['admin'] && $_SESSION['userID']!=$author) {// Se non è né l'admin né l'autore
+		header('location: ./../view.php');
+		exit;
+	}
 
 	$query = 'DELETE R.* '.
 			 'FROM richiesta R '.
