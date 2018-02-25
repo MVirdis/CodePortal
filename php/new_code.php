@@ -69,10 +69,25 @@
 		var code_space = document.getElementsByTagName('textarea')[0];
 
 		code_space.addEventListener('keydown', (function(element){
-			return function(key){
-				if(key.keyCode==9) {//tab
-					key.preventDefault();// Prevengo il comportamento default
-					element.value = element.value + "\t";// Append di \t
+			return function(event){
+				if(event.keyCode==9) {//tab
+					// Ottengo posizione cursore o selezione
+			        var start = element.selectionStart;
+			        var end = element.selectionEnd;
+
+			        var target = event.target;
+			        var value = target.value;
+
+			        // Imposto il contenuto della textarea inserendo il tab al posto della selezione
+			        target.value = value.substring(0, start)
+			                    + "\t"
+			                    + value.substring(end);
+
+			        // Riporto il cursore a dx (+1 perchè ho aggiunto il carattere tab)
+			        element.selectionStart = element.selectionEnd = start + 1;
+
+			        // Evito che il browser esegua il comportamento di default
+			        event.preventDefault();
 				}
 			};
 		})(code_space));
