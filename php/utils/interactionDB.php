@@ -119,6 +119,14 @@ if(isset($_GET['action'])) {
 		}
 
 		removeCode();
+	} elseif ($_GET['action']=='rmfriend') {
+
+		if (!isLogged()) {
+			header('location: ./../login.php');
+			exit;
+		}
+
+		removeFriend();
 	}
 }
 
@@ -569,6 +577,31 @@ function removeCode() {
 	$dbmanager->closeConnection();
 
 	header('location: ./../home.php');
+	exit;
+}
+
+function removeFriend() {
+	global $dbmanager;
+	global $_SESSION;
+
+	if (!isset($_POST['id'])) {
+		return;
+	}
+
+	$friend_id = $dbmanager->sqlInjectionFilter($_POST['id']);
+
+	$query = 'DELETE A.* '.
+			 'FROM amicizia A '.
+			 'WHERE (A.Utente1='.$_SESSION['userID'].' AND '.
+			 	'A.Utente2='.$friend_id.') OR ( '.
+			 	'A.Utente1='.$friend_id.' AND A.Utente2='.$_SESSION['userID'].') '.
+			 	' AND A.DataAmicizia IS NOT NULL';
+
+	$dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	header('location: ./../profile.php?id='.$friend_id);
 	exit;
 }
 
