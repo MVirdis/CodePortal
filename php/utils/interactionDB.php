@@ -111,6 +111,14 @@ if(isset($_GET['action'])) {
 
 		updateRequest();
 
+	} elseif ($_GET['action']=='rmcode') {
+
+		if (!isLogged()) {
+			header('location: ./../login.php');
+			exit;
+		}
+
+		removeCode();
 	}
 }
 
@@ -520,6 +528,47 @@ function updateRequest() {
 	$dbmanager->closeConnection();
 
 	header('location: ./../new_request.php?message='.'Request successfully received.');
+	exit;
+}
+
+function removeCode() {
+	global $dbmanager;
+	global $_SESSION;
+
+	if (!isset($_POST['code_id'])) {
+		header('location: ./../home.php');
+		exit;
+	}
+
+	$code_id = $dbmanager->sqlInjectionFilter($_POST['code_id']);
+
+	$query = 'SELECT R.Autore '.
+			 'FROM risposta R '.
+			 'WHERE R.ID='.$code_id;
+
+	$author = $dbmanager->performQuery($query);
+
+	if ($author==null || $author->num_rows!=1) {
+		return;
+	}
+
+	$author = $author->fetch_assoc();
+
+	// Controllo di sicurezza
+	if (!$_SESSION['admin'] && $_SESSION['userID']!=$author['Autore']) {
+		header('location: ./../home.php');
+		exit;
+	}
+
+	$query = 'DELETE R.* '.
+			 'FROM risposta R '.
+			 'WHERE R.ID='.$code_id;
+
+	$dbmanager->performQuery($query);
+
+	$dbmanager->closeConnection();
+
+	header('location: ./../home.php');
 	exit;
 }
 
