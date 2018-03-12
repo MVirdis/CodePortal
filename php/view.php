@@ -72,6 +72,9 @@ $author = $author->fetch_assoc();
 			</div>
 			<div class="description">
 				<p><?php echo $request['Descrizione']; ?></p>
+				<div>
+					Language: <span><?php echo $request['Linguaggio']; ?></span>
+				</div>
 				<?php
 					if ($_SESSION['admin'] || $_SESSION['userID']==$author['ID']) {
 						echo "<form method=\"POST\" action=\"./new_request.php\" enctype=\"application/x-www-form-urlencoded\">".

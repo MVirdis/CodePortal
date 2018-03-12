@@ -77,6 +77,20 @@ div {
 	outline: 0;
 }
 
+.description div {
+	display: block;
+	text-align: left;
+}
+
+.description div span {
+	border-radius: 4px;
+	background-color: #33465D;
+	color: white;
+	font-size: 16px;
+	padding: 4px 6px;
+	margin-left: 6px;
+}
+
 .replies {
 	display: inline-block;
 	margin: 0 auto;
