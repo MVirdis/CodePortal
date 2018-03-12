@@ -63,18 +63,22 @@
 						echo '<h1>'.$target_user['Username'].'</h1>';
 				?>
 			</div>
-			<form action="./utils/interactionDB.php?action=sendReq" method="POST">
+			<?php
+				if ($friends_flag==1) {
+					$action = 'sendReq';
+					$button = '<input type="submit" value="Pending Request" disabled></input>';
+				} elseif ($friends_flag==0) {
+					$action = 'sendReq';
+					$button = '<input type="submit" value="Add Friend"></input>';
+				} else {
+					$action = 'rmfriend';
+					$button = '<input type="submit" class="admin" value="Remove Friend"></input>';
+				}
+			?>
+			<form action="./utils/interactionDB.php?action=<?php echo $action; ?>" method="POST">
 				<input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
 				<?php
-					if ($friends_flag == 1) {
-
-						echo '<input type="submit" value="Pending Request" disabled></input>';
-
-					} elseif ($friends_flag == 0) {
-
-						echo '<input type="submit" value="Add Friend"></input>';
-
-					}
+					echo $button;
 				?>
 			</form>
 			<?php include LAYOUT_DIR.'profile_stats.php'; ?>
