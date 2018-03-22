@@ -111,7 +111,7 @@ a.admin {
 	text-align: center;
 }
 
-.container div:first-child {
+.container div {
 	display: inline-block;
 	margin: 0 auto;
 	padding-bottom: 10px;
