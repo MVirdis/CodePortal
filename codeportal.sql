@@ -37,7 +37,7 @@ CREATE TABLE `amicizia` (
   KEY `Utente2` (`Utente2`),
   CONSTRAINT `amicizia_ibfk_1` FOREIGN KEY (`Utente1`) REFERENCES `utente` (`ID`) ON DELETE CASCADE,
   CONSTRAINT `amicizia_ibfk_2` FOREIGN KEY (`Utente2`) REFERENCES `utente` (`ID`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `amicizia` (
 
 LOCK TABLES `amicizia` WRITE;
 /*!40000 ALTER TABLE `amicizia` DISABLE KEYS */;
-INSERT INTO `amicizia` VALUES (1,3,2,'2018-02-12','2018-02-21'),(2,2,1,'2018-02-12',NULL),(4,3,4,'2018-02-12','2018-02-12'),(5,5,3,'2018-02-16','2018-02-16');
+INSERT INTO `amicizia` VALUES (2,2,1,'2018-02-12',NULL),(4,3,4,'2018-02-12','2018-02-12'),(5,5,3,'2018-02-16','2018-02-16'),(7,3,2,'2018-03-12','2018-03-12');
 /*!40000 ALTER TABLE `amicizia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -70,7 +70,7 @@ CREATE TABLE `commento` (
   KEY `Risposta` (`Risposta`),
   CONSTRAINT `commento_ibfk_1` FOREIGN KEY (`Risposta`) REFERENCES `risposta` (`ID`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `commento_ibfk_2` FOREIGN KEY (`Autore`) REFERENCES `utente` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -467,7 +467,7 @@ CREATE TABLE `risposta` (
   KEY `Richiesta` (`Richiesta`),
   KEY `Autore` (`Autore`),
   CONSTRAINT `risposta_ibfk_1` FOREIGN KEY (`Richiesta`) REFERENCES `richiesta` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -546,4 +546,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-12 14:48:37
+-- Dump completed on 2018-03-22 18:42:59
