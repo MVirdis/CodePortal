@@ -7,7 +7,7 @@ function wrapRequests($data) {
 	if($data==null || $data->num_rows==0) {
 		echo '<div style="float:right; display: inline-block;">'.
 			 '<span style="color: gray; font-size: 16px; font-family: \'Open Sans\',sans-serif;">'.
-			 'There are no requests at the moment with this filter.</span>'.
+			 'There are no requests at the moment.</span>'.
 			 '</div>';
 		return;
 	}
