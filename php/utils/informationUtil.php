@@ -425,7 +425,8 @@ function getRequestsLike($title, $author, $language) {
 	$author = $dbmanager->sqlInjectionFilter($author);
 	$language = $dbmanager->sqlInjectionFilter($language);
 
-	$query = 'SELECT R.*, U.Username, IFNULL(DT.NumRisposte, 0) AS NumRisposte '.
+	$query = 'SELECT R.*, U.ID AS UserID, U.Amministratore, U.Username AS UsernameAutore, '.
+				'IFNULL(DT.NumRisposte, 0) AS NumRisposte '.
 			 'FROM (richiesta R INNER JOIN utente U ON U.ID=R.Autore) '.
 			 	' LEFT OUTER JOIN ( '.
 			 		'SELECT R2.ID, count(*) AS NumRisposte '.
