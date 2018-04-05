@@ -85,7 +85,7 @@
 			</form>
 			<?php include LAYOUT_DIR.'profile_stats.php'; ?>
 			<?php
-				if ($friends_flag==2) {
+				if ($friends_flag==2 || $_SESSION['admin']) {
 					$posts = getRequestsLike(null, $target_user['Username'], null);
 					wrapRequests($posts);
 				}
