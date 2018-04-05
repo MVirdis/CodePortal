@@ -10,6 +10,7 @@
 	require_once __DIR__.'/path.php';
 	require_once UTILS_DIR.'informationUtil.php';
 	require_once UTILS_DIR.'profilePicUtil.php';
+	require_once LAYOUT_DIR.'dataWrapper.php';
 
 	$target_user = getUser($_GET['id']);
 
@@ -42,6 +43,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
 	<link rel="stylesheet" href="./../style/profile.css" type="text/css">
 	<link rel="stylesheet" href="./../style/menu.css" type="text/css">
+	<link rel="stylesheet" href="./../style/page.css" type="text/css">
 
 	<link rel="icon" type="image/png" href="./../images/codeportal_logo2.png"  >
 </head>
@@ -82,6 +84,12 @@
 				?>
 			</form>
 			<?php include LAYOUT_DIR.'profile_stats.php'; ?>
+			<?php
+				if ($friends_flag==2) {
+					$posts = getRequestsLike(null, $target_user['Username'], null);
+					wrapRequests($posts);
+				}
+			?>
 		</div>
 	</div>
 </body>
