@@ -58,7 +58,8 @@ function getMailList($data) {
 			$row['Oggetto'] = substr($row['Oggetto'], 0, $max_len-4).'...';
 		}
 
-		echo "<div ".(($row['Visualizzato']==1 || !$in_flag)?"name='v'":"")." id='".$row['ID']."' class='list_element ".((!$row['Visualizzato'] && $row['dir'])?"marked":"")."'>".
+		echo "<div id='".$row['ID']."' class='list_element ".(($row['Visualizzato']==1 || !$in_flag)?"v":"").
+			 " ".((!$row['Visualizzato'] && $row['dir'])?"marked":"")."'>".
 			 "<div class='image'>".
 			 $image.
 			 "</div>".
@@ -77,7 +78,7 @@ function getMailList($data) {
 	// Script che associa al click una redirect a mail.php
 	// con parametri GET per la email cliccata
 	$js_code= "<script>".
-			  "var mails = document.getElementsByName('v');\n".
+			  "var mails = document.getElementsByClassName('v');\n".
 			  "var onClick = function() {\n".
 			  		"window.location=(\"./mail.php?mail=".$_GET['mail']."&view=\"+String(this.id));\n".
 			  "};\n".
