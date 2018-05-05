@@ -26,6 +26,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
 	<link rel="stylesheet" href="./../style/profile.css" type="text/css">
 	<link rel="stylesheet" href="./../style/menu.css" type="text/css">
+	<link rel="stylesheet" href="./../style/page.css" type="text/css">
 
 	<link rel="icon" type="image/png" href="./../images/codeportal_logo2.png"  >
 </head>
@@ -70,8 +71,12 @@
 				</li>
 			</ul>
 		</div>
+		<div class="heading"><?php
+			require_once LAYOUT_DIR.'dataWrapper.php';
+			$posts = getRequestsLike(null, $_SESSION['username'], null);
+			wrapRequests($posts);
+		?></div>
 	</div>
-
 	<script>
 		var dashboard = document.getElementsByClassName('dashboard')[0];
 		var options = dashboard.getElementsByTagName('a');
