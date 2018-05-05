@@ -75,9 +75,9 @@
 	<div class="container hidden">
 		<div>
 			<form id="new_email_form" action="./utils/interactionDB.php?action=send" enctype="application/x-www-form-urlencoded" method="POST">
-				<input type="text" autocomplete="off" name="to" max-length="100" placeholder="To">
+				<input type="text" autocomplete="off" name="to" maxlength="100" placeholder="To">
 				<div id="suggestion_container" class="hidden"></div>
-				<input type="text" autocomplete="off" name="object" max-length="100" placeholder="Object">
+				<input type="text" autocomplete="off" name="object" maxlength="100" placeholder="Object">
 				<textarea form="new_email_form" name="message" autocomplete="off" placeholder="Text" cols="9" rows="15"></textarea>
 				<div>
 					<input type="submit" name="submit" value="Send">
