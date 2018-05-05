@@ -19,9 +19,9 @@ function wrapRequests($data) {
 			 "<div class='post'>".
 			 "<span class='author ".($row['Amministratore']?"admin":"")."'>".$row["UsernameAutore"].":</span><br>".
 			 "<span class='description'>".$row["Titolo"]."</span><br>".
-			 "<div style='text-align: right;''>".
+			 "<div style='text-align: right;'>".
 			 "<span class='details'>".$row["Istante"]." - Language: </span>".
-			 "<span class='details' style='color: black;''>".$row["Linguaggio"]."</span>".
+			 "<span class='details' style='color: black;'>".$row["Linguaggio"]."</span>".
 			 "</div>".
 			 "</div><div class='post_picture'>".
 			 	$img.
