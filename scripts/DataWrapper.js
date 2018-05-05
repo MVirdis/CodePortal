@@ -106,7 +106,7 @@ DataWrapper.MainRequestWrapper = function(Object) {
 
 		var username_el = document.createElement('div');
 		username_el.setAttribute('class','author');
-		username_el.appendChild(document.createTextNode(Object.data[i]['Username']));
+		username_el.appendChild(document.createTextNode(Object.data[i]['UsernameAutore']));
 
 		var time_el = document.createElement('div');
 		time_el.setAttribute('class','time');
