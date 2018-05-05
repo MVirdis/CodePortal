@@ -1,6 +1,6 @@
 <div class="center-block" style="text-align: right; margin-right: 15%;">
 	<p style="font-size: 26px;">Already 
-	<span style="color: black; font-size: 32px; font-style: bold;">
+	<span style="color: black; font-size: 32px; font-weight: bold;">
 	<?php
 
 	require_once './path.php';
