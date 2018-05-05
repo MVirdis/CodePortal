@@ -92,8 +92,5 @@
 	<section id="third_section" class="container">
 		<?php include LAYOUT_DIR.'counter.php'; ?>
 	</section>
-	<?php
-		include LAYOUT_DIR.'footer.php';
-	?>
 </body>
 </html>
