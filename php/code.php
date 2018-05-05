@@ -71,9 +71,9 @@ $author = $author->fetch_assoc();
 				?> submitted:
 			</div>
 			<div class="code">
-				<code>
+				<div class="code_container">
 					<pre><?php echo htmlspecialchars($reply['Codice']); ?></pre>
-				</code>
+				</div>
 				<div class="rating_container">
 					<div class="icon like <?php if(retIsLiked($reply['ID'])) echo 'selected'; ?>"></div>
 					<span><?php echo retLikes($reply['ID']).' - '.retDislikes($reply['ID']);?></span>

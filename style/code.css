@@ -68,7 +68,7 @@ section {
 	border-bottom: thin solid rgb(235,235,235);
 }
 
-.code code {
+.code .code_container {
 	display: block;
 
 	font-size: 16px;
@@ -87,23 +87,23 @@ section {
 	overflow: scroll;
 }
 
-.code code::-webkit-scrollbar {
+.code .code_container::-webkit-scrollbar {
 	width: 14px;
 }
 
 /* Track */
-.code code::-webkit-scrollbar-track {
+.code .code_container::-webkit-scrollbar-track {
     background-color: rgb(55,56,51); 
 }
 
 /* Handle */
-.code code::-webkit-scrollbar-thumb {
+.code .code_container::-webkit-scrollbar-thumb {
     background-color: rgb(84,85,81); 
     border-radius: 4px;
 }
 
 /* Handle on hover */
-.code code::-webkit-scrollbar-thumb:hover {
+.code .code_container::-webkit-scrollbar-thumb:hover {
     background-color: rgb(88,89,85); 
 }
 
