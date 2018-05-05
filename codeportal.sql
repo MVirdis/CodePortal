@@ -37,7 +37,7 @@ CREATE TABLE `amicizia` (
   KEY `Utente2` (`Utente2`),
   CONSTRAINT `amicizia_ibfk_1` FOREIGN KEY (`Utente1`) REFERENCES `utente` (`ID`) ON DELETE CASCADE,
   CONSTRAINT `amicizia_ibfk_2` FOREIGN KEY (`Utente2`) REFERENCES `utente` (`ID`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `amicizia` (
 
 LOCK TABLES `amicizia` WRITE;
 /*!40000 ALTER TABLE `amicizia` DISABLE KEYS */;
-INSERT INTO `amicizia` VALUES (2,2,1,'2018-02-12',NULL),(4,3,4,'2018-02-12','2018-02-12'),(5,5,3,'2018-02-16','2018-02-16'),(7,3,2,'2018-03-12','2018-03-12');
+INSERT INTO `amicizia` VALUES (2,2,1,'2018-02-12',NULL),(4,3,4,'2018-02-12','2018-02-12'),(5,5,3,'2018-02-16','2018-02-16'),(8,3,2,'2018-05-05',NULL);
 /*!40000 ALTER TABLE `amicizia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -496,7 +496,7 @@ CREATE TABLE `utente` (
   `Password` varchar(100) COLLATE latin1_general_ci NOT NULL,
   `Amministratore` tinyint(1) NOT NULL DEFAULT '0',
   `Esperienza` int(11) NOT NULL DEFAULT '0',
-  `Image` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
+  `Image` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   UNIQUE KEY `Username` (`Username`),
   UNIQUE KEY `Email` (`Email`)
@@ -509,7 +509,7 @@ CREATE TABLE `utente` (
 
 LOCK TABLES `utente` WRITE;
 /*!40000 ALTER TABLE `utente` DISABLE KEYS */;
-INSERT INTO `utente` VALUES (1,'m.virdis1@studenti.unipi.it','NP-Ok','Alberto Maria','Nobili','17ca572925b63317ff8e75be03d96eae1224ddef0269d3d5f8792c4221c77fc7',0,0,NULL),(2,'pweb@unipi.it','pweb','Mario','Virdis','7ea964fea37a8edd647bd2e3b0a64ba06d2df93857d6177d4fb9854f5e936d30',0,0,'image/png'),(3,'virdis.mario97@gmail.com','VMind','Mario','Virdis','17ca572925b63317ff8e75be03d96eae1224ddef0269d3d5f8792c4221c77fc7',1,0,'image/jpeg'),(4,'test1@test','VMmai','Marco','Luciolli','7ea964fea37a8edd647bd2e3b0a64ba06d2df93857d6177d4fb9854f5e936d30',0,0,NULL),(5,'anna9709@libero.it','annacapitani','Anna','Capitani','b2290c781112630d050ee2359c4847b680991b1d33feab3b4f78eea724aed03c',0,0,'image/x-icon');
+INSERT INTO `utente` VALUES (1,'m.virdis1@studenti.unipi.it','NP-Ok','Alberto Maria','Nobili','17ca572925b63317ff8e75be03d96eae1224ddef0269d3d5f8792c4221c77fc7',0,0,0),(2,'pweb@unipi.it','pweb','Mario','Virdis','7ea964fea37a8edd647bd2e3b0a64ba06d2df93857d6177d4fb9854f5e936d30',0,0,0),(3,'virdis.mario97@gmail.com','VMind','Mario','Virdis','17ca572925b63317ff8e75be03d96eae1224ddef0269d3d5f8792c4221c77fc7',1,0,1),(4,'test1@test','VMmai','Marco','Luciolli','7ea964fea37a8edd647bd2e3b0a64ba06d2df93857d6177d4fb9854f5e936d30',0,0,0),(5,'anna9709@libero.it','annacapitani','Anna','Capitani','b2290c781112630d050ee2359c4847b680991b1d33feab3b4f78eea724aed03c',0,0,0);
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -546,4 +546,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-22 18:42:59
+-- Dump completed on 2018-05-05 11:43:30
