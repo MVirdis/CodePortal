@@ -1,5 +1,4 @@
 <!--
-document.addEventListener("load",load);
 function load() {
 	//Effetto di highlight del logo
 	var titolo = document.getElementById("logo");

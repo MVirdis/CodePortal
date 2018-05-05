@@ -37,7 +37,7 @@
 				</div>
 				<ul>
 					<li><a class="blue-hover" href="./login.php" target="_self">Log In</a>
-					<li><a class="blue-hover" href="#" target="_self">More Instructions</a>
+					<li><a class="blue-hover" href="./instructions.php" target="_self">More Instructions</a>
 				</ul>
 			</nav>
 			<!-- Questo div serve ad annullare tutti gli effetti dei precedenti elementi flottanti -->
