@@ -19,12 +19,12 @@
 
 		$type = $type->fetch_assoc();
 
-		if ($type['Image'] == null) {// se La risposta è null
+		if (!$type['Image']) {// se La risposta è null
 			return $default_pic;
 		}
 
 		// L'immagine del profilo si trova nella cartella uploads
 		// Il nome del file è l'hash dell'id dell'utente
-		return '<img src="./../uploads/'.hash('sha256', $id).'" alt="Profile Pic" type="'.$type['Image'].'">';
+		return '<img src="./../uploads/'.hash('sha256', $id).'" alt="Profile Pic" >';
 	}
 ?>
