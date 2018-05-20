@@ -164,32 +164,6 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
--- Table structure for table `include`
---
-
-DROP TABLE IF EXISTS `include`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `include` (
-  `Messaggio` int(11) NOT NULL,
-  `Richiesta` int(11) NOT NULL,
-  PRIMARY KEY (`Messaggio`,`Richiesta`),
-  KEY `Richiesta` (`Richiesta`),
-  CONSTRAINT `include_ibfk_1` FOREIGN KEY (`Messaggio`) REFERENCES `messaggio` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `include_ibfk_2` FOREIGN KEY (`Richiesta`) REFERENCES `richiesta` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `include`
---
-
-LOCK TABLES `include` WRITE;
-/*!40000 ALTER TABLE `include` DISABLE KEYS */;
-/*!40000 ALTER TABLE `include` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `likes`
 --
 
@@ -301,55 +275,6 @@ INSERT INTO `messaggio` VALUES (1,'2018-02-12 15:48:24','Messaggio di Prova','Co
 UNLOCK TABLES;
 
 --
--- Table structure for table `migliore`
---
-
-DROP TABLE IF EXISTS `migliore`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `migliore` (
-  `Richiesta` int(11) NOT NULL,
-  `Risposta` int(11) NOT NULL,
-  PRIMARY KEY (`Richiesta`,`Risposta`),
-  KEY `Risposta` (`Risposta`),
-  CONSTRAINT `migliore_ibfk_1` FOREIGN KEY (`Richiesta`) REFERENCES `richiesta` (`ID`) ON DELETE CASCADE,
-  CONSTRAINT `migliore_ibfk_2` FOREIGN KEY (`Risposta`) REFERENCES `risposta` (`ID`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `migliore`
---
-
-LOCK TABLES `migliore` WRITE;
-/*!40000 ALTER TABLE `migliore` DISABLE KEYS */;
-/*!40000 ALTER TABLE `migliore` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `portfolio`
---
-
-DROP TABLE IF EXISTS `portfolio`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `portfolio` (
-  `Utente` int(11) NOT NULL,
-  `Risposta` int(11) NOT NULL,
-  PRIMARY KEY (`Utente`,`Risposta`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `portfolio`
---
-
-LOCK TABLES `portfolio` WRITE;
-/*!40000 ALTER TABLE `portfolio` DISABLE KEYS */;
-/*!40000 ALTER TABLE `portfolio` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `richiesta`
 --
 
@@ -378,32 +303,6 @@ LOCK TABLES `richiesta` WRITE;
 /*!40000 ALTER TABLE `richiesta` DISABLE KEYS */;
 INSERT INTO `richiesta` VALUES (1,'2017-12-18 19:14:54','Multi-threading e socket server.','Necessito di libreria multi threading per connesioni socket server.','Java',1,3),(2,'2017-12-18 23:32:04','OpenGL videogame.','Libreria per videogiochi che sfrutti la OpenGL.','Python',1,1),(3,'2017-12-18 23:45:14','RestFul API','Vorrei sviluppare una API Restful che permetta di ottenere posizione GPS.','Qualunque',1,1),(4,'2017-12-19 00:43:57','Richiesta 8','Come da titolo.','Python',1,3),(7,'2018-02-20 15:54:05','Nuova richiesta di prova','Una richiesta qualunque','Python',0,2);
 /*!40000 ALTER TABLE `richiesta` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `risponde`
---
-
-DROP TABLE IF EXISTS `risponde`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `risponde` (
-  `Messaggio` int(11) NOT NULL,
-  `Risposta` int(11) NOT NULL,
-  PRIMARY KEY (`Messaggio`,`Risposta`),
-  KEY `Risposta` (`Risposta`),
-  CONSTRAINT `risponde_ibfk_1` FOREIGN KEY (`Messaggio`) REFERENCES `messaggio` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `risponde_ibfk_2` FOREIGN KEY (`Risposta`) REFERENCES `risposta` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `risponde`
---
-
-LOCK TABLES `risponde` WRITE;
-/*!40000 ALTER TABLE `risponde` DISABLE KEYS */;
-/*!40000 ALTER TABLE `risponde` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -468,30 +367,6 @@ LOCK TABLES `utente` WRITE;
 INSERT INTO `utente` VALUES (1,'m.virdis1@studenti.unipi.it','NP-Ok','Alberto Maria','Nobili','17ca572925b63317ff8e75be03d96eae1224ddef0269d3d5f8792c4221c77fc7',0,0,0),(2,'pweb@unipi.it','pweb','Mario','Virdis','7ea964fea37a8edd647bd2e3b0a64ba06d2df93857d6177d4fb9854f5e936d30',0,0,0),(3,'virdis.mario97@gmail.com','VMind','Mario','Virdis','17ca572925b63317ff8e75be03d96eae1224ddef0269d3d5f8792c4221c77fc7',1,3,1),(4,'test1@test','VMmai','Marco','Luciolli','7ea964fea37a8edd647bd2e3b0a64ba06d2df93857d6177d4fb9854f5e936d30',0,0,0),(5,'anna9709@libero.it','annacapitani','Anna','Capitani','b2290c781112630d050ee2359c4847b680991b1d33feab3b4f78eea724aed03c',0,0,0);
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `valuta`
---
-
-DROP TABLE IF EXISTS `valuta`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `valuta` (
-  `Utente` int(11) NOT NULL,
-  `Risposta` int(11) NOT NULL,
-  `Stelle` int(11) NOT NULL,
-  PRIMARY KEY (`Utente`,`Risposta`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `valuta`
---
-
-LOCK TABLES `valuta` WRITE;
-/*!40000 ALTER TABLE `valuta` DISABLE KEYS */;
-/*!40000 ALTER TABLE `valuta` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -502,4 +377,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-20 13:05:03
+-- Dump completed on 2018-05-20 13:12:24
