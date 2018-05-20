@@ -48,7 +48,7 @@ function load() {
 
 	var username_input = document.getElementById("username");
 	username_input.addEventListener("change", event=>{
-		if(/^\s*([A-Za-z_\.\-])+\s*$/.test(username_input.value)){
+		if(/^\s*([0-9A-Za-z_\.\-])+\s*$/.test(username_input.value)){
 			username_input.style.border = "1px solid "+border_color_ok;
 			username_input.style.backgroundColor = bg_color_ok;
 		} else {

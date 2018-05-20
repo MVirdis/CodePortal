@@ -56,7 +56,7 @@
 			</div>
 			<div id="signup_form_container" class="<?php if(!isset($_GET['error'])) echo 'hidden'; ?> container dark form-container">
 				<form id="signup_form" action="./utils/registerUtil.php" enctype="application/x-www-form-urlencoded" method="POST" >
-					<input id="username" name="username" autocomplete="off" maxlength="20" placeholder="Username" pattern="^\s*([A-Za-z_\.\-])+\s*$" type="text" required>
+					<input id="username" name="username" autocomplete="off" maxlength="20" placeholder="Username" pattern="^\s*([0-9A-Za-z_\.\-])+\s*$" type="text" required>
 					<input id="first_name" autocomplete="off" class="left" maxlength="30" name="first_name" placeholder="First Name" pattern="^\s*([A-Za-z\u00C0-\u00FF]+\s*)+$" type="text" required>
 					<input id="last_name" autocomplete="off" maxlength="30" name="last_name" placeholder="Last Name" pattern="^\s*([A-Za-z\u00C0-\u00FF]+\s*)+$" type="text" required>
 					<input id="id_email" autocomplete="off" maxlength="75" name="email" placeholder="Email" pattern="^\w([\.-_]?[\w0-9])*@(\w[\.-_]?)*\w+$" type="text" required>
