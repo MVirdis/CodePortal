@@ -46,7 +46,7 @@ CREATE TABLE `amicizia` (
 
 LOCK TABLES `amicizia` WRITE;
 /*!40000 ALTER TABLE `amicizia` DISABLE KEYS */;
-INSERT INTO `amicizia` VALUES (2,2,1,'2018-02-12',NULL),(4,3,4,'2018-02-12','2018-02-12'),(5,5,3,'2018-02-16','2018-02-16'),(8,3,2,'2018-05-05',NULL);
+INSERT INTO `amicizia` VALUES (2,2,1,'2018-02-12',NULL),(4,3,4,'2018-02-12','2018-02-12'),(5,5,3,'2018-02-16','2018-02-16'),(8,3,2,'2018-05-05','2018-05-05');
 /*!40000 ALTER TABLE `amicizia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,7 +109,6 @@ LOCK TABLES `dislikes` WRITE;
 INSERT INTO `dislikes` VALUES (2,3);
 /*!40000 ALTER TABLE `dislikes` ENABLE KEYS */;
 UNLOCK TABLES;
-ALTER DATABASE `codeportal` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -119,62 +118,44 @@ ALTER DATABASE `codeportal` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER chk_dislikes
-
-
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER dislikes_monitor
 AFTER INSERT ON dislikes
-
-
 FOR EACH ROW
-
-
 BEGIN
-
 
+	DECLARE esperienza_like INTEGER DEFAULT 0;
+	DECLARE codici_like INTEGER DEFAULT 0;
+	DECLARE utente_target INTEGER DEFAULT 0;
 
-
-
+	# Check coerenza
 	IF EXISTS (
-
-
         SELECT *
-
-
-        FROM likes L
-
-
-        WHERE L.Utente=NEW.Utente
-
-
-        	AND L.Risposta=NEW.Risposta
-
-
+        FROM likes D
+        WHERE D.Utente=NEW.Utente
+        	AND D.Risposta=NEW.Risposta
     ) THEN
-
-
-    
-
-
-    	DELETE L.*
-
-
-        FROM likes L
-
-
-        WHERE L.Utente=NEW.Utente
-
-
-        	AND L.Risposta=NEW.Risposta;
-
-
-    
-
-
+        DELETE D.*
+        FROM likes D
+        WHERE D.Utente=NEW.Utente
+        	AND D.Risposta=NEW.Risposta;
     END IF;
-
 
+    # Update esperienza
+	SELECT U.Esperienza INTO esperienza_like
+	FROM utente U
+	WHERE U.ID = NEW.Utente;
 
-
+	SELECT count(*) INTO codici_like
+	FROM utente U INNER JOIN risposta R ON R.Autore=U.ID
+	WHERE U.ID = NEW.Utente;
+
+	SELECT R.Autore INTO utente_target
+	FROM risposta R
+	WHERE R.ID = NEW.Risposta;
+
+	UPDATE utente U
+	SET U.Esperienza = IF((U.Esperienza - ROUND((esperienza_like+1)/(codici_like+1)))>=0, U.Esperienza - ROUND((esperienza_like+1)/(codici_like+1)), 0)
+	WHERE U.ID = utente_target;
 
 END */;;
 DELIMITER ;
@@ -182,7 +163,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-ALTER DATABASE `codeportal` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 
 --
 -- Table structure for table `include`
@@ -236,7 +216,6 @@ LOCK TABLES `likes` WRITE;
 INSERT INTO `likes` VALUES (1,3),(3,3),(4,3),(5,3);
 /*!40000 ALTER TABLE `likes` ENABLE KEYS */;
 UNLOCK TABLES;
-ALTER DATABASE `codeportal` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -246,62 +225,41 @@ ALTER DATABASE `codeportal` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER chk_like
-
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `likes_monitor` AFTER INSERT ON `likes` FOR EACH ROW BEGIN
 
-AFTER INSERT ON likes
-
+	DECLARE esperienza_like INTEGER DEFAULT 0;
+	DECLARE codici_like INTEGER DEFAULT 0;
+	DECLARE utente_target INTEGER DEFAULT 0;
 
-FOR EACH ROW
-
-
-BEGIN
-
-
-
-
-
+	# Check coerenza
 	IF EXISTS (
-
-
         SELECT *
-
-
         FROM dislikes D
-
-
         WHERE D.Utente=NEW.Utente
-
-
         	AND D.Risposta=NEW.Risposta
-
-
     ) THEN
-
-
-    	
-
-
         DELETE D.*
-
-
         FROM dislikes D
-
-
         WHERE D.Utente=NEW.Utente
-
-
         	AND D.Risposta=NEW.Risposta;
-
-
-        
-
-
     END IF;
-
 
+    # Update esperienza
+	SELECT U.Esperienza INTO esperienza_like
+	FROM utente U
+	WHERE U.ID = NEW.Utente;
 
-
+	SELECT count(*) INTO codici_like
+	FROM utente U INNER JOIN risposta R ON R.Autore=U.ID
+	WHERE U.ID = NEW.Utente;
+
+	SELECT R.Autore INTO utente_target
+	FROM risposta R
+	WHERE R.ID = NEW.Risposta;
+
+	UPDATE utente U
+	SET U.Esperienza = U.Esperienza + ROUND((esperienza_like+1)/(codici_like+1))
+	WHERE U.ID = utente_target;
 
 END */;;
 DELIMITER ;
@@ -309,7 +267,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-ALTER DATABASE `codeportal` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 
 --
 -- Table structure for table `messaggio`
@@ -331,7 +288,7 @@ CREATE TABLE `messaggio` (
   KEY `Mittente` (`Mittente`),
   CONSTRAINT `messaggio_ibfk_1` FOREIGN KEY (`Destinatario`) REFERENCES `utente` (`ID`) ON DELETE NO ACTION,
   CONSTRAINT `messaggio_ibfk_2` FOREIGN KEY (`Mittente`) REFERENCES `utente` (`ID`) ON DELETE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -340,7 +297,7 @@ CREATE TABLE `messaggio` (
 
 LOCK TABLES `messaggio` WRITE;
 /*!40000 ALTER TABLE `messaggio` DISABLE KEYS */;
-INSERT INTO `messaggio` VALUES (1,'2018-02-12 15:48:24','Messaggio di Prova','Con questo messaggio voglio testare il meccanismo delle email su questa piattaforma.',3,2,1),(2,'2018-02-12 15:49:24','Secondo messaggio di prova','Con questo secondo messaggio di prova voglio testare il ritorno dal form delle nuove email se era aperto email inviate.',3,2,1),(3,'2018-02-12 15:51:03','Re: Secondo Messaggio di prova','Ok i messaggi sono arrivati!',2,3,1),(8,'2018-02-16 15:34:22','Oggetto Mooooooolto Luuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuungooooooooooooooooooooooooooooooooooooooo','Messaggio per la visualizzazione di prova di un messaggio molto lungo con un oggetto molto lungo.\r\n<?php\r\n/* Questo file contiene funzioni per ottenere varie informazioni dal database sottoforma di object. */\r\n\r\nrequire_once __DIR__.\'/../path.php\';\r\nrequire UTILS_DIR.\'managerDB.php\';\r\n\r\n// Ordina le richieste di codici per popolarita\'\r\nfunction topRatedRequests() {\r\n	global $dbmanager;\r\n\r\n	$query = \'SELECT DT.* \'.\r\n			 \'FROM ( \'.\r\n				  \'SELECT R.*, \'.\r\n				  		\'U.ID AS UserID, \'.\r\n						\'U.Username AS Autore, \'.\r\n						\'U.Image, \'.\r\n						\'count(DISTINCT RA.ID) AS NumResponses \'.\r\n				  \'FROM (richiesta R INNER JOIN utente U ON U.ID=R.Autore) \'.\r\n				  		\'LEFT OUTER JOIN risposta RA ON RA.Richiesta=R.ID \'.\r\n				  \'WHERE R.Visibilita=1 \'.\r\n				  \'GROUP BY R.ID, U.Username \'.\r\n				  \'ORDER BY NumResponses DESC, R.Istante DESC \'.\r\n			 \') DT \'.\r\n			 \'WHERE DT.NumResponses>=20\';\r\n\r\n	$rows = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	if ($rows == null || $rows->num_rows == 0)\r\n		return null;\r\n\r\n	return $rows;\r\n}\r\n\r\n// Restituisce le richieste dei soli amici\r\nfunction friendsRequests() {\r\n	global $dbmanager;\r\n\r\n	$query = \'SELECT R.*, U.ID AS UserID, U.Username AS Autore, U.Image \'.\r\n			 \'FROM richiesta R INNER JOIN utente U ON U.ID = R.Autore \'.\r\n			 \'WHERE EXISTS ( \'.\r\n			 \'   SELECT * \'.\r\n			 \'   FROM amicizia A \'.\r\n			 \'   WHERE (A.Utente1=R.Autore AND A.Utente2=\'.$_SESSION[\'userID\'].\') \'.\r\n			 \'   	OR (A.Utente1=\'.$_SESSION[\'userID\'].\' AND A.Utente2=R.Autore) \'.\r\n			 \'      AND A.DataAmicizia IS NOT NULL \'.\r\n			 \') AND R.Visibilita=1 \'.\r\n			 \'ORDER BY R.Istante DESC\';\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce le richieste ordinate temporalmente\r\nfunction recentRequests() {\r\n	global $dbmanager;\r\n\r\n	$query = \'SELECT R.*, U.ID AS UserID, U.Username AS Autore, U.Image \'.\r\n			 \'FROM richiesta R INNER JOIN utente U ON U.ID = R.Autore \'.\r\n			 \'WHERE R.Visibilita=1 \'.\r\n			 \'ORDER BY R.Istante DESC\';\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce il numero di codici in totale nella piattaforma\r\nfunction getNumOfTotalCodes() {\r\n	global $dbmanager;\r\n\r\n	$query = \'SELECT count(*) AS Num \'.\r\n			 \'FROM risposta\';\r\n	$result = $dbmanager->performQuery($query);\r\n	$dbmanager->closeConnection();\r\n\r\n	if($result->num_rows==0)\r\n		return 0;\r\n	return $result->fetch_assoc()[\'Num\'];\r\n}\r\n\r\n// Restituisce il numero di codici dell\'utente $id\r\nfunction getNumOfCodes($id) {\r\n	global $dbmanager;\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT count(ID) AS Num \'.\r\n		     \'FROM risposta \'.\r\n		     \'WHERE Autore=\'.$id;\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	if($result->num_rows==0)\r\n		return 0;\r\n	return $result->fetch_assoc()[\'Num\'];\r\n}\r\n\r\n// Restituisce il numero di richieste effettuate dall\'utente loggato\r\nfunction getNumOfRequests($id) {\r\n	global $dbmanager;\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT count(ID) AS Num \'.\r\n			 \'FROM richiesta \'.\r\n			 \'WHERE Autore=\'.$id;\r\n	$result = $dbmanager->performQuery($query);\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result->fetch_assoc()[\'Num\'];\r\n}\r\n\r\n// Restituisce il numero di commenti effettuati dall\'utente loggato\r\nfunction getNumOfComments($id) {\r\n	global $dbmanager;\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT count(ID) AS Num \'.\r\n		     \'FROM commento \'.\r\n		     \'WHERE Autore=\'.$id;\r\n	$result = $dbmanager->performQuery($query);\r\n	$dbmanager->closeConnection();\r\n\r\n	if($result->num_rows==0)\r\n		return 0;\r\n	return $result->fetch_assoc()[\'Num\'];\r\n}\r\n\r\n// Restituisce l\'esperienza dell\'utente loggato\r\nfunction getExperience($id) {\r\n	global $dbmanager;\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT Experience \'.\r\n			 \'FROM utente \'.\r\n			 \'WHERE ID=\'.$id;\r\n	$result = $dbmanager->performQuery($query);\r\n	$dbmanager->closeConnection();\r\n\r\n	if($result==null)\r\n		return 0;\r\n	return $result->fetch_assoc()[\'Experience\'];\r\n}\r\n\r\n// Restituisce il contenuto dell\'email di id $mailID\r\nfunction getMail($mailID) {\r\n	global $dbmanager;\r\n\r\n	$mailID = $dbmanager->sqlInjectionFilter($mailID);\r\n\r\n	$query = \'SELECT M.*, U.Username AS UsernameMittente, U2.Username AS UsernameDestinatario \'.\r\n			 \'FROM ( \'.\r\n			 	\'SELECT * FROM messaggio \'.\r\n			 	\'WHERE Destinatario=\'.$_SESSION[\'userID\'].\' \'.\r\n			 	\'OR Mittente=\'.$_SESSION[\'userID\'].\' \'.\r\n			 \') M \'.\r\n			 \' INNER JOIN utente U ON U.ID=M.Mittente \'.\r\n			 \'   INNER JOIN utente U2 ON U2.ID=M.Destinatario \'.\r\n			 \'WHERE M.ID=\'.$mailID;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n	$dbmanager->closeConnection();\r\n	return $result;\r\n}\r\n\r\n// Restituisce tutte le email in arrivo all\'utente loggato\r\nfunction getMailsIn() {\r\n	global $dbmanager;\r\n\r\n	$query = \'SELECT M.*, U1.ID AS UserID, U1.Username AS UsernameTarget, U1.Image, 1 AS dir \'.\r\n			 \'FROM messaggio M INNER JOIN utente U1 ON U1.ID=M.Mittente \'.\r\n			 \'WHERE M.Destinatario=\'.$_SESSION[\'userID\'].\' \'.\r\n			 \'ORDER BY M.Istante DESC\';\r\n	$result = $dbmanager->performQuery($query);\r\n	$dbmanager->closeConnection();\r\n	return $result;\r\n}\r\n\r\n// Restituisce tutte le email inviate dall\'utente loggato\r\nfunction getMailsOut() {\r\n	global $dbmanager;\r\n\r\n	$query = \'SELECT M.*, U1.ID AS UserID, U1.Username AS UsernameTarget, U1.Image, 0 AS dir \'.\r\n			 \'FROM messaggio M INNER JOIN utente U1 ON U1.ID=M.Destinatario \'.\r\n			 \'WHERE M.Mittente=\'.$_SESSION[\'userID\'].\' \'.\r\n			 \'ORDER BY M.Istante DESC\';\r\n	$result = $dbmanager->performQuery($query);\r\n	$dbmanager->closeConnection();\r\n	return $result;\r\n}\r\n\r\n// Restituisce gli amici dell\'utente loggato con username like $pattern\r\nfunction getFriendsOfUserLike($pattern) {\r\n	global $dbmanager;\r\n\r\n	$pattern = $dbmanager->sqlInjectionFilter($pattern);\r\n\r\n	$query = \'SELECT IF(U1.Username=\"\'.$_SESSION[\'username\'].\'\",U2.Username,U1.Username) AS Username \'.\r\n			 \'FROM utente U1 INNER JOIN amicizia A ON A.Utente1=U1.ID \'.\r\n			 \'    INNER JOIN utente U2 ON A.Utente2 = U2.ID \'.\r\n			 \'WHERE A.DataAmicizia IS NOT NULL \'.\r\n			 \'  AND ((U1.ID=\'.$_SESSION[\'userID\'].\' AND U2.Username LIKE \"%\'.$pattern.\'%\") \'.\r\n			 \'       OR (U2.ID=\'.$_SESSION[\'userID\'].\' AND U1.Username LIKE \"%\'.$pattern.\'%\")) \';\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce le richieste di amicizia ancora in sospeso per l\'utente loggato\r\nfunction getFriendReqs() {\r\n	global $dbmanager;\r\n\r\n	$query = \'SELECT A.ID, \'.\r\n					\'A.Utente1 AS UserID, \'.\r\n			 		\'U1.Username, \'.\r\n			 		\'U1.Image \'.\r\n			 \'FROM utente U1 INNER JOIN amicizia A ON A.Utente1=U1.ID \'.\r\n			 \'WHERE A.DataAmicizia IS NULL \'.\r\n			 \'  AND A.Utente2=\'.$_SESSION[\'userID\'];\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce i nomi utenti registrati presso il sito like $pattern\r\nfunction getUsersLike($pattern) {\r\n	global $dbmanager;\r\n\r\n	$pattern = $dbmanager->sqlInjectionFilter($pattern);\r\n\r\n	$query = \'SELECT U.ID, U.Username \'.\r\n			 \'FROM utente U \'.\r\n			 \'WHERE U.Username LIKE \"%\'.$pattern.\'%\" \'.\r\n			   \'AND U.Username <> \"\'.$_SESSION[\'username\'].\'\"\';\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce l\'username di un utente a partire dal suo id\r\nfunction id2Username($id) {\r\n	global $dbmanager;\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT U.Username \'.\r\n			 \'FROM utente U \'.\r\n			 \'WHERE U.ID=\'.$id;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce il formato immagine dell\'immagine utente\r\nfunction id2Pic($id) {\r\n	global $dbmanager;\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT U.Image \'.\r\n			 \'FROM utente U \'.\r\n			 \'WHERE U.ID=\'.$id;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	if($result==null || $result->num_rows == 0)\r\n		return null;\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce l\'utente\r\nfunction getUser($id) {\r\n	global $dbmanager;\r\n\r\n	if ($id == null) {\r\n		return null;\r\n	}\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT U.* \'.\r\n			 \'FROM utente U \'.\r\n			 \'WHERE U.ID=\'.$id;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce una richiesta a partire dall\'id\r\nfunction getRequest($id) {\r\n	global $dbmanager;\r\n\r\n	if ($id == null) {\r\n		return null;\r\n	}\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT R.* \'.\r\n			 \'FROM richiesta R \'.\r\n			 \'WHERE R.ID=\'.$id;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce la risposta di id $id\r\nfunction getReply($id) {\r\n	global $dbmanager;\r\n\r\n	if ($id == null) {\r\n		return null;\r\n	}\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT R.* \'.\r\n			 \'FROM risposta R \'.\r\n			 \'WHERE R.ID=\'.$id;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce i codici proposti come risposta di una richiesta di id $id\r\nfunction getReplies($id) {\r\n	global $dbmanager;\r\n\r\n	if ($id==null) {\r\n		return null;\r\n	}\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT RA.*, U.Username \'.\r\n			 \'FROM risposta RA INNER JOIN utente U ON U.ID=RA.Autore \'.\r\n			 \'WHERE RA.Richiesta=\'.$id;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Controlla se l\'utente loggato e\' amico di quello passato\r\nfunction checkFriendship($id) {\r\n	global $dbmanager;\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT IF(A.DataAmicizia IS NULL, \'.\r\n						\'IF( A.Utente1=\'.$_SESSION[\'userID\'].\', 1, 0), \'.\r\n					  	\'2 ) AS Flag \'.\r\n			 \'FROM amicizia A \'.\r\n			 \'WHERE (A.Utente1=\'.$_SESSION[\'userID\'].\' AND A.Utente2=\'.$id.\') \'.\r\n			 	\'OR (A.Utente1=\'.$id.\' AND A.Utente2=\'.$_SESSION[\'userID\'].\') \';\r\n	$result = $dbmanager->performQuery($query);\r\n	$dbmanager->closeConnection();\r\n\r\n	// Se non ci sono risultati imposto il valore 0\r\n	if($result == null || $result->num_rows == 0) {\r\n		$result = [\'Flag\'=>0];\r\n	} else {\r\n		$result = $result->fetch_assoc();\r\n	}\r\n\r\n	return $result[\'Flag\'];\r\n}\r\n\r\n// Restituisce le richieste nel database in base alle informazioni fornite\r\nfunction getRequestsLike($title, $author, $language) {\r\n	global $dbmanager;\r\n\r\n	if ($title==null && $author == null && $language==null)\r\n		return null;\r\n\r\n	$title = $dbmanager->sqlInjectionFilter($title);\r\n	$author = $dbmanager->sqlInjectionFilter($author);\r\n	$language = $dbmanager->sqlInjectionFilter($language);\r\n\r\n	$query = \'SELECT R.*, U.Username, IFNULL(DT.NumRisposte, 0) AS NumRisposte \'.\r\n			 \'FROM (richiesta R INNER JOIN utente U ON U.ID=R.Autore) \'.\r\n			 	\' LEFT OUTER JOIN ( \'.\r\n			 		\'SELECT R2.ID, count(*) AS NumRisposte \'.\r\n			 		\'FROM richiesta R2 INNER JOIN risposta RA ON RA.Richiesta = R2.ID \'.\r\n			 		\'GROUP BY R2.ID \'.\r\n			 	\' ) DT ON DT.ID=R.ID \'.\r\n			 \'WHERE \'.\r\n			 		(($title!=null)? \' R.Titolo LIKE \"%\'.$title.\'%\" AND \' : \'\' ).\r\n			 		(($author!=null)? \' U.Username LIKE \"%\'.$author.\'%\" AND \' : \'\' ).\r\n			 		(($language!=null)? \' R.Linguaggio LIKE \"%\'.$language.\'%\" AND \' : \'\' ).\r\n			 		\' 1 \'.\r\n			 \'ORDER BY R.Istante DESC\';\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce il numero di like di un codice\r\nfunction retLikes($code) {\r\n	global $dbmanager;\r\n\r\n	if ($code==null) {\r\n		return 0;\r\n	}\r\n\r\n	$code = $dbmanager->sqlInjectionFilter($code);\r\n\r\n	$query = \'SELECT count(*) AS Likes \'.\r\n			 \'FROM risposta R INNER JOIN likes L ON L.Risposta=R.ID \'.\r\n			 \'WHERE R.ID=\'.$code;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	if ($result==null)\r\n		return null;\r\n\r\n	if ($result->num_rows==0)\r\n		return 0;\r\n\r\n	$result = $result->fetch_assoc();\r\n\r\n	return $result[\'Likes\'];\r\n}\r\n\r\n// Restituisce il numero di dislike di un codice\r\nfunction retDislikes($code) {\r\n	global $dbmanager;\r\n\r\n	if ($code==null) {\r\n		return 0;\r\n	}\r\n\r\n	$code = $dbmanager->sqlInjectionFilter($code);\r\n\r\n	$query = \'SELECT count(*) AS Dislikes \'.\r\n			 \'FROM risposta R INNER JOIN dislikes D ON D.Risposta=R.ID \'.\r\n			 \'WHERE R.ID=\'.$code;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	if ($result==null)\r\n		return null;\r\n\r\n	if ($result->num_rows==0)\r\n		return 0;\r\n\r\n	$result = $result->fetch_assoc();\r\n\r\n	return $result[\'Dislikes\'];\r\n}\r\n\r\n// Restituisce vero se l\'utente ha già messo mi piace al codice\r\nfunction retIsLiked($code) {\r\n	global $dbmanager;\r\n\r\n	if ($code==null) {\r\n		return null;\r\n	}\r\n\r\n	$code = $dbmanager->sqlInjectionFilter($code);\r\n\r\n	$query = \'SELECT IF( EXISTS ( \'.\r\n				\'SELECT * \'.\r\n				\'FROM likes L \'.\r\n				\'WHERE L.Utente=\'.$_SESSION[\'userID\'].\' \'.\r\n				\'AND L.Risposta=\'.$code.\' \'.\r\n			 \' ) ,1,0) AS Result \';\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	if ($result==null)\r\n		return null;\r\n\r\n	if ($result->num_rows==0)\r\n		return null;\r\n\r\n	$result = $result->fetch_assoc();\r\n\r\n	return $result[\'Result\'];\r\n}\r\n\r\n// Restituisce vero se l\'utente ha già messo mi piace al codice\r\nfunction retIsDisliked($code) {\r\n	global $dbmanager;\r\n\r\n	if ($code==null) {\r\n		return null;\r\n	}\r\n\r\n	$code = $dbmanager->sqlInjectionFilter($code);\r\n\r\n	$query = \'SELECT IF( EXISTS ( \'.\r\n				\'SELECT * \'.\r\n				\'FROM dislikes L \'.\r\n				\'WHERE L.Utente=\'.$_SESSION[\'userID\'].\' \'.\r\n				\'AND L.Risposta=\'.$code.\' \'.\r\n			 \' ) ,1,0) AS Result \';\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	if ($result==null)\r\n		return null;\r\n\r\n	if ($result->num_rows==0)\r\n		return null;\r\n\r\n	$result = $result->fetch_assoc();\r\n\r\n	return $result[\'Result\'];\r\n}\r\n\r\n?>',2,3,1);
+INSERT INTO `messaggio` VALUES (1,'2018-02-12 15:48:24','Messaggio di Prova','Con questo messaggio voglio testare il meccanismo delle email su questa piattaforma.',3,2,1),(2,'2018-02-12 15:49:24','Secondo messaggio di prova','Con questo secondo messaggio di prova voglio testare il ritorno dal form delle nuove email se era aperto email inviate.',3,2,1),(3,'2018-02-12 15:51:03','Re: Secondo Messaggio di prova','Ok i messaggi sono arrivati!',2,3,1),(8,'2018-02-16 15:34:22','Oggetto Mooooooolto Luuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuungooooooooooooooooooooooooooooooooooooooo','Messaggio per la visualizzazione di prova di un messaggio molto lungo con un oggetto molto lungo.\r\n<?php\r\n/* Questo file contiene funzioni per ottenere varie informazioni dal database sottoforma di object. */\r\n\r\nrequire_once __DIR__.\'/../path.php\';\r\nrequire UTILS_DIR.\'managerDB.php\';\r\n\r\n// Ordina le richieste di codici per popolarita\'\r\nfunction topRatedRequests() {\r\n	global $dbmanager;\r\n\r\n	$query = \'SELECT DT.* \'.\r\n			 \'FROM ( \'.\r\n				  \'SELECT R.*, \'.\r\n				  		\'U.ID AS UserID, \'.\r\n						\'U.Username AS Autore, \'.\r\n						\'U.Image, \'.\r\n						\'count(DISTINCT RA.ID) AS NumResponses \'.\r\n				  \'FROM (richiesta R INNER JOIN utente U ON U.ID=R.Autore) \'.\r\n				  		\'LEFT OUTER JOIN risposta RA ON RA.Richiesta=R.ID \'.\r\n				  \'WHERE R.Visibilita=1 \'.\r\n				  \'GROUP BY R.ID, U.Username \'.\r\n				  \'ORDER BY NumResponses DESC, R.Istante DESC \'.\r\n			 \') DT \'.\r\n			 \'WHERE DT.NumResponses>=20\';\r\n\r\n	$rows = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	if ($rows == null || $rows->num_rows == 0)\r\n		return null;\r\n\r\n	return $rows;\r\n}\r\n\r\n// Restituisce le richieste dei soli amici\r\nfunction friendsRequests() {\r\n	global $dbmanager;\r\n\r\n	$query = \'SELECT R.*, U.ID AS UserID, U.Username AS Autore, U.Image \'.\r\n			 \'FROM richiesta R INNER JOIN utente U ON U.ID = R.Autore \'.\r\n			 \'WHERE EXISTS ( \'.\r\n			 \'   SELECT * \'.\r\n			 \'   FROM amicizia A \'.\r\n			 \'   WHERE (A.Utente1=R.Autore AND A.Utente2=\'.$_SESSION[\'userID\'].\') \'.\r\n			 \'   	OR (A.Utente1=\'.$_SESSION[\'userID\'].\' AND A.Utente2=R.Autore) \'.\r\n			 \'      AND A.DataAmicizia IS NOT NULL \'.\r\n			 \') AND R.Visibilita=1 \'.\r\n			 \'ORDER BY R.Istante DESC\';\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce le richieste ordinate temporalmente\r\nfunction recentRequests() {\r\n	global $dbmanager;\r\n\r\n	$query = \'SELECT R.*, U.ID AS UserID, U.Username AS Autore, U.Image \'.\r\n			 \'FROM richiesta R INNER JOIN utente U ON U.ID = R.Autore \'.\r\n			 \'WHERE R.Visibilita=1 \'.\r\n			 \'ORDER BY R.Istante DESC\';\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce il numero di codici in totale nella piattaforma\r\nfunction getNumOfTotalCodes() {\r\n	global $dbmanager;\r\n\r\n	$query = \'SELECT count(*) AS Num \'.\r\n			 \'FROM risposta\';\r\n	$result = $dbmanager->performQuery($query);\r\n	$dbmanager->closeConnection();\r\n\r\n	if($result->num_rows==0)\r\n		return 0;\r\n	return $result->fetch_assoc()[\'Num\'];\r\n}\r\n\r\n// Restituisce il numero di codici dell\'utente $id\r\nfunction getNumOfCodes($id) {\r\n	global $dbmanager;\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT count(ID) AS Num \'.\r\n		     \'FROM risposta \'.\r\n		     \'WHERE Autore=\'.$id;\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	if($result->num_rows==0)\r\n		return 0;\r\n	return $result->fetch_assoc()[\'Num\'];\r\n}\r\n\r\n// Restituisce il numero di richieste effettuate dall\'utente loggato\r\nfunction getNumOfRequests($id) {\r\n	global $dbmanager;\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT count(ID) AS Num \'.\r\n			 \'FROM richiesta \'.\r\n			 \'WHERE Autore=\'.$id;\r\n	$result = $dbmanager->performQuery($query);\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result->fetch_assoc()[\'Num\'];\r\n}\r\n\r\n// Restituisce il numero di commenti effettuati dall\'utente loggato\r\nfunction getNumOfComments($id) {\r\n	global $dbmanager;\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT count(ID) AS Num \'.\r\n		     \'FROM commento \'.\r\n		     \'WHERE Autore=\'.$id;\r\n	$result = $dbmanager->performQuery($query);\r\n	$dbmanager->closeConnection();\r\n\r\n	if($result->num_rows==0)\r\n		return 0;\r\n	return $result->fetch_assoc()[\'Num\'];\r\n}\r\n\r\n// Restituisce l\'esperienza dell\'utente loggato\r\nfunction getExperience($id) {\r\n	global $dbmanager;\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT Experience \'.\r\n			 \'FROM utente \'.\r\n			 \'WHERE ID=\'.$id;\r\n	$result = $dbmanager->performQuery($query);\r\n	$dbmanager->closeConnection();\r\n\r\n	if($result==null)\r\n		return 0;\r\n	return $result->fetch_assoc()[\'Experience\'];\r\n}\r\n\r\n// Restituisce il contenuto dell\'email di id $mailID\r\nfunction getMail($mailID) {\r\n	global $dbmanager;\r\n\r\n	$mailID = $dbmanager->sqlInjectionFilter($mailID);\r\n\r\n	$query = \'SELECT M.*, U.Username AS UsernameMittente, U2.Username AS UsernameDestinatario \'.\r\n			 \'FROM ( \'.\r\n			 	\'SELECT * FROM messaggio \'.\r\n			 	\'WHERE Destinatario=\'.$_SESSION[\'userID\'].\' \'.\r\n			 	\'OR Mittente=\'.$_SESSION[\'userID\'].\' \'.\r\n			 \') M \'.\r\n			 \' INNER JOIN utente U ON U.ID=M.Mittente \'.\r\n			 \'   INNER JOIN utente U2 ON U2.ID=M.Destinatario \'.\r\n			 \'WHERE M.ID=\'.$mailID;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n	$dbmanager->closeConnection();\r\n	return $result;\r\n}\r\n\r\n// Restituisce tutte le email in arrivo all\'utente loggato\r\nfunction getMailsIn() {\r\n	global $dbmanager;\r\n\r\n	$query = \'SELECT M.*, U1.ID AS UserID, U1.Username AS UsernameTarget, U1.Image, 1 AS dir \'.\r\n			 \'FROM messaggio M INNER JOIN utente U1 ON U1.ID=M.Mittente \'.\r\n			 \'WHERE M.Destinatario=\'.$_SESSION[\'userID\'].\' \'.\r\n			 \'ORDER BY M.Istante DESC\';\r\n	$result = $dbmanager->performQuery($query);\r\n	$dbmanager->closeConnection();\r\n	return $result;\r\n}\r\n\r\n// Restituisce tutte le email inviate dall\'utente loggato\r\nfunction getMailsOut() {\r\n	global $dbmanager;\r\n\r\n	$query = \'SELECT M.*, U1.ID AS UserID, U1.Username AS UsernameTarget, U1.Image, 0 AS dir \'.\r\n			 \'FROM messaggio M INNER JOIN utente U1 ON U1.ID=M.Destinatario \'.\r\n			 \'WHERE M.Mittente=\'.$_SESSION[\'userID\'].\' \'.\r\n			 \'ORDER BY M.Istante DESC\';\r\n	$result = $dbmanager->performQuery($query);\r\n	$dbmanager->closeConnection();\r\n	return $result;\r\n}\r\n\r\n// Restituisce gli amici dell\'utente loggato con username like $pattern\r\nfunction getFriendsOfUserLike($pattern) {\r\n	global $dbmanager;\r\n\r\n	$pattern = $dbmanager->sqlInjectionFilter($pattern);\r\n\r\n	$query = \'SELECT IF(U1.Username=\"\'.$_SESSION[\'username\'].\'\",U2.Username,U1.Username) AS Username \'.\r\n			 \'FROM utente U1 INNER JOIN amicizia A ON A.Utente1=U1.ID \'.\r\n			 \'    INNER JOIN utente U2 ON A.Utente2 = U2.ID \'.\r\n			 \'WHERE A.DataAmicizia IS NOT NULL \'.\r\n			 \'  AND ((U1.ID=\'.$_SESSION[\'userID\'].\' AND U2.Username LIKE \"%\'.$pattern.\'%\") \'.\r\n			 \'       OR (U2.ID=\'.$_SESSION[\'userID\'].\' AND U1.Username LIKE \"%\'.$pattern.\'%\")) \';\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce le richieste di amicizia ancora in sospeso per l\'utente loggato\r\nfunction getFriendReqs() {\r\n	global $dbmanager;\r\n\r\n	$query = \'SELECT A.ID, \'.\r\n					\'A.Utente1 AS UserID, \'.\r\n			 		\'U1.Username, \'.\r\n			 		\'U1.Image \'.\r\n			 \'FROM utente U1 INNER JOIN amicizia A ON A.Utente1=U1.ID \'.\r\n			 \'WHERE A.DataAmicizia IS NULL \'.\r\n			 \'  AND A.Utente2=\'.$_SESSION[\'userID\'];\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce i nomi utenti registrati presso il sito like $pattern\r\nfunction getUsersLike($pattern) {\r\n	global $dbmanager;\r\n\r\n	$pattern = $dbmanager->sqlInjectionFilter($pattern);\r\n\r\n	$query = \'SELECT U.ID, U.Username \'.\r\n			 \'FROM utente U \'.\r\n			 \'WHERE U.Username LIKE \"%\'.$pattern.\'%\" \'.\r\n			   \'AND U.Username <> \"\'.$_SESSION[\'username\'].\'\"\';\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce l\'username di un utente a partire dal suo id\r\nfunction id2Username($id) {\r\n	global $dbmanager;\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT U.Username \'.\r\n			 \'FROM utente U \'.\r\n			 \'WHERE U.ID=\'.$id;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce il formato immagine dell\'immagine utente\r\nfunction id2Pic($id) {\r\n	global $dbmanager;\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT U.Image \'.\r\n			 \'FROM utente U \'.\r\n			 \'WHERE U.ID=\'.$id;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	if($result==null || $result->num_rows == 0)\r\n		return null;\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce l\'utente\r\nfunction getUser($id) {\r\n	global $dbmanager;\r\n\r\n	if ($id == null) {\r\n		return null;\r\n	}\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT U.* \'.\r\n			 \'FROM utente U \'.\r\n			 \'WHERE U.ID=\'.$id;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce una richiesta a partire dall\'id\r\nfunction getRequest($id) {\r\n	global $dbmanager;\r\n\r\n	if ($id == null) {\r\n		return null;\r\n	}\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT R.* \'.\r\n			 \'FROM richiesta R \'.\r\n			 \'WHERE R.ID=\'.$id;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce la risposta di id $id\r\nfunction getReply($id) {\r\n	global $dbmanager;\r\n\r\n	if ($id == null) {\r\n		return null;\r\n	}\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT R.* \'.\r\n			 \'FROM risposta R \'.\r\n			 \'WHERE R.ID=\'.$id;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce i codici proposti come risposta di una richiesta di id $id\r\nfunction getReplies($id) {\r\n	global $dbmanager;\r\n\r\n	if ($id==null) {\r\n		return null;\r\n	}\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT RA.*, U.Username \'.\r\n			 \'FROM risposta RA INNER JOIN utente U ON U.ID=RA.Autore \'.\r\n			 \'WHERE RA.Richiesta=\'.$id;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Controlla se l\'utente loggato e\' amico di quello passato\r\nfunction checkFriendship($id) {\r\n	global $dbmanager;\r\n\r\n	$id = $dbmanager->sqlInjectionFilter($id);\r\n\r\n	$query = \'SELECT IF(A.DataAmicizia IS NULL, \'.\r\n						\'IF( A.Utente1=\'.$_SESSION[\'userID\'].\', 1, 0), \'.\r\n					  	\'2 ) AS Flag \'.\r\n			 \'FROM amicizia A \'.\r\n			 \'WHERE (A.Utente1=\'.$_SESSION[\'userID\'].\' AND A.Utente2=\'.$id.\') \'.\r\n			 	\'OR (A.Utente1=\'.$id.\' AND A.Utente2=\'.$_SESSION[\'userID\'].\') \';\r\n	$result = $dbmanager->performQuery($query);\r\n	$dbmanager->closeConnection();\r\n\r\n	// Se non ci sono risultati imposto il valore 0\r\n	if($result == null || $result->num_rows == 0) {\r\n		$result = [\'Flag\'=>0];\r\n	} else {\r\n		$result = $result->fetch_assoc();\r\n	}\r\n\r\n	return $result[\'Flag\'];\r\n}\r\n\r\n// Restituisce le richieste nel database in base alle informazioni fornite\r\nfunction getRequestsLike($title, $author, $language) {\r\n	global $dbmanager;\r\n\r\n	if ($title==null && $author == null && $language==null)\r\n		return null;\r\n\r\n	$title = $dbmanager->sqlInjectionFilter($title);\r\n	$author = $dbmanager->sqlInjectionFilter($author);\r\n	$language = $dbmanager->sqlInjectionFilter($language);\r\n\r\n	$query = \'SELECT R.*, U.Username, IFNULL(DT.NumRisposte, 0) AS NumRisposte \'.\r\n			 \'FROM (richiesta R INNER JOIN utente U ON U.ID=R.Autore) \'.\r\n			 	\' LEFT OUTER JOIN ( \'.\r\n			 		\'SELECT R2.ID, count(*) AS NumRisposte \'.\r\n			 		\'FROM richiesta R2 INNER JOIN risposta RA ON RA.Richiesta = R2.ID \'.\r\n			 		\'GROUP BY R2.ID \'.\r\n			 	\' ) DT ON DT.ID=R.ID \'.\r\n			 \'WHERE \'.\r\n			 		(($title!=null)? \' R.Titolo LIKE \"%\'.$title.\'%\" AND \' : \'\' ).\r\n			 		(($author!=null)? \' U.Username LIKE \"%\'.$author.\'%\" AND \' : \'\' ).\r\n			 		(($language!=null)? \' R.Linguaggio LIKE \"%\'.$language.\'%\" AND \' : \'\' ).\r\n			 		\' 1 \'.\r\n			 \'ORDER BY R.Istante DESC\';\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	return $result;\r\n}\r\n\r\n// Restituisce il numero di like di un codice\r\nfunction retLikes($code) {\r\n	global $dbmanager;\r\n\r\n	if ($code==null) {\r\n		return 0;\r\n	}\r\n\r\n	$code = $dbmanager->sqlInjectionFilter($code);\r\n\r\n	$query = \'SELECT count(*) AS Likes \'.\r\n			 \'FROM risposta R INNER JOIN likes L ON L.Risposta=R.ID \'.\r\n			 \'WHERE R.ID=\'.$code;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	if ($result==null)\r\n		return null;\r\n\r\n	if ($result->num_rows==0)\r\n		return 0;\r\n\r\n	$result = $result->fetch_assoc();\r\n\r\n	return $result[\'Likes\'];\r\n}\r\n\r\n// Restituisce il numero di dislike di un codice\r\nfunction retDislikes($code) {\r\n	global $dbmanager;\r\n\r\n	if ($code==null) {\r\n		return 0;\r\n	}\r\n\r\n	$code = $dbmanager->sqlInjectionFilter($code);\r\n\r\n	$query = \'SELECT count(*) AS Dislikes \'.\r\n			 \'FROM risposta R INNER JOIN dislikes D ON D.Risposta=R.ID \'.\r\n			 \'WHERE R.ID=\'.$code;\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	if ($result==null)\r\n		return null;\r\n\r\n	if ($result->num_rows==0)\r\n		return 0;\r\n\r\n	$result = $result->fetch_assoc();\r\n\r\n	return $result[\'Dislikes\'];\r\n}\r\n\r\n// Restituisce vero se l\'utente ha già messo mi piace al codice\r\nfunction retIsLiked($code) {\r\n	global $dbmanager;\r\n\r\n	if ($code==null) {\r\n		return null;\r\n	}\r\n\r\n	$code = $dbmanager->sqlInjectionFilter($code);\r\n\r\n	$query = \'SELECT IF( EXISTS ( \'.\r\n				\'SELECT * \'.\r\n				\'FROM likes L \'.\r\n				\'WHERE L.Utente=\'.$_SESSION[\'userID\'].\' \'.\r\n				\'AND L.Risposta=\'.$code.\' \'.\r\n			 \' ) ,1,0) AS Result \';\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	if ($result==null)\r\n		return null;\r\n\r\n	if ($result->num_rows==0)\r\n		return null;\r\n\r\n	$result = $result->fetch_assoc();\r\n\r\n	return $result[\'Result\'];\r\n}\r\n\r\n// Restituisce vero se l\'utente ha già messo mi piace al codice\r\nfunction retIsDisliked($code) {\r\n	global $dbmanager;\r\n\r\n	if ($code==null) {\r\n		return null;\r\n	}\r\n\r\n	$code = $dbmanager->sqlInjectionFilter($code);\r\n\r\n	$query = \'SELECT IF( EXISTS ( \'.\r\n				\'SELECT * \'.\r\n				\'FROM dislikes L \'.\r\n				\'WHERE L.Utente=\'.$_SESSION[\'userID\'].\' \'.\r\n				\'AND L.Risposta=\'.$code.\' \'.\r\n			 \' ) ,1,0) AS Result \';\r\n\r\n	$result = $dbmanager->performQuery($query);\r\n\r\n	$dbmanager->closeConnection();\r\n\r\n	if ($result==null)\r\n		return null;\r\n\r\n	if ($result->num_rows==0)\r\n		return null;\r\n\r\n	$result = $result->fetch_assoc();\r\n\r\n	return $result[\'Result\'];\r\n}\r\n\r\n?>',2,3,1),(9,'2018-05-05 11:39:47','New Mess','Testo',2,3,1);
 /*!40000 ALTER TABLE `messaggio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -546,4 +503,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-05 11:43:30
+-- Dump completed on 2018-05-20 12:40:28
