@@ -106,7 +106,6 @@ CREATE TABLE `dislikes` (
 
 LOCK TABLES `dislikes` WRITE;
 /*!40000 ALTER TABLE `dislikes` DISABLE KEYS */;
-INSERT INTO `dislikes` VALUES (2,3);
 /*!40000 ALTER TABLE `dislikes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -213,7 +212,7 @@ CREATE TABLE `likes` (
 
 LOCK TABLES `likes` WRITE;
 /*!40000 ALTER TABLE `likes` DISABLE KEYS */;
-INSERT INTO `likes` VALUES (1,3),(3,3),(4,3),(5,3);
+INSERT INTO `likes` VALUES (1,3),(2,3),(3,3);
 /*!40000 ALTER TABLE `likes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -466,7 +465,7 @@ CREATE TABLE `utente` (
 
 LOCK TABLES `utente` WRITE;
 /*!40000 ALTER TABLE `utente` DISABLE KEYS */;
-INSERT INTO `utente` VALUES (1,'m.virdis1@studenti.unipi.it','NP-Ok','Alberto Maria','Nobili','17ca572925b63317ff8e75be03d96eae1224ddef0269d3d5f8792c4221c77fc7',0,0,0),(2,'pweb@unipi.it','pweb','Mario','Virdis','7ea964fea37a8edd647bd2e3b0a64ba06d2df93857d6177d4fb9854f5e936d30',0,0,0),(3,'virdis.mario97@gmail.com','VMind','Mario','Virdis','17ca572925b63317ff8e75be03d96eae1224ddef0269d3d5f8792c4221c77fc7',1,0,1),(4,'test1@test','VMmai','Marco','Luciolli','7ea964fea37a8edd647bd2e3b0a64ba06d2df93857d6177d4fb9854f5e936d30',0,0,0),(5,'anna9709@libero.it','annacapitani','Anna','Capitani','b2290c781112630d050ee2359c4847b680991b1d33feab3b4f78eea724aed03c',0,0,0);
+INSERT INTO `utente` VALUES (1,'m.virdis1@studenti.unipi.it','NP-Ok','Alberto Maria','Nobili','17ca572925b63317ff8e75be03d96eae1224ddef0269d3d5f8792c4221c77fc7',0,0,0),(2,'pweb@unipi.it','pweb','Mario','Virdis','7ea964fea37a8edd647bd2e3b0a64ba06d2df93857d6177d4fb9854f5e936d30',0,0,0),(3,'virdis.mario97@gmail.com','VMind','Mario','Virdis','17ca572925b63317ff8e75be03d96eae1224ddef0269d3d5f8792c4221c77fc7',1,3,1),(4,'test1@test','VMmai','Marco','Luciolli','7ea964fea37a8edd647bd2e3b0a64ba06d2df93857d6177d4fb9854f5e936d30',0,0,0),(5,'anna9709@libero.it','annacapitani','Anna','Capitani','b2290c781112630d050ee2359c4847b680991b1d33feab3b4f78eea724aed03c',0,0,0);
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -503,4 +502,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-20 12:40:28
+-- Dump completed on 2018-05-20 13:05:03
