@@ -495,8 +495,7 @@ function updateRequest() {
 	if (!isset($_POST['old_req_id']) 
 	  || !isset($_POST['language']) 
 	  || !isset($_POST['title']) 
-	  || !isset($_POST['description'])
-	  || !isset($_POST['public'])) {
+	  || !isset($_POST['description'])) {
 	  	header('location: ./../new_request.php?message='.'Error some information was missing!');
 		exit;
 	}
