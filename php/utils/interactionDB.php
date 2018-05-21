@@ -283,8 +283,6 @@ function newFriendRequest() {
 
 	$dbmanager->closeConnection();
 
-	echo 'Aperto nuova request!';
-
 	header('location: ./../profile.php?id='.$id);
 	exit;
 }
@@ -309,7 +307,7 @@ function newCodeRequest() {
 
 	$dbmanager->closeConnection();
 
-	//header('location: ./../new_request.php?message='.'Request successfully received.');
+	header('location: ./../new_request.php?message='.'Request successfully received.');
 	exit;
 }
 
