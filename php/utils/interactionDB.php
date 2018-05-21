@@ -373,9 +373,9 @@ function updateCode() {
 
 	$old_id = $dbmanager->sqlInjectionFilter($_POST['old_code_id']);
 
-	$query = 'SELECT C.Autore AS ID '.
-			 'FROM commento C '.
-			 'WHERE C.ID='.$old_id;
+	$query = 'SELECT R.Autore AS ID '.
+			 'FROM risposta R '.
+			 'WHERE R.ID='.$old_id;
 
 	$author = $dbmanager->performQuery($query);
 
