@@ -164,6 +164,9 @@ $author = $author->fetch_assoc();
 		// Admin's remove buttons
 		var comments = document.getElementsByClassName('comment');
 		for(var i=0; i<comments.length-1; ++i) {
+			if (comments[i].getElementsByTagName('form').length == 0)
+				continue;
+
 			comments[i].addEventListener('mouseenter', (function(){
 				this.getElementsByClassName('delete_button')[0].setAttribute('class', 'delete_button');
 			}).bind(comments[i]));

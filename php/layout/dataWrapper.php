@@ -197,7 +197,7 @@ function getCommentsList($data) {
 				"<div class='content'>".
 					"<div><span ".($row['Amministratore']?"class=\"admin\"":"").">".$row['Username']."</span></div>".
 					"<div><span>".$row['Testo']."</span></div>".
-					($_SESSION['admin']?$delete_form:"").
+					($_SESSION['admin'] || $_SESSION['userID']==$row['Autore']?$delete_form:"").
 				"</div>".
 			 "</div>";
 	}

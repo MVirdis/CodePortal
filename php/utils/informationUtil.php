@@ -580,7 +580,8 @@ function getComments($code) {
 
 	$query = 'SELECT C.*, U.ID AS UserID, U.Username, U.Amministratore '.
 			 'FROM commento C INNER JOIN utente U ON U.ID=C.Autore '.
-			 'WHERE C.Risposta='.$code;
+			 'WHERE C.Risposta='.$code.' '.
+			 'ORDER BY C.Istante DESC';
 
 	$result = $dbmanager->performQuery($query);
 
