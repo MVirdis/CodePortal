@@ -47,7 +47,6 @@
 					   <?php if($edit_flag) echo "value=\"".htmlspecialchars($_POST['old_title'])."\""; ?> required>
 				<input type="text" name="language" placeholder="Language" autocomplete="off"
 					   <?php if($edit_flag) echo "value=\"".htmlspecialchars($_POST['old_language'])."\""; ?> required>
-				<label>Public: <input type="checkbox" name="public" <?php if($edit_flag) echo "checked"; ?>></label>
 				<textarea name="description" placeholder="Description" autocomplete="off" required><?php
 					if($edit_flag) {
 						echo htmlspecialchars($_POST['old_description']);

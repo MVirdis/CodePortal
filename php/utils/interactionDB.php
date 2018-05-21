@@ -300,17 +300,16 @@ function newCodeRequest() {
 
 	$title = $dbmanager->sqlInjectionFilter($_POST['title']);
 	$language = $dbmanager->sqlInjectionFilter($_POST['language']);
-	$public = $dbmanager->sqlInjectionFilter($_POST['public']);
 	$description = $dbmanager->sqlInjectionFilter($_POST['description']);
 
 	$query = 'INSERT INTO richiesta(Autore, Titolo, Descrizione, Linguaggio, Visibilita) '.
-			 'VALUES ('.$_SESSION['userID'].', "'.$title.'", "'.$description.'", "'.$language.'", "'.$public.'")';
+			 'VALUES ('.$_SESSION['userID'].', "'.$title.'", "'.$description.'", "'.$language.'", 1)';
 
 	$dbmanager->performQuery($query);
 
 	$dbmanager->closeConnection();
 
-	header('location: ./../new_request.php?message='.'Request successfully received.');
+	//header('location: ./../new_request.php?message='.'Request successfully received.');
 	exit;
 }
 
