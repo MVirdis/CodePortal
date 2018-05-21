@@ -526,7 +526,7 @@ function updateRequest() {
 			 'SET R.Titolo="'.$title.'", '.
 			 	'R.Linguaggio="'.$language.'", '.
 			 	'R.Descrizione="'.$description.'", '.
-			 	'R.Visibilita='.($public=='on'?1:0).' '.
+			 	'R.Visibilita=1 '.
 			 'WHERE R.ID='.$old_id;
 
 	$dbmanager->performQuery($query);
