@@ -105,7 +105,7 @@ $author = $author->fetch_assoc();
 				<div class="replies">
 					<?php
 						$res = getReplies($request['ID']);
-						wrapRepliesShowcase($res);
+						wrapRepliesShowcase($res, $request['ID']);
 					?>
 				</div>
 			</div>

@@ -9,6 +9,14 @@ a {
 	color: inherit;
 }
 
+h1 a {
+	color: #2896EB;
+}
+
+h1 a:hover {
+	text-decoration: underline;
+}
+
 section {
 	display: block;
 	text-align: center;

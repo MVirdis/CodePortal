@@ -150,7 +150,7 @@ function getFriendReqsList($data) {
 }
 
 // Mostra tutte le risposte ad una richiesta nella pagina di visualizzazione
-function wrapRepliesShowcase($data) {
+function wrapRepliesShowcase($data, $req) {
 
 	if ($data == null || $data->num_rows == 0) {
 		echo "<p style='font-size: 16px; font-weight: 300; font-style: normal;'>No replies at the moment</p>";
@@ -171,7 +171,7 @@ function wrapRepliesShowcase($data) {
 			 "<script>\n".
 			 	"var div_x = document.getElementById('".$row['ID']."');\n".
 			 	"div_x.addEventListener('click', function(){\n".
-			 		"window.location = './code.php?id=".$row['ID']."';\n".
+			 		"window.location = './code.php?id=".$row['ID']."&req=".$req."';\n".
 			 	"});\n".
 			 "</script>";
 	}

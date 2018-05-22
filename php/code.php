@@ -60,7 +60,7 @@ $author = $author->fetch_assoc();
 	<?php include LAYOUT_DIR.'menu.php'; ?>
 	<section>
 		<div class="container">
-			<h1>Reply #<?php echo $reply['ID']; ?></h1>
+			<h1>Reply #<?php echo $reply['ID']; ?> to Request <a href="./view.php?id=<?php echo $_GET['req']; ?>">#<?php echo $_GET['req']; ?></a></h1>
 			<div class="author">
 				<?php echo getPic($author['ID']); ?>
 				<?php
