@@ -30,10 +30,8 @@ function updateDatabase() {
 	global $dbmanager;
 	global $_SESSION;
 
-	$type = $dbmanager->sqlInjectionFilter($_FILES['fileToUpload']['type']);
-
 	$query = 'UPDATE utente U '.
-			 'SET U.Image="'.$type.'" '.
+			 'SET U.Image=1 '.
 			 'WHERE U.ID='.$_SESSION['userID'];
 	$dbmanager->performQuery($query);
 

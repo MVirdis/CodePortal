@@ -137,7 +137,7 @@ function removeProfilePic() {
 	unlink('./../../uploads/'.hash('sha256',$_SESSION['userID']));
 
 	$query = 'UPDATE utente U '.
-			 'SET U.Image = NULL '.
+			 'SET U.Image = 0 '.
 			 'WHERE U.ID='.$_SESSION['userID'];
 
 	$dbmanager->performQuery($query);
