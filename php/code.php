@@ -116,6 +116,7 @@ $author = $author->fetch_assoc();
 								<form action="./utils/interactionDB.php?action=newcomment" method="POST"
 									enctype="application/x-www-form-urlencoded">
 									<input type="hidden" value="<?php echo $_GET['id']; ?>" name="return">
+									<input type="hidden" value="<?php echo $_GET['req']; ?>" name="req">
 									<textarea name="comment" placeholder="Write your comment" autocomplete="off" maxlength="10000" rows="1" required></textarea>
 									<button class="hidden">Send</button>
 								</form>

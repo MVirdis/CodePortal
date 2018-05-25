@@ -356,7 +356,7 @@ function newComment() {
 
 	$dbmanager->closeConnection();
 
-	header('location: ./../code.php?id='.$code_id);
+	header('location: ./../code.php?id='.$code_id.'&req='.$_POST['req']);
 	exit;
 }
 
