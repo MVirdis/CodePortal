@@ -152,7 +152,7 @@ function getExperience($id) {
 
 	$id = $dbmanager->sqlInjectionFilter($id);
 
-	$query = 'SELECT Experience '.
+	$query = 'SELECT Esperienza '.
 			 'FROM utente '.
 			 'WHERE ID='.$id;
 	$result = $dbmanager->performQuery($query);
@@ -160,7 +160,7 @@ function getExperience($id) {
 
 	if($result==null)
 		return 0;
-	return $result->fetch_assoc()['Experience'];
+	return $result->fetch_assoc()['Esperienza'];
 }
 
 // Restituisce il contenuto dell'email di id $mailID
