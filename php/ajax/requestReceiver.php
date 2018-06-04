@@ -129,12 +129,32 @@
 
 		$code_id = $dbmanager->sqlInjectionFilter($_GET['likes']);
 
-		// Esiste un trigger che cancella il non mi piace se era
-		// già stato messo dallo stesso user sul codice
-		$query = 'INSERT INTO likes(Utente, Risposta) '.
-				 'VALUES ('.$_SESSION['userID'].', '.$code_id.')';
+		$query = 'SELECT * '.
+				 'FROM likes L '.
+				 'WHERE L.Utente='.$_SESSION['userID'].' '.
+				 	'AND L.Risposta='.$code_id;
 
-		$dbmanager->performQuery($query);
+		$res = $dbmanager->performQuery($query);
+
+		if (!$res) {// Non è stata eseguita la query
+			echo json_encode($response);
+			return;
+		}
+
+		if ($res->num_rows==0) {// Non ci sono altri mi piace
+			// Esiste un trigger che cancella il non mi piace se era
+			// già stato messo dallo stesso user sul codice
+			$query = 'INSERT INTO likes(Utente, Risposta) '.
+					 'VALUES ('.$_SESSION['userID'].', '.$code_id.')';
+
+			$dbmanager->performQuery($query);
+		} else {// Mi piace già messo
+			$query = 'DELETE L.* '.
+					 'FROM likes L '.
+					 'WHERE L.Utente='.$_SESSION['userID'].' '.
+					 	' AND L.Risposta='.$code_id;
+			$dbmanager->performQuery($query);
+		}
 
 		$dbmanager->closeConnection();
 
@@ -149,12 +169,32 @@
 
 		$code_id = $dbmanager->sqlInjectionFilter($_GET['dislikes']);
 
-		// Esiste un trigger che cancella il mi piace se era
-		// già stato messo dallo stesso user sul codice
-		$query = 'INSERT INTO dislikes(Utente, Risposta) '.
-				 'VALUES ('.$_SESSION['userID'].', '.$code_id.')';
+		$query = 'SELECT * '.
+				 'FROM dislikes L '.
+				 'WHERE L.Utente='.$_SESSION['userID'].' '.
+				 	'AND L.Risposta='.$code_id;
 
-		$dbmanager->performQuery($query);
+		$res = $dbmanager->performQuery($query);
+
+		if (!$res) {// Non è stata eseguita la query
+			echo json_encode($response);
+			return;
+		}
+
+		if ($res->num_rows==0) {// Non ci sono altri non mi piace
+			// Esiste un trigger che cancella il non mi piace se era
+			// già stato messo dallo stesso user sul codice
+			$query = 'INSERT INTO dislikes(Utente, Risposta) '.
+					 'VALUES ('.$_SESSION['userID'].', '.$code_id.')';
+
+			$dbmanager->performQuery($query);
+		} else {// Mi piace già messo
+			$query = 'DELETE L.* '.
+					 'FROM dislikes L '.
+					 'WHERE L.Utente='.$_SESSION['userID'].' '.
+					 	' AND L.Risposta='.$code_id;
+			$dbmanager->performQuery($query);
+		}
 
 		$dbmanager->closeConnection();
 
