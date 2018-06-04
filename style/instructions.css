@@ -8,7 +8,21 @@ body {
 
 	margin: 0 auto;
 
-	font-size: 10px;
+	font-size: 16px;
 	word-spacing: 1px;
 }
 
+section {
+	display: block;
+	padding-left: 10%;
+}
+
+section p img {
+	width: 20px;
+	height: 20px;
+	border-radius: 2px;
+}
+
+section span {
+	color: #09f;
+}
