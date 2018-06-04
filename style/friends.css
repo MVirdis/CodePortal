@@ -129,6 +129,7 @@ a.admin {
 }
 
 #result_container {
+	display: block;
 	margin: 4px 0;
 	font-size: 22px;
 	padding: 4px;
