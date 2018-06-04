@@ -72,6 +72,7 @@ div {
 	font-size: 18px;
 	cursor: pointer;
 	border-bottom: thin dashed #616161;
+	margin-top: 20px;
 }
 
 .description input[type=submit]:focus {
