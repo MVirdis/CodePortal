@@ -106,7 +106,6 @@ CREATE TABLE `dislikes` (
 
 LOCK TABLES `dislikes` WRITE;
 /*!40000 ALTER TABLE `dislikes` DISABLE KEYS */;
-INSERT INTO `dislikes` VALUES (2,1);
 /*!40000 ALTER TABLE `dislikes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -153,6 +152,44 @@ DELIMITER ;;
 	IF utente_target<>NEW.Utente THEN
     	UPDATE utente U
 		SET U.Esperienza = IF((U.Esperienza -(esperienza_like+1))>=0, (U.Esperienza -(esperienza_like+1)), 0)
+		WHERE U.ID = utente_target;
+    END IF;
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER del_dislikes
+AFTER DELETE ON dislikes
+FOR EACH ROW
+BEGIN
+
+	DECLARE esperienza_like INTEGER DEFAULT 0;
+	DECLARE codici_like INTEGER DEFAULT 0;
+	DECLARE utente_target INTEGER DEFAULT 0;
+
+	SELECT U.Esperienza INTO esperienza_like
+	FROM utente U
+	WHERE U.ID = OLD.Utente;
+
+	SELECT R.Autore INTO utente_target
+	FROM risposta R
+	WHERE R.ID = OLD.Risposta;
+
+	IF utente_target<>OLD.Utente THEN
+    	UPDATE utente U
+		SET U.Esperienza = U.Esperienza+esperienza_like+1
 		WHERE U.ID = utente_target;
     END IF;
 
@@ -233,6 +270,44 @@ DELIMITER ;;
 	IF utente_target<>NEW.Utente THEN
     	UPDATE utente U
 		SET U.Esperienza = U.Esperienza+(esperienza_like+1)
+		WHERE U.ID = utente_target;
+    END IF;
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER del_likes
+AFTER DELETE ON likes
+FOR EACH ROW
+BEGIN
+
+	DECLARE esperienza_like INTEGER DEFAULT 0;
+	DECLARE codici_like INTEGER DEFAULT 0;
+	DECLARE utente_target INTEGER DEFAULT 0;
+
+	SELECT U.Esperienza INTO esperienza_like
+	FROM utente U
+	WHERE U.ID = OLD.Utente;
+
+	SELECT R.Autore INTO utente_target
+	FROM risposta R
+	WHERE R.ID = OLD.Risposta;
+
+	IF utente_target<>OLD.Utente THEN
+    	UPDATE utente U
+		SET U.Esperienza = IF(U.Esperienza-(esperienza_like+1)>=0,U.Esperienza-(esperienza_like+1),0)
 		WHERE U.ID = utente_target;
     END IF;
 
@@ -379,4 +454,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-04 13:44:26
+-- Dump completed on 2018-06-04 14:58:15
