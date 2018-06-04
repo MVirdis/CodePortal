@@ -117,7 +117,7 @@
 		<p>By hovering on a comment in the case you're the author or an administrator, it will appear a <span style="color: red;">red delete button</span>.</p>
 	</section>
 
-	<script type="text/javascript">
+	<script>
 		// Effetto fissaggio menu navigazione
 		var body = document.body;
 		var menu = document.getElementsByTagName("header")[0];

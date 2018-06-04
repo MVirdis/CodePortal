@@ -29,11 +29,11 @@
 </head>
 <body onload="load()">
 	<!-- In questa sezione compaiono il menu di navigazione ed il logo oltre ad una prima sezione di presentazione-->
-	<section id="first_section">
+	<div id="first_section">
 		<header class="header-top">
 			<nav>
 				<div id="logo">
-					<h1><a href="./" target="_self"><span id="logo_code">&lt;/>Code</span><span id="logo_portal">Portal</span></a></h1>
+					<h2><a href="./" target="_self"><span id="logo_code">&lt;/>Code</span><span id="logo_portal">Portal</span></a></h2>
 				</div>
 				<ul>
 					<li><a class="blue-hover" href="./login.php" target="_self">Log In</a>
@@ -47,7 +47,7 @@
 		<div id="presentation">
 			<div id="title_container" class="container">
 				<span id="second_title" class="dark">A Social Network for</span>
-				<h1 class="dark">Developers</h1>
+				<h2 class="dark">Developers</h2>
 			</div>
 			<div id="links_container" class="container">
 				<a id="signup_link" class="button" ><span>Sign Up</span></a>
@@ -73,9 +73,9 @@
 				<a id="back_link_signup" class="dark back-link">Back</a>
 			</div>
 		</div>
-	</section>
+	</div>
 	<!-- Nelle sezioni seguenti si mostrano le principali funzionalità del servizio web -->
-	<section id="second_section" class="container">
+	<div id="second_section" class="container">
 		<div id="second_container" class="center-block">
 			<h2>Sharing your codes with your friends is now easy and fast.</h2>
 			<p>With Code Portal you can <em>share your code and projects with your friends</em> or make it publicly available!</p>
@@ -88,9 +88,9 @@
 			<h2>Finding mistakes or bugs is easier with the help of more coders.</h2>
 			<p>You can request help to other coders who can give you advice and can contact you opening a forum-like public post or directly in a private form.</p>
 		</div>
-	</section>
-	<section id="third_section" class="container">
+	</div>
+	<div id="third_section" class="container">
 		<?php include LAYOUT_DIR.'counter.php'; ?>
-	</section>
+	</div>
 </body>
 </html>

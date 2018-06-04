@@ -25,15 +25,15 @@
 	<link rel="stylesheet" href="./../style/mail.css" type="text/css">
 	<link rel="stylesheet" href="./../style/menu.css" type="text/css">
 	<link rel="icon" type="image/png" href="./../images/codeportal_logo2.png"  >
-	<script type="text/javascript" src="./../scripts/ResponseTable.js"></script>
-	<script type="text/javascript" src="./../scripts/DataWrapper.js"></script>
-	<script type="text/javascript" src="./../scripts/AjaxEngine.js"></script>
-	<script type="text/javascript" src="./../scripts/AjaxActivities.js"></script>
+	<script src="./../scripts/ResponseTable.js"></script>
+	<script src="./../scripts/DataWrapper.js"></script>
+	<script src="./../scripts/AjaxEngine.js"></script>
+	<script src="./../scripts/AjaxActivities.js"></script>
 	<title>Mail - CodePortal</title>
 </head>
 <body>
 	<?php include LAYOUT_DIR.'menu.php'; ?>
-	<section>
+	<div class="section">
 		<div class="list">
 			<div>
 				<div><a id="incoming_link" href="./mail.php" target="_self">Incoming</a></div>
@@ -70,7 +70,7 @@
 			?>
 		</div>
 		<div class="clear"></div>
-	</section>
+	</div>
 	<a id="floating_button"></a>
 	<div class="container hidden">
 		<div>
@@ -86,7 +86,7 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">
+	<script>
 	// Email form popup
 	var float_bttn = document.getElementById('floating_button');
 	var new_email = document.getElementsByClassName('hidden')[0];

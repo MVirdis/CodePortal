@@ -13,7 +13,7 @@ a {
 	text-decoration: none;
 }
 
-section {
+div.section {
 	overflow: hidden;
 	width: 100%;
 	display: block;

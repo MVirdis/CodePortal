@@ -36,7 +36,7 @@
 	</div>
 	<script>document.getElementById(<?php echo '"'.$_GET['info'].'"'; ?>).classList.add('selected');</script>
 
-	<section>
+	<div class="section">
 		<?php
 			require UTILS_DIR.'informationUtil.php';
 			require LAYOUT_DIR.'dataWrapper.php';
@@ -63,6 +63,6 @@
 			wrapRequests($result);// Actual display of request
 		?>
 		</div>
-	</section>
+	</div>
 </body>
 </html>

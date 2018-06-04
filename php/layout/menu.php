@@ -1,7 +1,7 @@
 <header>
 	<nav>
 		<div class="left">
-			<span class="rx_space default_cursor">&lt;/></span>
+			<span class="rx_space default_cursor">&lt;&#47;&gt;</span>
 		</div>
 		<div class="right">
 			<a href="./page.php" class="icon global"></a>

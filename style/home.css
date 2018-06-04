@@ -54,7 +54,7 @@ input {
     display: block;
 }
 
-nav h1 {
+nav h2, nav h1 {
 	display: inline-block;
 	padding: 8.5px 0;
 	font-size: 24px;
@@ -236,12 +236,12 @@ footer {
 	cursor: default;
 }
 
-#title_container h1 {
+#title_container h2 {
     font-size: 70px;
     margin: 0;
 }
 
-#title_container h1:hover {
+#title_container h2:hover {
     color: #b10000;
 }
 

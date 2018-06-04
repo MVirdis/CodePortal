@@ -27,10 +27,10 @@
 	<link rel="icon" type="image/png" href="./../images/codeportal_logo2.png"  >
 	<title><?php echo $_SESSION['username']; ?> - CodePortal</title>
 
-	<script type="text/javascript" src="./../scripts/ResponseTable.js"></script>
-	<script type="text/javascript" src="./../scripts/DataWrapper.js"></script>
-	<script type="text/javascript" src="./../scripts/AjaxEngine.js"></script>
-	<script type="text/javascript" src="./../scripts/AjaxActivities.js"></script>
+	<script src="./../scripts/ResponseTable.js"></script>
+	<script src="./../scripts/DataWrapper.js"></script>
+	<script src="./../scripts/AjaxEngine.js"></script>
+	<script src="./../scripts/AjaxActivities.js"></script>
 </head>
 <body>
 	<?php include LAYOUT_DIR.'menu.php'; ?>
