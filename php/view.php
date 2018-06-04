@@ -71,7 +71,7 @@ $author = $author->fetch_assoc();
 				</span>
 			</div>
 			<div class="description">
-				<pre><?php echo $request['Descrizione']; ?></pre>
+				<pre><?php echo htmlspecialchars($request['Descrizione']); ?></pre>
 				<div>
 					Language: <span><?php echo $request['Linguaggio']; ?></span>
 				</div>
