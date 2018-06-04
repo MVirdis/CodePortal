@@ -1,5 +1,6 @@
-function AjaxActivities() {}
+function AjaxActivities() {}// New function obj
 
+// Questa funzione restituisce un handler da uno custom
 AjaxActivities.createResponseHandler = function(customHandler) {
 	if(customHandler==null)
 		return function(response){};
@@ -17,6 +18,8 @@ AjaxActivities.createResponseHandler = function(customHandler) {
 	return realHandler;
 };
 
+// Cerca tra gli amici quello il cui username combacia con
+// Pattern; viene utilizzato nel campo destinatario delle email
 AjaxActivities.searchFriend = function(pattern,customHandler){
 	if(pattern==null || pattern.length==0) {
 		customHandler(null);
@@ -32,6 +35,7 @@ AjaxActivities.searchFriend = function(pattern,customHandler){
 								  responseHandler);
 };
 
+// Manda un segnale per segnare una data email come letta
 AjaxActivities.markAsRead = function(id,customHandler) {
 	var responseHandler = this.createResponseHandler(customHandler);
 
@@ -42,6 +46,8 @@ AjaxActivities.markAsRead = function(id,customHandler) {
 								  responseHandler);
 };
 
+// Invia la richiesta AJAX per cercare un utente, prende un pattern
+// che viene confrontato con gli username
 AjaxActivities.findNewFriend = function(pattern, customHandler){
 	if(pattern == null || pattern.length == 0) {
 		customHandler(null);
@@ -57,6 +63,8 @@ AjaxActivities.findNewFriend = function(pattern, customHandler){
 								  responseHandler);
 };
 
+// Questa funzione manda una richiesta ajax per trovare una richiesta
+// Che combaci con i parametri passati
 AjaxActivities.searchRequests = function(title_pattern,author_pattern,
 										 language_pattern,customHandler) {
 	if ((title_pattern==null || title_pattern.length==0) && 
@@ -75,6 +83,7 @@ AjaxActivities.searchRequests = function(title_pattern,author_pattern,
 								  responseHandler);
 };
 
+// Manda un segnale per mettere un like
 AjaxActivities.likeCode = function(code_id, customHandler) {
 	if (code_id==null) {
 		customHandler(null);
@@ -90,6 +99,7 @@ AjaxActivities.likeCode = function(code_id, customHandler) {
 								  responseHandler);
 };
 
+// Manda un segnale per mettere non mi piace
 AjaxActivities.dislikeCode = function(code_id, customHandler) {
 	if (code_id==null) {
 		customHandler(null);

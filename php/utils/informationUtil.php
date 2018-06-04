@@ -569,6 +569,7 @@ function retIsDisliked($code) {
 	return $result['Result'];
 }
 
+// Restituisce tutti i commenti relativi ad un codice
 function getComments($code) {
 	global $dbmanager;
 
